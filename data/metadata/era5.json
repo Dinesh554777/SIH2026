@@ -1,0 +1,23 @@
+{
+  "dataset_name": "ERA5 hourly on single levels",
+  "provider": "ECMWF / Copernicus Climate Data Store",
+  "official_url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels",
+  "api_url": "cds.climate.copernicus.eu (CDS API)",
+  "license": "Copernicus licence terms (free, must accept licence in CDS UI)",
+  "version": "ERA5 (ECMWF reanalysis), 0.25 deg",
+  "temporal_coverage": "1940-01-01 .. present",
+  "spatial_resolution": "0.25 x 0.25 deg",
+  "temporal_resolution": "hourly (aggregate to daily for features)",
+  "variables": [
+    "total_precipitation, 2m_temperature, 2m_dewpoint_temperature, surface_pressure, mean_sea_level_pressure, 10m_u/v_wind"
+  ],
+  "geographic_coverage": "Global (pilot bbox extraction planned)",
+  "access_method": "CDS API REQUIRES free account + licence acceptance + ~/.cdsapirc key",
+  "download_timestamp": "UNVERIFIED",
+  "checksum": "UNVERIFIED",
+  "citation": "Hersbach et al. (2020) QJRMS 146:1999-2049",
+  "role": "ATMOSPHERIC_PREDICTORS",
+  "suitability": "Main predictor source for onset/break detection (moisture, wind, MSLP patterns)",
+  "limitations": "AUTH_REQUIRED - not downloaded this session; hourly->daily aggregation step needed; 0.25-deg not block-scale",
+  "status": "AUTH_REQUIRED"
+}

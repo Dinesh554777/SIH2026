@@ -1,0 +1,40 @@
+project:
+  name: SIH26086-Hyperlocal-Monsoon
+  problem_id: SIH26086
+  organization: MoES
+  primary_period:
+    start: "2015-01-01"
+    end: "2024-12-31"
+  monsoon_season:
+    start_month: 6
+    end_month: 9
+
+pilot:
+  country: India
+  # "choose all" — three pilot states; extraction uses these bounding boxes.
+  # District/block lists are placeholders awaiting verification against official
+  # state GIS admin boundary sources (do NOT treat block names as authoritative yet).
+  states:
+    - name: Tamil Nadu
+      district_list: [Coimbatore, Tiruppur, Erode]
+      blocks: [VERIFY_FROM_OFFICIAL_GIS]
+      bbox: {lat_min: 10.0, lat_max: 13.5, lon_min: 76.2, lon_max: 80.4}
+    - name: Maharashtra
+      district_list: [Pune, Satara]
+      blocks: [VERIFY_FROM_OFFICIAL_GIS]
+      bbox: {lat_min: 17.5, lat_max: 19.5, lon_min: 73.2, lon_max: 75.0}
+    - name: Karnataka
+      district_list: [Mandya, Mysuru]
+      blocks: [VERIFY_FROM_OFFICIAL_GIS]
+      bbox: {lat_min: 11.5, lat_max: 12.6, lon_min: 76.0, lon_max: 77.2}
+
+  # Combined India-south extraction box (union of pilot states, incl. buffer).
+  extraction_bbox: {lat_min: 8.0, lat_max: 20.5, lon_min: 72.5, lon_max: 81.0}
+
+splits:
+  train: ["2015-01-01", "2021-12-31"]
+  validation: ["2022-01-01", "2023-12-31"]
+  test: ["2024-01-01", "2024-12-31"]
+  rule: NEVER randomly shuffle the full time series
+
+geography_gis_status: "Block/village boundaries pending acquisition from official state GIS portals (verification required)."

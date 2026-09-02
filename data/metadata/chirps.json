@@ -1,0 +1,23 @@
+{
+  "dataset_name": "CHIRPS v3.0 daily precipitation (FINAL)",
+  "provider": "UCSB Climate Hazards Center",
+  "official_url": "https://www.chc.ucsb.edu/data/chirps",
+  "api_url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/",
+  "license": "CC-BY-4.0 / doi:10.15780/G2JQ0P",
+  "version": "v3.0 (final, rnl/ERA5-downscaled daily)",
+  "temporal_coverage": "1981-01-01 .. present",
+  "spatial_resolution": "0.05 x 0.05 deg (coarsened p25 = 0.25)",
+  "temporal_resolution": "daily (mm/day)",
+  "variables": [
+    "precip (mm/day)"
+  ],
+  "geographic_coverage": "Global 50S-50N (pilot bbox extracted only)",
+  "access_method": "COG range-read window over pilot bbox (verified)",
+  "download_timestamp": "2026-09-02T00:00:00Z",
+  "checksum": "see data/checksums.csv (per-year pilot netcdf)",
+  "citation": "Funk et al. (2015) Scientific Data 2:150066",
+  "role": "HIGH_RESOLUTION_RAINFALL / VALIDATION",
+  "suitability": "0.05-deg finer than IMD; used for cross-validation and spatial downscaling at block scale",
+  "limitations": "Satellite+station blend; overestimates light rain, rare extremes; INDIA 2015-on final uses rnl chain; not gauge-truth-verified locally",
+  "status": "VERIFIED"
+}

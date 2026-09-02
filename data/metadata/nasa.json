@@ -1,0 +1,23 @@
+{
+  "dataset_name": "NASA POWER daily meteorology (MERRA-2)",
+  "provider": "NASA Langley POWER Project",
+  "official_url": "https://power.larc.nasa.gov/docs/",
+  "api_url": "https://power.larc.nasa.gov/api/temporal/daily/",
+  "license": "NASA open data (no restrictions for research use)",
+  "version": "POWER API v2.x (MERRA-2 reanalysis, AG community v837)",
+  "temporal_coverage": "1981-01-01 .. near-real-time",
+  "spatial_resolution": "0.5 x 0.5 deg",
+  "temporal_resolution": "daily",
+  "variables": [
+    "T2M, T2MDEW, T2M_MAX, T2M_MIN, PRECTOTCORR, PS, RH2M, WS10M, WS10M_MAX"
+  ],
+  "geographic_coverage": "Global (pilot bbox 9.9-20.6N, 72.6-80.9E downloaded)",
+  "access_method": "REST regional daily endpoint, no auth (verified)",
+  "download_timestamp": "2026-09-02T00:00:00Z",
+  "checksum": "see data/checksums.csv",
+  "citation": "NASA POWER docs: https://power.larc.nasa.gov/docs/services/api/",
+  "role": "SUPPLEMENTARY / VALIDATION",
+  "suitability": "Cross-check T2M/RH/PS against ERA5 predictors; independent daily field",
+  "limitations": "0.5-deg coarse; PRECTOTCORR is adjusted MERRA-2 precip, NOT rain-gauge verified; LST vs UTC time-standard nuance",
+  "status": "VERIFIED"
+}

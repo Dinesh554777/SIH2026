@@ -1,0 +1,23 @@
+{
+  "dataset_name": "NOAA CPC Oceanic Nino Index (ONI) v6",
+  "provider": "NOAA NWS CPC",
+  "official_url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/",
+  "api_url": "https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt",
+  "license": "US Government public domain (NWS)",
+  "version": "ONI v6 (ERSSTv5/v6, Nino 3.4 3-month mean SST anomaly)",
+  "temporal_coverage": "1950-01 .. 2026-05 (download verified; file covers 1950-2026)",
+  "spatial_resolution": "Nino 3.4 region (5N-5S, 120-170W) index - no grid",
+  "temporal_resolution": "3-month running (JJAS etc.)",
+  "variables": [
+    "ONI SST anomaly (deg C)"
+  ],
+  "geographic_coverage": "Equatorial Pacific Nino 3.4",
+  "access_method": "HTTP GET text file (verified)",
+  "download_timestamp": "2026-09-02T00:00:00Z",
+  "checksum": "see data/checksums.csv",
+  "citation": "NOAA CPC ONI (ERSSTv5/v6)",
+  "role": "CLIMATE_PREDICTOR",
+  "suitability": "ENSO-phase context feature (correlated with ISM interannual variability)",
+  "limitations": "Monthly/3-month index; only seasonal-timescale driver, not daily-local physics",
+  "status": "VERIFIED"
+}

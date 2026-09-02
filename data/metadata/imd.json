@@ -1,0 +1,23 @@
+{
+  "dataset_name": "IMD gridded rainfall (0.25x0.25 deg daily)",
+  "provider": "India Meteorological Department (IMD Pune)",
+  "official_url": "https://www.imdpune.gov.in/cmpg/Griddata/Rainfall_25_NetCDF.html",
+  "api_url": "https://www.imdpune.gov.in/cmpg/Griddata/RF25.php",
+  "license": "IMD research dissemination (free for research; cite Pai et al. 2014)",
+  "version": "0.25-deg daily (Pai et al., 2014, MAUSAM)",
+  "temporal_coverage": "1901-01-01 .. 2024-12-31 (present)",
+  "spatial_resolution": "0.25 x 0.25 deg (135 lon x 129 lat)",
+  "temporal_resolution": "daily (mm/day)",
+  "variables": [
+    "RAINFALL (mm/day, -999 missing)"
+  ],
+  "geographic_coverage": "India mainland 66.5E-100E, 6.5N-38.5N",
+  "access_method": "HTTP POST RF25.php {RF25=<year>} -> yearly netCDF (verified)",
+  "download_timestamp": "2026-09-02T00:00:00Z",
+  "checksum": "see data/checksums.csv (per-year sha256)",
+  "citation": "Pai et al. (2014) MAUSAM 65(1):1-18",
+  "role": "GROUND_TRUTH",
+  "suitability": "Primary reference rainfall for station/grid verification and thumb-label onset/break targets",
+  "limitations": "225 km2 grid cell - represents district/cluster, not a village point; gauge-interpolation smoothing",
+  "status": "VERIFIED"
+}
