@@ -89,8 +89,23 @@ Your model must demonstrably beat both. This is how you answer "why should we be
 
 ---
 
+## Design Documents (Phase 3 — Pre-Implementation Specs)
+
+Once the problem is understood, the following **design documents** define the system before any ML pipeline code:
+
+| Document | Contents |
+| -------- | -------- |
+| `../PROJECT_REQUIREMENTS.md` | Prediction targets, scientific definitions (documented as assumptions), horizons, spatial resolution, principles, scope |
+| `../SYSTEM_ARCHITECTURE.md` | Full pipeline: data → quality → features → state classifier → forecasting tiers → probabilistic output → downscaling → verification loop → decision engine → explainability → dashboards |
+| `../DATA_DICTIONARY.md` | Input/output variables, labels, thresholds registry, provenance schema |
+| `../MODELING_PLAN.md` | Baseline-first modeling, leakage rules, T2 guard, decision thresholds |
+| `../EVALUATION_PLAN.md` | Hindcast protocol, metrics (Brier, calibration, skill vs baselines), anti-patterns |
+| `../DATA_SOURCES.md` | Dataset inventory: provider/resolution/period/license/limitations |
+
+---
+
 ## Current Stage
 
-**Phase 2 — Problem Statement Analysis (research/documentation, no code)**
+**Phase 3 — Design documents complete (research/design). ML pipeline implementation NOT started — blocked until documents are approved.**
 
 Next research phase: **"What already exists?"** → **"What data exists?"** → **"What defensible approach?"** → then technology.
