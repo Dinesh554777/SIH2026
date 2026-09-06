@@ -21,6 +21,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 RAW = DATA / "raw"
+PROCESSED = DATA / "processed"
 METADATA = DATA / "metadata"
 REPORTS = ROOT / "reports"
 CHECKSUMS_CSV = DATA / "checksums.csv"
