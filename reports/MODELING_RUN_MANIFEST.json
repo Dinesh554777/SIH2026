@@ -1,0 +1,51 @@
+{
+  "seed": 42,
+  "input_matrix": "data/processed/training_matrix.parquet",
+  "targets": [
+    "onset",
+    "break",
+    "revival",
+    "dry_spell"
+  ],
+  "models": [
+    "climatology",
+    "persistence",
+    "logistic",
+    "random_forest",
+    "xgboost"
+  ],
+  "splits": {
+    "train": "2015-2021",
+    "validation": "2022-2023",
+    "test": "2024"
+  },
+  "decision": {
+    "winner": {
+      "onset": {
+        "winner": "persistence",
+        "kind": "baseline",
+        "val_brier_climatology": 0.00906,
+        "val_brier_persistence": 0.00792
+      },
+      "break": {
+        "winner": "persistence",
+        "kind": "baseline",
+        "val_brier_climatology": 0.21135,
+        "val_brier_persistence": 0.05566
+      },
+      "revival": {
+        "winner": "xgboost",
+        "kind": "learned",
+        "val_brier_climatology": 0.03203,
+        "val_brier_persistence": 0.0281
+      },
+      "dry_spell": {
+        "winner": "persistence",
+        "kind": "baseline",
+        "val_brier_climatology": 0.16076,
+        "val_brier_persistence": 0.0334
+      }
+    }
+  },
+  "generated": "2026-09-06T14:02:17Z"
+}

@@ -1,0 +1,9 @@
+{
+  "path": "C:\\Users\\hp\\Downloads\\SIH2026\\data\\processed\\training_matrix.parquet",
+  "rows": 370880,
+  "columns": 63,
+  "n_feature_cols": 51,
+  "n_cells": 304,
+  "n_targets": 4,
+  "issues": []
+}

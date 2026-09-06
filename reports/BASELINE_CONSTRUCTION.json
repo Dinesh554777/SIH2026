@@ -1,0 +1,25 @@
+{
+  "description": "E0 climatology: P(target|cell, dseason) empirical mean on TRAIN (2015-2021). E1 persistence: two-state Markov P(y_t|y_{t-1}) from TRAIN; dseason==1 uses climatology.",
+  "climatology": {
+    "n_cell_dseason_combos": 37088,
+    "fit_split": "train"
+  },
+  "persistence_transitions": {
+    "onset": {
+      "p11": 0.0,
+      "p01": 0.008179358572273188
+    },
+    "break": {
+      "p11": 0.9077585902461419,
+      "p01": 0.04750285446020274
+    },
+    "revival": {
+      "p11": 0.0,
+      "p01": 0.03137437039053804
+    },
+    "dry_spell": {
+      "p11": 0.9164619164619164,
+      "p01": 0.020942307414174625
+    }
+  }
+}

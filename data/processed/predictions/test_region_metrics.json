@@ -1,0 +1,7262 @@
+[
+  {
+    "target": "break",
+    "model": "climatology",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.3360655737704918,
+    "brier": 0.19712278353964535,
+    "log_loss": 0.9661090438832488,
+    "roc_auc": 0.7163827762722071,
+    "pr_auc": 0.5181017165246941,
+    "precision": 0.6134122287968442,
+    "recall": 0.30341463414634146,
+    "f1": 0.40600522193211486,
+    "ece": 0.05255269320843096,
+    "confusion_matrix": [
+      [
+        1829,
+        196
+      ],
+      [
+        714,
+        311
+      ]
+    ],
+    "mean_predicted_prob": 0.29128805620608894,
+    "n_pos": 1025,
+    "n_pred_pos": 507,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 526,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.09125475285171103
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 688,
+        "bin_mean_pred": 0.1428571428571428,
+        "bin_freq": 0.22965116279069767
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 716,
+        "bin_mean_pred": 0.2857142857142856,
+        "bin_freq": 0.3100558659217877
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 613,
+        "bin_mean_pred": 0.4285714285714285,
+        "bin_freq": 0.466557911908646
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 314,
+        "bin_mean_pred": 0.5714285714285713,
+        "bin_freq": 0.5668789808917197
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 160,
+        "bin_mean_pred": 0.7142857142857143,
+        "bin_freq": 0.68125
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 27,
+        "bin_mean_pred": 0.8571428571428571,
+        "bin_freq": 0.7037037037037037
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 6,
+        "bin_mean_pred": 1.0,
+        "bin_freq": 0.8333333333333334
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "climatology",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.2888205828779599,
+    "brier": 0.187081799933088,
+    "log_loss": 0.8352133387206035,
+    "roc_auc": 0.7339591746647772,
+    "pr_auc": 0.4496207485051126,
+    "precision": 0.46310331072995614,
+    "recall": 0.4576271186440678,
+    "f1": 0.46034892942109434,
+    "ece": 0.0710219880301847,
+    "confusion_matrix": [
+      [
+        4901,
+        1346
+      ],
+      [
+        1376,
+        1161
+      ]
+    ],
+    "mean_predicted_prob": 0.33310564663023673,
+    "n_pos": 2537,
+    "n_pred_pos": 2507,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2028,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.04388560157790927
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1162,
+        "bin_mean_pred": 0.14285714285714282,
+        "bin_freq": 0.11962134251290878
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 1424,
+        "bin_mean_pred": 0.28571428571428564,
+        "bin_freq": 0.2914325842696629
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 1663,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.4407696933253157
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1385,
+        "bin_mean_pred": 0.5714285714285712,
+        "bin_freq": 0.4433212996389892
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 832,
+        "bin_mean_pred": 0.7142857142857142,
+        "bin_freq": 0.4675480769230769
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 247,
+        "bin_mean_pred": 0.8571428571428573,
+        "bin_freq": 0.5425101214574899
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 43,
+        "bin_mean_pred": 1.0,
+        "bin_freq": 0.5581395348837209
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "climatology",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.48776431456402947,
+    "brier": 0.2690040615913745,
+    "log_loss": 1.492989064051193,
+    "roc_auc": 0.6439777445318117,
+    "pr_auc": 0.5792628719717972,
+    "precision": 0.6087456846950517,
+    "recall": 0.30061698327650593,
+    "f1": 0.4024781261887941,
+    "ece": 0.18243220310219607,
+    "confusion_matrix": [
+      [
+        10556,
+        2380
+      ],
+      [
+        8615,
+        3703
+      ]
+    ],
+    "mean_predicted_prob": 0.33154578058355677,
+    "n_pos": 12318,
+    "n_pred_pos": 6083,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 3972,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.18882175226586104
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 4389,
+        "bin_mean_pred": 0.1428571428571428,
+        "bin_freq": 0.4294827979038505
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 5312,
+        "bin_mean_pred": 0.28571428571428564,
+        "bin_freq": 0.5235316265060241
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 5498,
+        "bin_mean_pred": 0.4285714285714285,
+        "bin_freq": 0.5818479447071663
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 3869,
+        "bin_mean_pred": 0.5714285714285713,
+        "bin_freq": 0.6133367795295942
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 1702,
+        "bin_mean_pred": 0.7142857142857142,
+        "bin_freq": 0.6028202115158637
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 467,
+        "bin_mean_pred": 0.8571428571428572,
+        "bin_freq": 0.5845824411134903
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 45,
+        "bin_mean_pred": 1.0,
+        "bin_freq": 0.6888888888888889
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "logistic",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.3360655737704918,
+    "brier": 0.11930561654040618,
+    "log_loss": 0.3540708212770044,
+    "roc_auc": 0.9090789521228545,
+    "pr_auc": 0.8324985474916142,
+    "precision": 0.685064935064935,
+    "recall": 0.8234146341463414,
+    "f1": 0.7478954364200265,
+    "ece": 0.04813849566626211,
+    "confusion_matrix": [
+      [
+        1637,
+        388
+      ],
+      [
+        181,
+        844
+      ]
+    ],
+    "mean_predicted_prob": 0.36897467263220807,
+    "n_pos": 1025,
+    "n_pred_pos": 1232,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 1131,
+        "bin_mean_pred": 0.011587794686280368,
+        "bin_freq": 0.0035366931918656055
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 150,
+        "bin_mean_pred": 0.14906149743105251,
+        "bin_freq": 0.08
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 138,
+        "bin_mean_pred": 0.2502425074995559,
+        "bin_freq": 0.2898550724637681
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 167,
+        "bin_mean_pred": 0.3530686892347694,
+        "bin_freq": 0.25149700598802394
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 232,
+        "bin_mean_pred": 0.45060237780555357,
+        "bin_freq": 0.3577586206896552
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 250,
+        "bin_mean_pred": 0.5489989299971381,
+        "bin_freq": 0.44
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 289,
+        "bin_mean_pred": 0.6467220763061692,
+        "bin_freq": 0.5709342560553633
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 273,
+        "bin_mean_pred": 0.7490033917416258,
+        "bin_freq": 0.6886446886446886
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 325,
+        "bin_mean_pred": 0.8490718276290841,
+        "bin_freq": 0.88
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 95,
+        "bin_mean_pred": 0.9188774721965964,
+        "bin_freq": 1.0
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "logistic",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.2888205828779599,
+    "brier": 0.09218514139341305,
+    "log_loss": 0.281337417159725,
+    "roc_auc": 0.9530935747858224,
+    "pr_auc": 0.8731868064686621,
+    "precision": 0.7021527572987319,
+    "recall": 0.938510051241624,
+    "f1": 0.803306342780027,
+    "ece": 0.07478862543063444,
+    "confusion_matrix": [
+      [
+        5237,
+        1010
+      ],
+      [
+        156,
+        2381
+      ]
+    ],
+    "mean_predicted_prob": 0.36360920830859433,
+    "n_pos": 2537,
+    "n_pred_pos": 3391,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 4119,
+        "bin_mean_pred": 0.007490597078821506,
+        "bin_freq": 0.0012138868657441126
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 370,
+        "bin_mean_pred": 0.14943238000899411,
+        "bin_freq": 0.04594594594594595
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 354,
+        "bin_mean_pred": 0.2503497882556216,
+        "bin_freq": 0.07627118644067797
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 281,
+        "bin_mean_pred": 0.35083984630637494,
+        "bin_freq": 0.16370106761565836
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 269,
+        "bin_mean_pred": 0.4501128137280298,
+        "bin_freq": 0.22676579925650558
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 303,
+        "bin_mean_pred": 0.5521973546937502,
+        "bin_freq": 0.33993399339933994
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 373,
+        "bin_mean_pred": 0.6518339511362922,
+        "bin_freq": 0.4289544235924933
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 534,
+        "bin_mean_pred": 0.7511575208165338,
+        "bin_freq": 0.5842696629213483
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 857,
+        "bin_mean_pred": 0.8553126238773658,
+        "bin_freq": 0.690781796966161
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1324,
+        "bin_mean_pred": 0.9478387235946397,
+        "bin_freq": 0.9169184290030211
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "logistic",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.48776431456402947,
+    "brier": 0.12252711607765512,
+    "log_loss": 0.3740138561902937,
+    "roc_auc": 0.9043934478838104,
+    "pr_auc": 0.8824833463076409,
+    "precision": 0.7814262982786055,
+    "recall": 0.8770904367592142,
+    "f1": 0.826499388004896,
+    "ece": 0.019117888535115236,
+    "confusion_matrix": [
+      [
+        9914,
+        3022
+      ],
+      [
+        1514,
+        10804
+      ]
+    ],
+    "mean_predicted_prob": 0.4749630062640869,
+    "n_pos": 12318,
+    "n_pred_pos": 13826,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 6720,
+        "bin_mean_pred": 0.010578399384617767,
+        "bin_freq": 0.007142857142857143
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1029,
+        "bin_mean_pred": 0.14732858355289424,
+        "bin_freq": 0.11078717201166181
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 1041,
+        "bin_mean_pred": 0.25078914725164736,
+        "bin_freq": 0.23246878001921228
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 1197,
+        "bin_mean_pred": 0.3516458254485608,
+        "bin_freq": 0.3642439431913116
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 1441,
+        "bin_mean_pred": 0.4531780067970509,
+        "bin_freq": 0.4677307425399028
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 2019,
+        "bin_mean_pred": 0.5520304882126283,
+        "bin_freq": 0.5765230312035661
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 2730,
+        "bin_mean_pred": 0.652704084641981,
+        "bin_freq": 0.6575091575091575
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 3317,
+        "bin_mean_pred": 0.7510988454444467,
+        "bin_freq": 0.7663551401869159
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 3785,
+        "bin_mean_pred": 0.8521058727234392,
+        "bin_freq": 0.9009247027741083
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1975,
+        "bin_mean_pred": 0.9235237647270351,
+        "bin_freq": 0.9584810126582278
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "persistence",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.3360655737704918,
+    "brier": 0.059056998269318116,
+    "log_loss": 0.2325129919610118,
+    "roc_auc": 0.9293164709424873,
+    "pr_auc": 0.85175344467333,
+    "precision": 0.9053658536585366,
+    "recall": 0.9053658536585366,
+    "f1": 0.9053658536585366,
+    "ece": 0.0014579823219310582,
+    "confusion_matrix": [
+      [
+        1928,
+        97
+      ],
+      [
+        97,
+        928
+      ]
+    ],
+    "mean_predicted_prob": 0.3362158242369512,
+    "n_pos": 1025,
+    "n_pred_pos": 1025,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2025,
+        "bin_mean_pred": 0.046916399466866904,
+        "bin_freq": 0.047901234567901234
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1025,
+        "bin_mean_pred": 0.9077585902461417,
+        "bin_freq": 0.9053658536585366
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "persistence",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.2888205828779599,
+    "brier": 0.06486536027746623,
+    "log_loss": 0.2490104211172079,
+    "roc_auc": 0.9146016575934376,
+    "pr_auc": 0.8058572580007932,
+    "precision": 0.8777602523659306,
+    "recall": 0.8774142688214427,
+    "f1": 0.8775872264931993,
+    "ece": 0.010666912080829183,
+    "confusion_matrix": [
+      [
+        5937,
+        310
+      ],
+      [
+        311,
+        2226
+      ]
+    ],
+    "mean_predicted_prob": 0.2954751154383456,
+    "n_pos": 2537,
+    "n_pred_pos": 2536,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 6248,
+        "bin_mean_pred": 0.04695544640624394,
+        "bin_freq": 0.04977592829705506
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 2536,
+        "bin_mean_pred": 0.9077585902461418,
+        "bin_freq": 0.8777602523659306
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "persistence",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.48776431456402947,
+    "brier": 0.0735774096078717,
+    "log_loss": 0.2817925948715132,
+    "roc_auc": 0.9212636638811749,
+    "pr_auc": 0.8845313798390833,
+    "precision": 0.9200260607541331,
+    "recall": 0.9171131677220328,
+    "f1": 0.9185673049558889,
+    "ece": 0.022377279821800853,
+    "confusion_matrix": [
+      [
+        11954,
+        982
+      ],
+      [
+        1021,
+        11297
+      ]
+    ],
+    "mean_predicted_prob": 0.46538703474222864,
+    "n_pos": 12318,
+    "n_pred_pos": 12279,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 12975,
+        "bin_mean_pred": 0.046745005452629565,
+        "bin_freq": 0.0786897880539499
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 12279,
+        "bin_mean_pred": 0.9077585902461416,
+        "bin_freq": 0.9200260607541331
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "random_forest",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.3360655737704918,
+    "brier": 0.0864526622490077,
+    "log_loss": 0.26668406159052827,
+    "roc_auc": 0.953474736525143,
+    "pr_auc": 0.913280414254971,
+    "precision": 0.7764505119453925,
+    "recall": 0.8878048780487805,
+    "f1": 0.8284023668639053,
+    "ece": 0.041783373860714,
+    "confusion_matrix": [
+      [
+        1763,
+        262
+      ],
+      [
+        115,
+        910
+      ]
+    ],
+    "mean_predicted_prob": 0.37620235033363136,
+    "n_pos": 1025,
+    "n_pred_pos": 1172,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 1311,
+        "bin_mean_pred": 0.014024075588101667,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 158,
+        "bin_mean_pred": 0.14866417165315776,
+        "bin_freq": 0.16455696202531644
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 135,
+        "bin_mean_pred": 0.2534464650351978,
+        "bin_freq": 0.17037037037037037
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 139,
+        "bin_mean_pred": 0.35336014033584834,
+        "bin_freq": 0.17266187050359713
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 135,
+        "bin_mean_pred": 0.44888338530652383,
+        "bin_freq": 0.3111111111111111
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 168,
+        "bin_mean_pred": 0.5525138424594728,
+        "bin_freq": 0.43452380952380953
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 132,
+        "bin_mean_pred": 0.6480751564897133,
+        "bin_freq": 0.5833333333333334
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 137,
+        "bin_mean_pred": 0.7523828654797889,
+        "bin_freq": 0.7007299270072993
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 233,
+        "bin_mean_pred": 0.8494240221282531,
+        "bin_freq": 0.7939914163090128
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 502,
+        "bin_mean_pred": 0.9606585280500247,
+        "bin_freq": 0.954183266932271
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "random_forest",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.2888205828779599,
+    "brier": 0.06785566253267288,
+    "log_loss": 0.20691078415103697,
+    "roc_auc": 0.9728710458986416,
+    "pr_auc": 0.9350076898351735,
+    "precision": 0.7578149668455952,
+    "recall": 0.9459992116673236,
+    "f1": 0.8415147265077139,
+    "ece": 0.05052873434501466,
+    "confusion_matrix": [
+      [
+        5480,
+        767
+      ],
+      [
+        137,
+        2400
+      ]
+    ],
+    "mean_predicted_prob": 0.3367836128350181,
+    "n_pos": 2537,
+    "n_pred_pos": 3167,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 4670,
+        "bin_mean_pred": 0.007994256646674719,
+        "bin_freq": 0.00021413276231263382
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 211,
+        "bin_mean_pred": 0.15552655388744605,
+        "bin_freq": 0.02843601895734597
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 216,
+        "bin_mean_pred": 0.24944302817813424,
+        "bin_freq": 0.06018518518518518
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 228,
+        "bin_mean_pred": 0.3495362205167796,
+        "bin_freq": 0.14912280701754385
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 292,
+        "bin_mean_pred": 0.45160900359481004,
+        "bin_freq": 0.2842465753424658
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 328,
+        "bin_mean_pred": 0.5507952317464581,
+        "bin_freq": 0.39634146341463417
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 423,
+        "bin_mean_pred": 0.6504537570256336,
+        "bin_freq": 0.48936170212765956
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 479,
+        "bin_mean_pred": 0.7527480264903634,
+        "bin_freq": 0.5970772442588727
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 554,
+        "bin_mean_pred": 0.8494831878464425,
+        "bin_freq": 0.776173285198556
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1383,
+        "bin_mean_pred": 0.9658217110109147,
+        "bin_freq": 0.9739696312364425
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "random_forest",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.48776431456402947,
+    "brier": 0.08792241062912191,
+    "log_loss": 0.275116367572524,
+    "roc_auc": 0.9527411693101278,
+    "pr_auc": 0.9479014174816566,
+    "precision": 0.8282820976491863,
+    "recall": 0.9296151972722845,
+    "f1": 0.8760279998469954,
+    "ece": 0.035008207671134633,
+    "confusion_matrix": [
+      [
+        10562,
+        2374
+      ],
+      [
+        867,
+        11451
+      ]
+    ],
+    "mean_predicted_prob": 0.4965207714717451,
+    "n_pos": 12318,
+    "n_pred_pos": 13825,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 7793,
+        "bin_mean_pred": 0.012195487398367021,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 710,
+        "bin_mean_pred": 0.14698028668705557,
+        "bin_freq": 0.0323943661971831
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 722,
+        "bin_mean_pred": 0.2533253951461487,
+        "bin_freq": 0.1149584487534626
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 921,
+        "bin_mean_pred": 0.352438070880032,
+        "bin_freq": 0.23235613463626492
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 1283,
+        "bin_mean_pred": 0.4518801097159155,
+        "bin_freq": 0.426344505066251
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1508,
+        "bin_mean_pred": 0.551158746976081,
+        "bin_freq": 0.5623342175066313
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 2014,
+        "bin_mean_pred": 0.6519936143504216,
+        "bin_freq": 0.6261171797418074
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 2238,
+        "bin_mean_pred": 0.7501551671807688,
+        "bin_freq": 0.7140303842716711
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 2748,
+        "bin_mean_pred": 0.8547575933314493,
+        "bin_freq": 0.9075691411935953
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 5317,
+        "bin_mean_pred": 0.955519632536309,
+        "bin_freq": 0.9873989091593004
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "xgboost",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.3360655737704918,
+    "brier": 0.08543903518155026,
+    "log_loss": 0.2587526094996045,
+    "roc_auc": 0.9548497440529962,
+    "pr_auc": 0.917577783330859,
+    "precision": 0.7928251121076233,
+    "recall": 0.8624390243902439,
+    "f1": 0.8261682242990654,
+    "ece": 0.03878053760852856,
+    "confusion_matrix": [
+      [
+        1794,
+        231
+      ],
+      [
+        141,
+        884
+      ]
+    ],
+    "mean_predicted_prob": 0.3605465128780204,
+    "n_pos": 1025,
+    "n_pred_pos": 1115,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 1490,
+        "bin_mean_pred": 0.005129429284320524,
+        "bin_freq": 0.0174496644295302
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 109,
+        "bin_mean_pred": 0.1502574138821812,
+        "bin_freq": 0.1743119266055046
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 121,
+        "bin_mean_pred": 0.2493570623072711,
+        "bin_freq": 0.256198347107438
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 124,
+        "bin_mean_pred": 0.35030427935623354,
+        "bin_freq": 0.23387096774193547
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 91,
+        "bin_mean_pred": 0.4445740554358933,
+        "bin_freq": 0.3956043956043956
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 97,
+        "bin_mean_pred": 0.5539810897148761,
+        "bin_freq": 0.5463917525773195
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 117,
+        "bin_mean_pred": 0.6493514704908061,
+        "bin_freq": 0.4188034188034188
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 109,
+        "bin_mean_pred": 0.7530043682920824,
+        "bin_freq": 0.7431192660550459
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 171,
+        "bin_mean_pred": 0.8511980210828503,
+        "bin_freq": 0.6666666666666666
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 621,
+        "bin_mean_pred": 0.9730066937332952,
+        "bin_freq": 0.9452495974235104
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "xgboost",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.2888205828779599,
+    "brier": 0.0701850529094795,
+    "log_loss": 0.2100775505430165,
+    "roc_auc": 0.9701306844076641,
+    "pr_auc": 0.9287008289804735,
+    "precision": 0.7619201030927835,
+    "recall": 0.9322033898305084,
+    "f1": 0.8385038113809609,
+    "ece": 0.04273257902314455,
+    "confusion_matrix": [
+      [
+        5508,
+        739
+      ],
+      [
+        172,
+        2365
+      ]
+    ],
+    "mean_predicted_prob": 0.3299010539991453,
+    "n_pos": 2537,
+    "n_pred_pos": 3104,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 5022,
+        "bin_mean_pred": 0.0029358705883304284,
+        "bin_freq": 0.004380724810832338
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 171,
+        "bin_mean_pred": 0.14541364796677528,
+        "bin_freq": 0.09941520467836257
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 157,
+        "bin_mean_pred": 0.24749201773458226,
+        "bin_freq": 0.1592356687898089
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 146,
+        "bin_mean_pred": 0.350484456918011,
+        "bin_freq": 0.2808219178082192
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 184,
+        "bin_mean_pred": 0.45106714461808617,
+        "bin_freq": 0.3641304347826087
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 215,
+        "bin_mean_pred": 0.5493946801784426,
+        "bin_freq": 0.4186046511627907
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 298,
+        "bin_mean_pred": 0.6535087075809505,
+        "bin_freq": 0.5167785234899329
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 371,
+        "bin_mean_pred": 0.7513981837468006,
+        "bin_freq": 0.5175202156334232
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 542,
+        "bin_mean_pred": 0.8540796044787797,
+        "bin_freq": 0.6568265682656826
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1678,
+        "bin_mean_pred": 0.9717953083625993,
+        "bin_freq": 0.9374255065554231
+      }
+    ]
+  },
+  {
+    "target": "break",
+    "model": "xgboost",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.48776431456402947,
+    "brier": 0.09222548423114667,
+    "log_loss": 0.27535853512816283,
+    "roc_auc": 0.9512929904430147,
+    "pr_auc": 0.9488782891981452,
+    "precision": 0.8190524193548387,
+    "recall": 0.9234453645072253,
+    "f1": 0.8681218041669847,
+    "ece": 0.03562518151344115,
+    "confusion_matrix": [
+      [
+        10423,
+        2513
+      ],
+      [
+        943,
+        11375
+      ]
+    ],
+    "mean_predicted_prob": 0.5145072765093388,
+    "n_pos": 12318,
+    "n_pred_pos": 13888,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8782,
+        "bin_mean_pred": 0.004596606368391501,
+        "bin_freq": 0.007401503074470508
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 551,
+        "bin_mean_pred": 0.15120388134746066,
+        "bin_freq": 0.2159709618874773
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 621,
+        "bin_mean_pred": 0.2511818229240304,
+        "bin_freq": 0.286634460547504
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 691,
+        "bin_mean_pred": 0.3504769402716508,
+        "bin_freq": 0.39363241678726485
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 721,
+        "bin_mean_pred": 0.45012754544967093,
+        "bin_freq": 0.42857142857142855
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 851,
+        "bin_mean_pred": 0.5525848519507922,
+        "bin_freq": 0.491186839012926
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 1178,
+        "bin_mean_pred": 0.6542247288903072,
+        "bin_freq": 0.5814940577249575
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 1623,
+        "bin_mean_pred": 0.7521178928775987,
+        "bin_freq": 0.6142945163277881
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 2335,
+        "bin_mean_pred": 0.8536559009705161,
+        "bin_freq": 0.7079229122055675
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 7901,
+        "bin_mean_pred": 0.9735578127623117,
+        "bin_freq": 0.9646880141754208
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "climatology",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.15934426229508197,
+    "brier": 0.12559384409501506,
+    "log_loss": 1.0334018824053526,
+    "roc_auc": 0.7101233123399011,
+    "pr_auc": 0.2757824923888473,
+    "precision": 0.46511627906976744,
+    "recall": 0.0411522633744856,
+    "f1": 0.07561436672967864,
+    "ece": 0.044121779859484817,
+    "confusion_matrix": [
+      [
+        2541,
+        23
+      ],
+      [
+        466,
+        20
+      ]
+    ],
+    "mean_predicted_prob": 0.13302107728337234,
+    "n_pos": 486,
+    "n_pred_pos": 43,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 1358,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.05964653902798233
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 847,
+        "bin_mean_pred": 0.14285714285714282,
+        "bin_freq": 0.16883116883116883
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 590,
+        "bin_mean_pred": 0.2857142857142856,
+        "bin_freq": 0.29322033898305083
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 212,
+        "bin_mean_pred": 0.4285714285714286,
+        "bin_freq": 0.32547169811320753
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 38,
+        "bin_mean_pred": 0.5714285714285716,
+        "bin_freq": 0.47368421052631576
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 5,
+        "bin_mean_pred": 0.7142857142857143,
+        "bin_freq": 0.4
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "climatology",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.1002959927140255,
+    "brier": 0.10882959741273558,
+    "log_loss": 0.5115326283770122,
+    "roc_auc": 0.7119966799486912,
+    "pr_auc": 0.17448270275053115,
+    "precision": 0.21077654516640254,
+    "recall": 0.15096481271282633,
+    "f1": 0.17592592592592593,
+    "ece": 0.10327218319021593,
+    "confusion_matrix": [
+      [
+        7405,
+        498
+      ],
+      [
+        748,
+        133
+      ]
+    ],
+    "mean_predicted_prob": 0.1892239136091595,
+    "n_pos": 881,
+    "n_pred_pos": 631,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 3314,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.019010259505129752
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1889,
+        "bin_mean_pred": 0.14285714285714282,
+        "bin_freq": 0.11064055055584966
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 1765,
+        "bin_mean_pred": 0.2857142857142856,
+        "bin_freq": 0.14447592067988668
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 1185,
+        "bin_mean_pred": 0.4285714285714285,
+        "bin_freq": 0.18649789029535865
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 509,
+        "bin_mean_pred": 0.5714285714285713,
+        "bin_freq": 0.19842829076620824
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 107,
+        "bin_mean_pred": 0.7142857142857141,
+        "bin_freq": 0.2616822429906542
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 15,
+        "bin_mean_pred": 0.8571428571428573,
+        "bin_freq": 0.26666666666666666
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "climatology",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.33380850558327396,
+    "brier": 0.2293675845249005,
+    "log_loss": 1.677103239342876,
+    "roc_auc": 0.6512084216808276,
+    "pr_auc": 0.43492001229441685,
+    "precision": 0.5193687230989957,
+    "recall": 0.08588374851720047,
+    "f1": 0.1473941368078176,
+    "ece": 0.14062835873242147,
+    "confusion_matrix": [
+      [
+        16154,
+        670
+      ],
+      [
+        7706,
+        724
+      ]
+    ],
+    "mean_predicted_prob": 0.2022197332247225,
+    "n_pos": 8430,
+    "n_pred_pos": 1394,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 6968,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.15054535017221585
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 7333,
+        "bin_mean_pred": 0.14285714285714285,
+        "bin_freq": 0.33983362880130913
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 6126,
+        "bin_mean_pred": 0.28571428571428564,
+        "bin_freq": 0.4196865817825661
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 3433,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.4643169239732013
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1141,
+        "bin_mean_pred": 0.5714285714285712,
+        "bin_freq": 0.5004382120946538
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 220,
+        "bin_mean_pred": 0.7142857142857142,
+        "bin_freq": 0.5636363636363636
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 31,
+        "bin_mean_pred": 0.8571428571428572,
+        "bin_freq": 0.8709677419354839
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 2,
+        "bin_mean_pred": 1.0,
+        "bin_freq": 1.0
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "logistic",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.15934426229508197,
+    "brier": 0.09530457166126179,
+    "log_loss": 0.2775353918751721,
+    "roc_auc": 0.9236508349222858,
+    "pr_auc": 0.7133905070710302,
+    "precision": 0.5111695137976346,
+    "recall": 0.8004115226337448,
+    "f1": 0.623897353648757,
+    "ece": 0.08115014119452148,
+    "confusion_matrix": [
+      [
+        2192,
+        372
+      ],
+      [
+        97,
+        389
+      ]
+    ],
+    "mean_predicted_prob": 0.239243062596901,
+    "n_pos": 486,
+    "n_pred_pos": 761,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 1672,
+        "bin_mean_pred": 0.0044761930495255545,
+        "bin_freq": 0.0023923444976076554
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 145,
+        "bin_mean_pred": 0.14750653477799375,
+        "bin_freq": 0.1103448275862069
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 184,
+        "bin_mean_pred": 0.247453333226868,
+        "bin_freq": 0.125
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 136,
+        "bin_mean_pred": 0.35101488139802905,
+        "bin_freq": 0.15441176470588236
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 152,
+        "bin_mean_pred": 0.4508978757045923,
+        "bin_freq": 0.21710526315789475
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 173,
+        "bin_mean_pred": 0.5499374096375386,
+        "bin_freq": 0.2658959537572254
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 214,
+        "bin_mean_pred": 0.6496261492893455,
+        "bin_freq": 0.3691588785046729
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 150,
+        "bin_mean_pred": 0.7508884008690366,
+        "bin_freq": 0.5666666666666667
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 200,
+        "bin_mean_pred": 0.8506432561188008,
+        "bin_freq": 0.775
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 24,
+        "bin_mean_pred": 0.9204877141095323,
+        "bin_freq": 1.0
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "logistic",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.1002959927140255,
+    "brier": 0.10305795918662052,
+    "log_loss": 0.29257766535184127,
+    "roc_auc": 0.9663480713871354,
+    "pr_auc": 0.761526281849173,
+    "precision": 0.3817446043165468,
+    "recall": 0.963677639046538,
+    "f1": 0.5468599033816425,
+    "ece": 0.14261534714315177,
+    "confusion_matrix": [
+      [
+        6528,
+        1375
+      ],
+      [
+        32,
+        849
+      ]
+    ],
+    "mean_predicted_prob": 0.24291133985717733,
+    "n_pos": 881,
+    "n_pred_pos": 2224,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 5329,
+        "bin_mean_pred": 0.00214229491277665,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 283,
+        "bin_mean_pred": 0.154512731148636,
+        "bin_freq": 0.007067137809187279
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 328,
+        "bin_mean_pred": 0.24634312162537753,
+        "bin_freq": 0.024390243902439025
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 269,
+        "bin_mean_pred": 0.35002118467544713,
+        "bin_freq": 0.026022304832713755
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 351,
+        "bin_mean_pred": 0.45087603405181426,
+        "bin_freq": 0.042735042735042736
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 303,
+        "bin_mean_pred": 0.5505515861577367,
+        "bin_freq": 0.0627062706270627
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 296,
+        "bin_mean_pred": 0.6504433203711697,
+        "bin_freq": 0.09121621621621621
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 494,
+        "bin_mean_pred": 0.7526833112083405,
+        "bin_freq": 0.20445344129554655
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 558,
+        "bin_mean_pred": 0.8495305956089052,
+        "bin_freq": 0.41397849462365593
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 573,
+        "bin_mean_pred": 0.9426947726960538,
+        "bin_freq": 0.8219895287958116
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "logistic",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.33380850558327396,
+    "brier": 0.12173103702570419,
+    "log_loss": 0.35886095035500826,
+    "roc_auc": 0.9163819310830317,
+    "pr_auc": 0.8279646308752777,
+    "precision": 0.662704309063893,
+    "recall": 0.8994068801897983,
+    "f1": 0.7631221377887374,
+    "ece": 0.06734810111267735,
+    "confusion_matrix": [
+      [
+        12965,
+        3859
+      ],
+      [
+        848,
+        7582
+      ]
+    ],
+    "mean_predicted_prob": 0.4003654664846603,
+    "n_pos": 8430,
+    "n_pred_pos": 11441,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 9405,
+        "bin_mean_pred": 0.004071910185569988,
+        "bin_freq": 0.003615098351940457
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1025,
+        "bin_mean_pred": 0.1498317231759665,
+        "bin_freq": 0.12975609756097561
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 1022,
+        "bin_mean_pred": 0.250057517018291,
+        "bin_freq": 0.15362035225048923
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 1110,
+        "bin_mean_pred": 0.3502281790485258,
+        "bin_freq": 0.1981981981981982
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 1251,
+        "bin_mean_pred": 0.4518415840827671,
+        "bin_freq": 0.24300559552358114
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1514,
+        "bin_mean_pred": 0.5520438002144898,
+        "bin_freq": 0.34544253632760896
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 2101,
+        "bin_mean_pred": 0.651282289158986,
+        "bin_freq": 0.4973821989528796
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 2663,
+        "bin_mean_pred": 0.7524371100602234,
+        "bin_freq": 0.6109650769808487
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 3700,
+        "bin_mean_pred": 0.8525678585239703,
+        "bin_freq": 0.8189189189189189
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1463,
+        "bin_mean_pred": 0.9207178896459527,
+        "bin_freq": 0.9275461380724539
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "persistence",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.15934426229508197,
+    "brier": 0.026727818605909687,
+    "log_loss": 0.11949340465128123,
+    "roc_auc": 0.9478073258732818,
+    "pr_auc": 0.8450883878622166,
+    "precision": 0.911522633744856,
+    "recall": 0.911522633744856,
+    "f1": 0.911522633744856,
+    "ece": 0.00412229833609202,
+    "confusion_matrix": [
+      [
+        2521,
+        43
+      ],
+      [
+        43,
+        443
+      ]
+    ],
+    "mean_predicted_prob": 0.16346656063117404,
+    "n_pos": 486,
+    "n_pred_pos": 486,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2564,
+        "bin_mean_pred": 0.02073811174905982,
+        "bin_freq": 0.016770670826833072
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 486,
+        "bin_mean_pred": 0.9164619164619162,
+        "bin_freq": 0.911522633744856
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "persistence",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.1002959927140255,
+    "brier": 0.020053429620384592,
+    "log_loss": 0.0936837551827096,
+    "roc_auc": 0.9418160864500227,
+    "pr_auc": 0.8106945146952573,
+    "precision": 0.8944381384790011,
+    "recall": 0.8944381384790011,
+    "f1": 0.8944381384790011,
+    "ece": 0.010291684626975153,
+    "confusion_matrix": [
+      [
+        7810,
+        93
+      ],
+      [
+        93,
+        788
+      ]
+    ],
+    "mean_predicted_prob": 0.11058767734100068,
+    "n_pos": 881,
+    "n_pred_pos": 881,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 7903,
+        "bin_mean_pred": 0.020751513268429903,
+        "bin_freq": 0.011767683158294318
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 881,
+        "bin_mean_pred": 0.9164619164619162,
+        "bin_freq": 0.8944381384790011
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "persistence",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.33380850558327396,
+    "brier": 0.04963212911341855,
+    "log_loss": 0.20708288149912155,
+    "roc_auc": 0.941312539872712,
+    "pr_auc": 0.8755979237846907,
+    "precision": 0.9220624925745515,
+    "recall": 0.9206405693950178,
+    "f1": 0.9213509823707485,
+    "ece": 0.014566780582970118,
+    "confusion_matrix": [
+      [
+        16168,
+        656
+      ],
+      [
+        669,
+        7761
+      ]
+    ],
+    "mean_predicted_prob": 0.3192417250003039,
+    "n_pos": 8430,
+    "n_pred_pos": 8417,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 16837,
+        "bin_mean_pred": 0.02068483532088401,
+        "bin_freq": 0.03973391934430124
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 8417,
+        "bin_mean_pred": 0.9164619164619162,
+        "bin_freq": 0.9220624925745515
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "random_forest",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.15934426229508197,
+    "brier": 0.0741890452771472,
+    "log_loss": 0.22719453120656394,
+    "roc_auc": 0.9530528752014278,
+    "pr_auc": 0.8133868181649123,
+    "precision": 0.6303317535545023,
+    "recall": 0.8209876543209876,
+    "f1": 0.7131367292225201,
+    "ece": 0.07005506290965613,
+    "confusion_matrix": [
+      [
+        2330,
+        234
+      ],
+      [
+        87,
+        399
+      ]
+    ],
+    "mean_predicted_prob": 0.2293993252047381,
+    "n_pos": 486,
+    "n_pred_pos": 633,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 1778,
+        "bin_mean_pred": 0.007983328319111634,
+        "bin_freq": 0.0011248593925759281
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 184,
+        "bin_mean_pred": 0.14560366050887955,
+        "bin_freq": 0.04891304347826087
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 173,
+        "bin_mean_pred": 0.24666814213203456,
+        "bin_freq": 0.13872832369942195
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 133,
+        "bin_mean_pred": 0.35205916394441994,
+        "bin_freq": 0.15789473684210525
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 149,
+        "bin_mean_pred": 0.44625723931279887,
+        "bin_freq": 0.2080536912751678
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 124,
+        "bin_mean_pred": 0.5463517930918657,
+        "bin_freq": 0.31451612903225806
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 77,
+        "bin_mean_pred": 0.6513684138066103,
+        "bin_freq": 0.37662337662337664
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 90,
+        "bin_mean_pred": 0.7485451203598308,
+        "bin_freq": 0.6111111111111112
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 117,
+        "bin_mean_pred": 0.8551658295950261,
+        "bin_freq": 0.6666666666666666
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 225,
+        "bin_mean_pred": 0.9660723174972307,
+        "bin_freq": 0.88
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "random_forest",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.1002959927140255,
+    "brier": 0.07041645928547617,
+    "log_loss": 0.2029997678340499,
+    "roc_auc": 0.9672925538844069,
+    "pr_auc": 0.8274507807290654,
+    "precision": 0.4531791907514451,
+    "recall": 0.8898978433598184,
+    "f1": 0.6005361930294906,
+    "ece": 0.0979289059191525,
+    "confusion_matrix": [
+      [
+        6957,
+        946
+      ],
+      [
+        97,
+        784
+      ]
+    ],
+    "mean_predicted_prob": 0.19822489863317796,
+    "n_pos": 881,
+    "n_pred_pos": 1730,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 5673,
+        "bin_mean_pred": 0.004212343916939507,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 351,
+        "bin_mean_pred": 0.14631306108486017,
+        "bin_freq": 0.011396011396011397
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 325,
+        "bin_mean_pred": 0.24864868346473845,
+        "bin_freq": 0.021538461538461538
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 343,
+        "bin_mean_pred": 0.347314395601168,
+        "bin_freq": 0.1282798833819242
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 362,
+        "bin_mean_pred": 0.45191482052365733,
+        "bin_freq": 0.11602209944751381
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 365,
+        "bin_mean_pred": 0.5472210374724013,
+        "bin_freq": 0.1178082191780822
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 385,
+        "bin_mean_pred": 0.653691919658584,
+        "bin_freq": 0.23376623376623376
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 337,
+        "bin_mean_pred": 0.7480700752753422,
+        "bin_freq": 0.2878338278931751
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 226,
+        "bin_mean_pred": 0.8455212448842684,
+        "bin_freq": 0.6548672566371682
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 417,
+        "bin_mean_pred": 0.978004049898875,
+        "bin_freq": 0.973621103117506
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "random_forest",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.33380850558327396,
+    "brier": 0.09546967816959909,
+    "log_loss": 0.2875351587717463,
+    "roc_auc": 0.9481573448426216,
+    "pr_auc": 0.9031736652790026,
+    "precision": 0.7250882044435968,
+    "recall": 0.9020166073546857,
+    "f1": 0.8039329703441349,
+    "ece": 0.06038644558411049,
+    "confusion_matrix": [
+      [
+        13941,
+        2883
+      ],
+      [
+        826,
+        7604
+      ]
+    ],
+    "mean_predicted_prob": 0.38923779924482627,
+    "n_pos": 8430,
+    "n_pred_pos": 10487,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 9950,
+        "bin_mean_pred": 0.0069332222756132,
+        "bin_freq": 0.00020100502512562814
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 895,
+        "bin_mean_pred": 0.14802070085960464,
+        "bin_freq": 0.0223463687150838
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 1138,
+        "bin_mean_pred": 0.2511009814988175,
+        "bin_freq": 0.10984182776801406
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 1222,
+        "bin_mean_pred": 0.35201996292961135,
+        "bin_freq": 0.1890343698854337
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 1562,
+        "bin_mean_pred": 0.4530237037928384,
+        "bin_freq": 0.28681177976952626
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1813,
+        "bin_mean_pred": 0.5498080936845687,
+        "bin_freq": 0.40044125758411475
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 1729,
+        "bin_mean_pred": 0.6500513338680348,
+        "bin_freq": 0.5176402544823597
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 1773,
+        "bin_mean_pred": 0.7510665189202435,
+        "bin_freq": 0.6756909193457417
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 1957,
+        "bin_mean_pred": 0.8518217401224768,
+        "bin_freq": 0.8364844149207972
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 3215,
+        "bin_mean_pred": 0.959690837534637,
+        "bin_freq": 0.9791601866251944
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "xgboost",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.15934426229508197,
+    "brier": 0.06895641340421849,
+    "log_loss": 0.2153504419113743,
+    "roc_auc": 0.9520216611133583,
+    "pr_auc": 0.8167942015939845,
+    "precision": 0.6549912434325744,
+    "recall": 0.7695473251028807,
+    "f1": 0.7076631977294229,
+    "ece": 0.046558367557584635,
+    "confusion_matrix": [
+      [
+        2367,
+        197
+      ],
+      [
+        112,
+        374
+      ]
+    ],
+    "mean_predicted_prob": 0.19383648804330397,
+    "n_pos": 486,
+    "n_pred_pos": 571,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2082,
+        "bin_mean_pred": 0.0065317645248424505,
+        "bin_freq": 0.01536983669548511
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 140,
+        "bin_mean_pred": 0.15087105802127293,
+        "bin_freq": 0.1357142857142857
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 99,
+        "bin_mean_pred": 0.2501346875320781,
+        "bin_freq": 0.12121212121212122
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 74,
+        "bin_mean_pred": 0.348898844138996,
+        "bin_freq": 0.2972972972972973
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 84,
+        "bin_mean_pred": 0.44657480113563086,
+        "bin_freq": 0.32142857142857145
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 84,
+        "bin_mean_pred": 0.5463271949972425,
+        "bin_freq": 0.2976190476190476
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 80,
+        "bin_mean_pred": 0.6578701369464397,
+        "bin_freq": 0.4125
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 78,
+        "bin_mean_pred": 0.7469120109692599,
+        "bin_freq": 0.5512820512820513
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 80,
+        "bin_mean_pred": 0.8519074283540249,
+        "bin_freq": 0.6875
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 249,
+        "bin_mean_pred": 0.97772388908279,
+        "bin_freq": 0.8755020080321285
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "xgboost",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.1002959927140255,
+    "brier": 0.06675057408908483,
+    "log_loss": 0.19131051694474782,
+    "roc_auc": 0.9636776390465381,
+    "pr_auc": 0.8073106036858615,
+    "precision": 0.4777636594663278,
+    "recall": 0.8535754824063564,
+    "f1": 0.6126272912423625,
+    "ece": 0.07846889192306988,
+    "confusion_matrix": [
+      [
+        7081,
+        822
+      ],
+      [
+        129,
+        752
+      ]
+    ],
+    "mean_predicted_prob": 0.1787648846370954,
+    "n_pos": 881,
+    "n_pred_pos": 1574,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 6121,
+        "bin_mean_pred": 0.003305608761211336,
+        "bin_freq": 0.0006534879921581441
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 321,
+        "bin_mean_pred": 0.1495568382312947,
+        "bin_freq": 0.08099688473520249
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 287,
+        "bin_mean_pred": 0.24937604897321308,
+        "bin_freq": 0.10452961672473868
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 244,
+        "bin_mean_pred": 0.3490470392537899,
+        "bin_freq": 0.12704918032786885
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 237,
+        "bin_mean_pred": 0.4540027728312126,
+        "bin_freq": 0.16033755274261605
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 279,
+        "bin_mean_pred": 0.552364837311502,
+        "bin_freq": 0.14336917562724014
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 251,
+        "bin_mean_pred": 0.6508072750026961,
+        "bin_freq": 0.2151394422310757
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 271,
+        "bin_mean_pred": 0.7501364642843549,
+        "bin_freq": 0.2915129151291513
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 299,
+        "bin_mean_pred": 0.8473562504535535,
+        "bin_freq": 0.45819397993311034
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 474,
+        "bin_mean_pred": 0.9780240363209559,
+        "bin_freq": 0.9324894514767933
+      }
+    ]
+  },
+  {
+    "target": "dry_spell",
+    "model": "xgboost",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.33380850558327396,
+    "brier": 0.10407874372322354,
+    "log_loss": 0.30604492264626576,
+    "roc_auc": 0.9398786769620759,
+    "pr_auc": 0.8933849070830082,
+    "precision": 0.7150058162078325,
+    "recall": 0.8749703440094899,
+    "f1": 0.7869412141256802,
+    "ece": 0.060744611972958905,
+    "confusion_matrix": [
+      [
+        13884,
+        2940
+      ],
+      [
+        1054,
+        7376
+      ]
+    ],
+    "mean_predicted_prob": 0.38965159389673976,
+    "n_pos": 8430,
+    "n_pred_pos": 10316,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 11190,
+        "bin_mean_pred": 0.005422507543169666,
+        "bin_freq": 0.009294012511170688
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1007,
+        "bin_mean_pred": 0.14839185833516638,
+        "bin_freq": 0.16683217477656406
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 871,
+        "bin_mean_pred": 0.2503101133520102,
+        "bin_freq": 0.21354764638346727
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 884,
+        "bin_mean_pred": 0.3502323266068195,
+        "bin_freq": 0.29638009049773756
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 986,
+        "bin_mean_pred": 0.4514454718354266,
+        "bin_freq": 0.33874239350912777
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1098,
+        "bin_mean_pred": 0.5507926240644819,
+        "bin_freq": 0.4034608378870674
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 1211,
+        "bin_mean_pred": 0.6518241219241003,
+        "bin_freq": 0.4467382328654005
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 1446,
+        "bin_mean_pred": 0.752179608964986,
+        "bin_freq": 0.5511756569847857
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 1780,
+        "bin_mean_pred": 0.852948344256101,
+        "bin_freq": 0.6297752808988764
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 4781,
+        "bin_mean_pred": 0.9741420394530034,
+        "bin_freq": 0.9357874921564526
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "climatology",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.007868852459016393,
+    "brier": 0.00841083974573436,
+    "log_loss": 0.174599614965145,
+    "roc_auc": 0.6028379048248513,
+    "pr_auc": 0.03779266498528794,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.012131147540983604,
+    "confusion_matrix": [
+      [
+        3026,
+        0
+      ],
+      [
+        24,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.00819672131147541,
+    "n_pos": 24,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2894,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.006219765031098825
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 141,
+        "bin_mean_pred": 0.1428571428571428,
+        "bin_freq": 0.02127659574468085
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 11,
+        "bin_mean_pred": 0.28571428571428564,
+        "bin_freq": 0.18181818181818182
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 4,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.25
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "climatology",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.00819672131147541,
+    "brier": 0.009521021523363444,
+    "log_loss": 0.20041369493877403,
+    "roc_auc": 0.5598790939700031,
+    "pr_auc": 0.011720576643018425,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.013628675513921412,
+    "confusion_matrix": [
+      [
+        8710,
+        2
+      ],
+      [
+        72,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.008164194639604475,
+    "n_pos": 72,
+    "n_pred_pos": 2,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8375,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.007164179104477612
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 339,
+        "bin_mean_pred": 0.14285714285714282,
+        "bin_freq": 0.035398230088495575
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 49,
+        "bin_mean_pred": 0.2857142857142857,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 19,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 2,
+        "bin_mean_pred": 0.5714285714285714,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "climatology",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.008077928248990259,
+    "brier": 0.008281573498964804,
+    "log_loss": 0.16525036789671865,
+    "roc_auc": 0.6350731869594145,
+    "pr_auc": 0.07370232362174473,
+    "precision": 1.0,
+    "recall": 0.029411764705882353,
+    "f1": 0.05714285714285714,
+    "ece": 0.011177861498602766,
+    "confusion_matrix": [
+      [
+        25050,
+        0
+      ],
+      [
+        198,
+        6
+      ]
+    ],
+    "mean_predicted_prob": 0.007987419249001572,
+    "n_pos": 204,
+    "n_pred_pos": 6,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 23977,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.005838928973599699
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1173,
+        "bin_mean_pred": 0.14285714285714282,
+        "bin_freq": 0.03410059676044331
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 81,
+        "bin_mean_pred": 0.28571428571428564,
+        "bin_freq": 0.14814814814814814
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 17,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.35294117647058826
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 4,
+        "bin_mean_pred": 0.5714285714285714,
+        "bin_freq": 1.0
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 2,
+        "bin_mean_pred": 0.7142857142857143,
+        "bin_freq": 1.0
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "logistic",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.007868852459016393,
+    "brier": 0.06098279745677553,
+    "log_loss": 0.20466536657665663,
+    "roc_auc": 0.9794420577219652,
+    "pr_auc": 0.22921902538691025,
+    "precision": 0.08394160583941605,
+    "recall": 0.9583333333333334,
+    "f1": 0.15436241610738255,
+    "ece": 0.10045673577599562,
+    "confusion_matrix": [
+      [
+        2775,
+        251
+      ],
+      [
+        1,
+        23
+      ]
+    ],
+    "mean_predicted_prob": 0.10832558823501202,
+    "n_pos": 24,
+    "n_pred_pos": 274,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2392,
+        "bin_mean_pred": 0.008274138898391577,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 167,
+        "bin_mean_pred": 0.14608776866882983,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 95,
+        "bin_mean_pred": 0.24995659722256747,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 75,
+        "bin_mean_pred": 0.3478544509358017,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 47,
+        "bin_mean_pred": 0.4461792834739581,
+        "bin_freq": 0.02127659574468085
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 45,
+        "bin_mean_pred": 0.5487891452116613,
+        "bin_freq": 0.022222222222222223
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 44,
+        "bin_mean_pred": 0.646798317451979,
+        "bin_freq": 0.022727272727272728
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 41,
+        "bin_mean_pred": 0.7513670117751832,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 58,
+        "bin_mean_pred": 0.8518178718348135,
+        "bin_freq": 0.06896551724137931
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 86,
+        "bin_mean_pred": 0.9538736985223353,
+        "bin_freq": 0.19767441860465115
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "logistic",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.00819672131147541,
+    "brier": 0.05157326653856254,
+    "log_loss": 0.1795609634848222,
+    "roc_auc": 0.9891943424140395,
+    "pr_auc": 0.3488469286413048,
+    "precision": 0.10304789550072568,
+    "recall": 0.9861111111111112,
+    "f1": 0.18659658344283836,
+    "ece": 0.0771063688060529,
+    "confusion_matrix": [
+      [
+        8094,
+        618
+      ],
+      [
+        1,
+        71
+      ]
+    ],
+    "mean_predicted_prob": 0.0853030901175283,
+    "n_pos": 72,
+    "n_pred_pos": 689,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 7483,
+        "bin_mean_pred": 0.004983112621572078,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 275,
+        "bin_mean_pred": 0.14372620893656377,
+        "bin_freq": 0.0036363636363636364
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 132,
+        "bin_mean_pred": 0.24574368930540172,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 111,
+        "bin_mean_pred": 0.34844934366898955,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 94,
+        "bin_mean_pred": 0.45169039697278013,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 98,
+        "bin_mean_pred": 0.5538086704088167,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 103,
+        "bin_mean_pred": 0.6463168756606262,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 91,
+        "bin_mean_pred": 0.7495158447046305,
+        "bin_freq": 0.01098901098901099
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 107,
+        "bin_mean_pred": 0.8488228636291342,
+        "bin_freq": 0.037383177570093455
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 290,
+        "bin_mean_pred": 0.9622075405759665,
+        "bin_freq": 0.22758620689655173
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "logistic",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.008077928248990259,
+    "brier": 0.055363344548625425,
+    "log_loss": 0.18763466278540497,
+    "roc_auc": 0.9787002465656922,
+    "pr_auc": 0.21364503669861054,
+    "precision": 0.09460105112279026,
+    "recall": 0.9705882352941176,
+    "f1": 0.17239878101872008,
+    "ece": 0.08679392257304447,
+    "confusion_matrix": [
+      [
+        23155,
+        1895
+      ],
+      [
+        6,
+        198
+      ]
+    ],
+    "mean_predicted_prob": 0.09487185082203474,
+    "n_pos": 204,
+    "n_pred_pos": 2093,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 20842,
+        "bin_mean_pred": 0.0072140875947047205,
+        "bin_freq": 9.59600806064677e-05
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1030,
+        "bin_mean_pred": 0.14293221785409252,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 533,
+        "bin_mean_pred": 0.24503246090621075,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 396,
+        "bin_mean_pred": 0.34891274117723386,
+        "bin_freq": 0.0025252525252525255
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 360,
+        "bin_mean_pred": 0.4490323828797394,
+        "bin_freq": 0.008333333333333333
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 320,
+        "bin_mean_pred": 0.5491303758166364,
+        "bin_freq": 0.0125
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 279,
+        "bin_mean_pred": 0.6501248019568676,
+        "bin_freq": 0.014336917562724014
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 363,
+        "bin_mean_pred": 0.7516710829108297,
+        "bin_freq": 0.05234159779614325
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 430,
+        "bin_mean_pred": 0.8510366449677965,
+        "bin_freq": 0.06976744186046512
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 701,
+        "bin_mean_pred": 0.9586094396221676,
+        "bin_freq": 0.20114122681883023
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "persistence",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.007868852459016393,
+    "brier": 0.007805955216524261,
+    "log_loss": 0.04583523849980023,
+    "roc_auc": 0.5080964970257766,
+    "pr_auc": 0.007997334221926024,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.00017910002471863314,
+    "confusion_matrix": [
+      [
+        3026,
+        0
+      ],
+      [
+        24,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.008047952483735027,
+    "n_pos": 24,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 3050,
+        "bin_mean_pred": 0.008047952483735027,
+        "bin_freq": 0.007868852459016393
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "persistence",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.00819672131147541,
+    "brier": 0.008128438620114031,
+    "log_loss": 0.047405637043891016,
+    "roc_auc": 0.5082644628099173,
+    "pr_auc": 0.008333333333333333,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.0001514505846493281,
+    "confusion_matrix": [
+      [
+        8712,
+        0
+      ],
+      [
+        72,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.008045270726826082,
+    "n_pos": 72,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8784,
+        "bin_mean_pred": 0.008045270726826082,
+        "bin_freq": 0.00819672131147541
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "persistence",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.008077928248990259,
+    "brier": 0.008011596807219188,
+    "log_loss": 0.04683665206414797,
+    "roc_auc": 0.5082035928143713,
+    "pr_auc": 0.00821156865112909,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 3.168587111021179e-05,
+    "confusion_matrix": [
+      [
+        25050,
+        0
+      ],
+      [
+        204,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.008046242377880047,
+    "n_pos": 204,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 25254,
+        "bin_mean_pred": 0.008046242377880047,
+        "bin_freq": 0.008077928248990259
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "random_forest",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.007868852459016393,
+    "brier": 0.015274950255545925,
+    "log_loss": 0.04851959624313765,
+    "roc_auc": 0.9910910993610927,
+    "pr_auc": 0.3704472399086837,
+    "precision": 0.25555555555555554,
+    "recall": 0.9583333333333334,
+    "f1": 0.40350877192982454,
+    "ece": 0.027496769862200118,
+    "confusion_matrix": [
+      [
+        2959,
+        67
+      ],
+      [
+        1,
+        23
+      ]
+    ],
+    "mean_predicted_prob": 0.03536562232121651,
+    "n_pos": 24,
+    "n_pred_pos": 90,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2839,
+        "bin_mean_pred": 0.0037765761246209895,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 41,
+        "bin_mean_pred": 0.14309300849643689,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 30,
+        "bin_mean_pred": 0.24930424872575682,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 27,
+        "bin_mean_pred": 0.34444587867667037,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 23,
+        "bin_mean_pred": 0.43983263487736396,
+        "bin_freq": 0.043478260869565216
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 20,
+        "bin_mean_pred": 0.5328471792453067,
+        "bin_freq": 0.05
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 23,
+        "bin_mean_pred": 0.6502104701068323,
+        "bin_freq": 0.43478260869565216
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 20,
+        "bin_mean_pred": 0.7411790167854729,
+        "bin_freq": 0.1
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 16,
+        "bin_mean_pred": 0.853553712638912,
+        "bin_freq": 0.3125
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 11,
+        "bin_mean_pred": 0.9353721990945411,
+        "bin_freq": 0.45454545454545453
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "random_forest",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.00819672131147541,
+    "brier": 0.014327657321750724,
+    "log_loss": 0.04691077125648601,
+    "roc_auc": 0.9975512702785432,
+    "pr_auc": 0.8528446943194475,
+    "precision": 0.2827868852459016,
+    "recall": 0.9583333333333334,
+    "f1": 0.43670886075949367,
+    "ece": 0.02778823357994676,
+    "confusion_matrix": [
+      [
+        8537,
+        175
+      ],
+      [
+        3,
+        69
+      ]
+    ],
+    "mean_predicted_prob": 0.03598495489142217,
+    "n_pos": 72,
+    "n_pred_pos": 244,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8182,
+        "bin_mean_pred": 0.00451613809179322,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 172,
+        "bin_mean_pred": 0.14245650934128357,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 83,
+        "bin_mean_pred": 0.24572747017016774,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 64,
+        "bin_mean_pred": 0.34690275484290617,
+        "bin_freq": 0.046875
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 39,
+        "bin_mean_pred": 0.4439172686246556,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 35,
+        "bin_mean_pred": 0.548788639105598,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 41,
+        "bin_mean_pred": 0.6532510880825055,
+        "bin_freq": 0.04878048780487805
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 35,
+        "bin_mean_pred": 0.7534504746025633,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 49,
+        "bin_mean_pred": 0.8519684801351485,
+        "bin_freq": 0.14285714285714285
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 84,
+        "bin_mean_pred": 0.9597646829080629,
+        "bin_freq": 0.7142857142857143
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "random_forest",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.008077928248990259,
+    "brier": 0.019842196048957376,
+    "log_loss": 0.06264175835978571,
+    "roc_auc": 0.9913670697820047,
+    "pr_auc": 0.45077751028448193,
+    "precision": 0.21588366890380314,
+    "recall": 0.946078431372549,
+    "f1": 0.35154826958105645,
+    "ece": 0.035039461848253455,
+    "confusion_matrix": [
+      [
+        24349,
+        701
+      ],
+      [
+        11,
+        193
+      ]
+    ],
+    "mean_predicted_prob": 0.04311739009724371,
+    "n_pos": 204,
+    "n_pred_pos": 894,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 23143,
+        "bin_mean_pred": 0.004375147615133895,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 545,
+        "bin_mean_pred": 0.14286604772941966,
+        "bin_freq": 0.001834862385321101
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 259,
+        "bin_mean_pred": 0.2469973908728612,
+        "bin_freq": 0.015444015444015444
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 220,
+        "bin_mean_pred": 0.3492329535209292,
+        "bin_freq": 0.013636363636363636
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 193,
+        "bin_mean_pred": 0.4517531256016184,
+        "bin_freq": 0.015544041450777202
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 157,
+        "bin_mean_pred": 0.5466199751992544,
+        "bin_freq": 0.03821656050955414
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 164,
+        "bin_mean_pred": 0.6534833933975965,
+        "bin_freq": 0.04878048780487805
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 161,
+        "bin_mean_pred": 0.7504501368791023,
+        "bin_freq": 0.21739130434782608
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 215,
+        "bin_mean_pred": 0.850483724745856,
+        "bin_freq": 0.2558139534883721
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 197,
+        "bin_mean_pred": 0.9396523833149457,
+        "bin_freq": 0.4517766497461929
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "xgboost",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.007868852459016393,
+    "brier": 0.00821344154652843,
+    "log_loss": 0.02421951342099636,
+    "roc_auc": 0.9934319233311302,
+    "pr_auc": 0.5564325754902075,
+    "precision": 0.3333333333333333,
+    "recall": 0.5833333333333334,
+    "f1": 0.42424242424242425,
+    "ece": 0.008203364539273051,
+    "confusion_matrix": [
+      [
+        2998,
+        28
+      ],
+      [
+        10,
+        14
+      ]
+    ],
+    "mean_predicted_prob": 0.0150076492906883,
+    "n_pos": 24,
+    "n_pred_pos": 42,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2972,
+        "bin_mean_pred": 0.0005923672692587903,
+        "bin_freq": 0.00033647375504710633
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 13,
+        "bin_mean_pred": 0.14741326925846246,
+        "bin_freq": 0.23076923076923078
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 12,
+        "bin_mean_pred": 0.25445685038963956,
+        "bin_freq": 0.08333333333333333
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 5,
+        "bin_mean_pred": 0.34552413821220396,
+        "bin_freq": 0.4
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 6,
+        "bin_mean_pred": 0.4554235090812047,
+        "bin_freq": 0.5
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 4,
+        "bin_mean_pred": 0.5504491031169891,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 3,
+        "bin_mean_pred": 0.6293041706085205,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 7,
+        "bin_mean_pred": 0.7578941583633423,
+        "bin_freq": 0.14285714285714285
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 15,
+        "bin_mean_pred": 0.8537948687871297,
+        "bin_freq": 0.26666666666666666
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 13,
+        "bin_mean_pred": 0.9523774843949538,
+        "bin_freq": 0.6923076923076923
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "xgboost",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.00819672131147541,
+    "brier": 0.004827172580257802,
+    "log_loss": 0.01546336727951265,
+    "roc_auc": 0.998678387409448,
+    "pr_auc": 0.9162936396329953,
+    "precision": 0.5476190476190477,
+    "recall": 0.9583333333333334,
+    "f1": 0.696969696969697,
+    "ece": 0.006472197610721782,
+    "confusion_matrix": [
+      [
+        8655,
+        57
+      ],
+      [
+        3,
+        69
+      ]
+    ],
+    "mean_predicted_prob": 0.014668918922197191,
+    "n_pos": 72,
+    "n_pred_pos": 126,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8599,
+        "bin_mean_pred": 0.000425596221267438,
+        "bin_freq": 0.00023258518432375856
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 20,
+        "bin_mean_pred": 0.14964967109262944,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 20,
+        "bin_mean_pred": 0.2594275951385498,
+        "bin_freq": 0.05
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 13,
+        "bin_mean_pred": 0.342489276941006,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 6,
+        "bin_mean_pred": 0.4393548170725505,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 9,
+        "bin_mean_pred": 0.5417951941490173,
+        "bin_freq": 0.1111111111111111
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 14,
+        "bin_mean_pred": 0.6649332387106759,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 12,
+        "bin_mean_pred": 0.7500341534614563,
+        "bin_freq": 0.08333333333333333
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 14,
+        "bin_mean_pred": 0.8455292199339185,
+        "bin_freq": 0.42857142857142855
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 77,
+        "bin_mean_pred": 0.972714364528656,
+        "bin_freq": 0.7922077922077922
+      }
+    ]
+  },
+  {
+    "target": "onset",
+    "model": "xgboost",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.008077928248990259,
+    "brier": 0.008263162649138261,
+    "log_loss": 0.027118536363933278,
+    "roc_auc": 0.9933714923094987,
+    "pr_auc": 0.5020206873320967,
+    "precision": 0.3893129770992366,
+    "recall": 0.75,
+    "f1": 0.5125628140703518,
+    "ece": 0.00816733432268439,
+    "confusion_matrix": [
+      [
+        24810,
+        240
+      ],
+      [
+        51,
+        153
+      ]
+    ],
+    "mean_predicted_prob": 0.01624526257167465,
+    "n_pos": 204,
+    "n_pred_pos": 393,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 24572,
+        "bin_mean_pred": 0.0006796744501110394,
+        "bin_freq": 0.0005697541917629822
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 119,
+        "bin_mean_pred": 0.1453502794273761,
+        "bin_freq": 0.07563025210084033
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 72,
+        "bin_mean_pred": 0.24782773459123242,
+        "bin_freq": 0.16666666666666666
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 47,
+        "bin_mean_pred": 0.34821082936956527,
+        "bin_freq": 0.10638297872340426
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 51,
+        "bin_mean_pred": 0.4450460111393648,
+        "bin_freq": 0.21568627450980393
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 47,
+        "bin_mean_pred": 0.5470645884250073,
+        "bin_freq": 0.2978723404255319
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 56,
+        "bin_mean_pred": 0.6510586578931127,
+        "bin_freq": 0.23214285714285715
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 66,
+        "bin_mean_pred": 0.7526724148880352,
+        "bin_freq": 0.25757575757575757
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 75,
+        "bin_mean_pred": 0.8505585805575053,
+        "bin_freq": 0.32
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 149,
+        "bin_mean_pred": 0.9645219549236682,
+        "bin_freq": 0.5704697986577181
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "climatology",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.03180327868852459,
+    "brier": 0.03391769822683172,
+    "log_loss": 0.7300913834147694,
+    "roc_auc": 0.5230134652511338,
+    "pr_auc": 0.048943572541330096,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.047259953161592504,
+    "confusion_matrix": [
+      [
+        2953,
+        0
+      ],
+      [
+        97,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.029039812646370018,
+    "n_pos": 97,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2491,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.030509835407466882
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 502,
+        "bin_mean_pred": 0.14285714285714282,
+        "bin_freq": 0.025896414342629483
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 53,
+        "bin_mean_pred": 0.28571428571428575,
+        "bin_freq": 0.11320754716981132
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 4,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.5
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "climatology",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.03529143897996357,
+    "brier": 0.037449815991970566,
+    "log_loss": 0.7791540824309837,
+    "roc_auc": 0.5352746922274585,
+    "pr_auc": 0.038854787005063375,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.0460415040333073,
+    "confusion_matrix": [
+      [
+        8474,
+        0
+      ],
+      [
+        310,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.028281941191777255,
+    "n_pos": 310,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 7215,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.03229383229383229
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 1405,
+        "bin_mean_pred": 0.1428571428571428,
+        "bin_freq": 0.05124555160142349
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 158,
+        "bin_mean_pred": 0.2857142857142856,
+        "bin_freq": 0.02531645569620253
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 6,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.16666666666666666
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "climatology",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.03888492912013938,
+    "brier": 0.04142968662874986,
+    "log_loss": 0.8722790905654093,
+    "roc_auc": 0.5217085060757444,
+    "pr_auc": 0.040866238443060754,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.051652354931043455,
+    "confusion_matrix": [
+      [
+        24271,
+        1
+      ],
+      [
+        982,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.0309823620586272,
+    "n_pos": 982,
+    "n_pred_pos": 1,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 20390,
+        "bin_mean_pred": 0.0,
+        "bin_freq": 0.03688082393330064
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 4286,
+        "bin_mean_pred": 0.14285714285714285,
+        "bin_freq": 0.04713019132057863
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 544,
+        "bin_mean_pred": 0.28571428571428564,
+        "bin_freq": 0.04963235294117647
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 33,
+        "bin_mean_pred": 0.42857142857142855,
+        "bin_freq": 0.030303030303030304
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 1,
+        "bin_mean_pred": 0.5714285714285714,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "logistic",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.03180327868852459,
+    "brier": 0.06247224151544032,
+    "log_loss": 0.18696022329654227,
+    "roc_auc": 0.9766374227153236,
+    "pr_auc": 0.5312129472855671,
+    "precision": 0.26256983240223464,
+    "recall": 0.9690721649484536,
+    "f1": 0.41318681318681316,
+    "ece": 0.07895478516606046,
+    "confusion_matrix": [
+      [
+        2689,
+        264
+      ],
+      [
+        3,
+        94
+      ]
+    ],
+    "mean_predicted_prob": 0.11075806385458505,
+    "n_pos": 97,
+    "n_pred_pos": 358,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2570,
+        "bin_mean_pred": 0.002321194539815711,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 45,
+        "bin_mean_pred": 0.14679074292703903,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 31,
+        "bin_mean_pred": 0.2521574468924275,
+        "bin_freq": 0.03225806451612903
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 30,
+        "bin_mean_pred": 0.35649749564744015,
+        "bin_freq": 0.06666666666666667
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 16,
+        "bin_mean_pred": 0.4621045961665379,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 29,
+        "bin_mean_pred": 0.5506441263355184,
+        "bin_freq": 0.034482758620689655
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 32,
+        "bin_mean_pred": 0.6564474494397323,
+        "bin_freq": 0.125
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 51,
+        "bin_mean_pred": 0.7518006278046462,
+        "bin_freq": 0.09803921568627451
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 108,
+        "bin_mean_pred": 0.8584166489323606,
+        "bin_freq": 0.17592592592592593
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 138,
+        "bin_mean_pred": 0.951519811211267,
+        "bin_freq": 0.47101449275362317
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "logistic",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.03529143897996357,
+    "brier": 0.04625520346880207,
+    "log_loss": 0.14662571682940806,
+    "roc_auc": 0.9856372813996515,
+    "pr_auc": 0.6978685618480205,
+    "precision": 0.352803738317757,
+    "recall": 0.9741935483870968,
+    "f1": 0.5180102915951973,
+    "ece": 0.05958305755299732,
+    "confusion_matrix": [
+      [
+        7920,
+        554
+      ],
+      [
+        8,
+        302
+      ]
+    ],
+    "mean_predicted_prob": 0.0948744965329609,
+    "n_pos": 310,
+    "n_pred_pos": 856,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 7600,
+        "bin_mean_pred": 0.001700249200733446,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 109,
+        "bin_mean_pred": 0.14869514316671964,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 76,
+        "bin_mean_pred": 0.24526306065011094,
+        "bin_freq": 0.013157894736842105
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 70,
+        "bin_mean_pred": 0.35107667900755296,
+        "bin_freq": 0.014285714285714285
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 73,
+        "bin_mean_pred": 0.45362900237581955,
+        "bin_freq": 0.0821917808219178
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 67,
+        "bin_mean_pred": 0.54681317821271,
+        "bin_freq": 0.08955223880597014
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 92,
+        "bin_mean_pred": 0.6509755296779183,
+        "bin_freq": 0.06521739130434782
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 106,
+        "bin_mean_pred": 0.7474121298057982,
+        "bin_freq": 0.08490566037735849
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 156,
+        "bin_mean_pred": 0.8542757076390498,
+        "bin_freq": 0.25
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 435,
+        "bin_mean_pred": 0.9629855353555942,
+        "bin_freq": 0.5563218390804597
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "logistic",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.03888492912013938,
+    "brier": 0.049986569562778534,
+    "log_loss": 0.15484842756076625,
+    "roc_auc": 0.9839371374255383,
+    "pr_auc": 0.672430035542392,
+    "precision": 0.3652762119503946,
+    "recall": 0.9898167006109979,
+    "f1": 0.533626132308537,
+    "ece": 0.06075777152810946,
+    "confusion_matrix": [
+      [
+        22583,
+        1689
+      ],
+      [
+        10,
+        972
+      ]
+    ],
+    "mean_predicted_prob": 0.09964270064824886,
+    "n_pos": 982,
+    "n_pred_pos": 2661,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 21908,
+        "bin_mean_pred": 0.0011393248923504708,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 233,
+        "bin_mean_pred": 0.1482325763084935,
+        "bin_freq": 0.004291845493562232
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 169,
+        "bin_mean_pred": 0.24517460162261195,
+        "bin_freq": 0.011834319526627219
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 158,
+        "bin_mean_pred": 0.350384142618639,
+        "bin_freq": 0.006329113924050633
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 125,
+        "bin_mean_pred": 0.450351788633122,
+        "bin_freq": 0.048
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 166,
+        "bin_mean_pred": 0.551320774720947,
+        "bin_freq": 0.060240963855421686
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 204,
+        "bin_mean_pred": 0.6541328955233243,
+        "bin_freq": 0.08823529411764706
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 282,
+        "bin_mean_pred": 0.7532862827485629,
+        "bin_freq": 0.14184397163120568
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 511,
+        "bin_mean_pred": 0.8571280795832276,
+        "bin_freq": 0.23679060665362034
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1498,
+        "bin_mean_pred": 0.9535430752134294,
+        "bin_freq": 0.5226969292389854
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "persistence",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.03180327868852459,
+    "brier": 0.030753285546959167,
+    "log_loss": 0.13970455602920173,
+    "roc_auc": 0.5203183203521842,
+    "pr_auc": 0.03310580204778157,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.0016633097559749371,
+    "confusion_matrix": [
+      [
+        2953,
+        0
+      ],
+      [
+        97,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.03013996893254965,
+    "n_pos": 97,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 3050,
+        "bin_mean_pred": 0.03013996893254965,
+        "bin_freq": 0.03180327868852459
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "persistence",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.03529143897996357,
+    "brier": 0.03401848912184468,
+    "log_loss": 0.15153645577383068,
+    "roc_auc": 0.5225395326882227,
+    "pr_auc": 0.03689597714829802,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.0052814822380122285,
+    "confusion_matrix": [
+      [
+        8474,
+        0
+      ],
+      [
+        310,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.03000995674195134,
+    "n_pos": 310,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8784,
+        "bin_mean_pred": 0.03000995674195134,
+        "bin_freq": 0.03529143897996357
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "persistence",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.03888492912013938,
+    "brier": 0.03738318889284799,
+    "log_loss": 0.1637547439368003,
+    "roc_auc": 0.5243696440342782,
+    "pr_auc": 0.04079597856341656,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "ece": 0.008980261753756193,
+    "confusion_matrix": [
+      [
+        24272,
+        0
+      ],
+      [
+        982,
+        0
+      ]
+    ],
+    "mean_predicted_prob": 0.02990466736638319,
+    "n_pos": 982,
+    "n_pred_pos": 0,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 25254,
+        "bin_mean_pred": 0.02990466736638319,
+        "bin_freq": 0.03888492912013938
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 0,
+        "bin_mean_pred": NaN,
+        "bin_freq": NaN
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "random_forest",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.03180327868852459,
+    "brier": 0.023443882206750394,
+    "log_loss": 0.07620926971839473,
+    "roc_auc": 0.9941488823178246,
+    "pr_auc": 0.8503899321567953,
+    "precision": 0.48484848484848486,
+    "recall": 0.9896907216494846,
+    "f1": 0.6508474576271186,
+    "ece": 0.0357924156255606,
+    "confusion_matrix": [
+      [
+        2851,
+        102
+      ],
+      [
+        1,
+        96
+      ]
+    ],
+    "mean_predicted_prob": 0.06759569431408519,
+    "n_pos": 97,
+    "n_pred_pos": 198,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2739,
+        "bin_mean_pred": 0.0058678973427336275,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 78,
+        "bin_mean_pred": 0.1312956279096548,
+        "bin_freq": 0.01282051282051282
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 18,
+        "bin_mean_pred": 0.24194701796588594,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 6,
+        "bin_mean_pred": 0.3421248868789668,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 11,
+        "bin_mean_pred": 0.46134663518709557,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 17,
+        "bin_mean_pred": 0.5590541310102957,
+        "bin_freq": 0.058823529411764705
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 16,
+        "bin_mean_pred": 0.6564695734703005,
+        "bin_freq": 0.125
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 33,
+        "bin_mean_pred": 0.7561097552960451,
+        "bin_freq": 0.24242424242424243
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 37,
+        "bin_mean_pred": 0.8564377211685805,
+        "bin_freq": 0.3783783783783784
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 95,
+        "bin_mean_pred": 0.9655134549140499,
+        "bin_freq": 0.7473684210526316
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "random_forest",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.03529143897996357,
+    "brier": 0.01605254007653028,
+    "log_loss": 0.05531765831345754,
+    "roc_auc": 0.9955739377374435,
+    "pr_auc": 0.8860387608877389,
+    "precision": 0.6231884057971014,
+    "recall": 0.9709677419354839,
+    "f1": 0.7591424968474149,
+    "ece": 0.02453414457938132,
+    "confusion_matrix": [
+      [
+        8292,
+        182
+      ],
+      [
+        9,
+        301
+      ]
+    ],
+    "mean_predicted_prob": 0.05982558355934489,
+    "n_pos": 310,
+    "n_pred_pos": 483,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8036,
+        "bin_mean_pred": 0.005625077265665297,
+        "bin_freq": 0.00012444001991040318
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 163,
+        "bin_mean_pred": 0.13593543219459917,
+        "bin_freq": 0.006134969325153374
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 45,
+        "bin_mean_pred": 0.2310612504056365,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 29,
+        "bin_mean_pred": 0.3615635457092534,
+        "bin_freq": 0.1724137931034483
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 28,
+        "bin_mean_pred": 0.44751254722377476,
+        "bin_freq": 0.07142857142857142
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 27,
+        "bin_mean_pred": 0.5517266219943558,
+        "bin_freq": 0.14814814814814814
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 32,
+        "bin_mean_pred": 0.6562417319271614,
+        "bin_freq": 0.25
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 59,
+        "bin_mean_pred": 0.7494988355525659,
+        "bin_freq": 0.288135593220339
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 86,
+        "bin_mean_pred": 0.8587828995223326,
+        "bin_freq": 0.38372093023255816
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 279,
+        "bin_mean_pred": 0.9704722736292225,
+        "bin_freq": 0.8566308243727598
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "random_forest",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.03888492912013938,
+    "brier": 0.01875435445039774,
+    "log_loss": 0.06272999245446322,
+    "roc_auc": 0.9961827731064232,
+    "pr_auc": 0.9101610121555943,
+    "precision": 0.6050156739811913,
+    "recall": 0.9826883910386965,
+    "f1": 0.7489328676755918,
+    "ece": 0.028428181764485493,
+    "confusion_matrix": [
+      [
+        23642,
+        630
+      ],
+      [
+        17,
+        965
+      ]
+    ],
+    "mean_predicted_prob": 0.06731311088462487,
+    "n_pos": 982,
+    "n_pred_pos": 1595,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 22748,
+        "bin_mean_pred": 0.00407423333223388,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 546,
+        "bin_mean_pred": 0.14292351870308112,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 153,
+        "bin_mean_pred": 0.23800651267163508,
+        "bin_freq": 0.026143790849673203
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 116,
+        "bin_mean_pred": 0.34821440385810604,
+        "bin_freq": 0.02586206896551724
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 96,
+        "bin_mean_pred": 0.44740536943248843,
+        "bin_freq": 0.10416666666666667
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 115,
+        "bin_mean_pred": 0.5513390623731325,
+        "bin_freq": 0.08695652173913043
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 111,
+        "bin_mean_pred": 0.6529681893092721,
+        "bin_freq": 0.15315315315315314
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 140,
+        "bin_mean_pred": 0.7558887069462691,
+        "bin_freq": 0.19285714285714287
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 194,
+        "bin_mean_pred": 0.8570564502414378,
+        "bin_freq": 0.4020618556701031
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1035,
+        "bin_mean_pred": 0.9676065574583599,
+        "bin_freq": 0.8048309178743961
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "xgboost",
+    "split": "test",
+    "region": "KA",
+    "n": 3050,
+    "positive_rate": 0.03180327868852459,
+    "brier": 0.015848443451995632,
+    "log_loss": 0.05000540687880503,
+    "roc_auc": 0.9951194137710733,
+    "pr_auc": 0.8894940005572254,
+    "precision": 0.5960264900662252,
+    "recall": 0.9278350515463918,
+    "f1": 0.7258064516129032,
+    "ece": 0.01641740359732459,
+    "confusion_matrix": [
+      [
+        2892,
+        61
+      ],
+      [
+        7,
+        90
+      ]
+    ],
+    "mean_predicted_prob": 0.04737091775311701,
+    "n_pos": 97,
+    "n_pred_pos": 151,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 2866,
+        "bin_mean_pred": 0.0005124528623914681,
+        "bin_freq": 0.0006978367062107466
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 18,
+        "bin_mean_pred": 0.14166768723064,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 4,
+        "bin_mean_pred": 0.26379115134477615,
+        "bin_freq": 0.25
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 6,
+        "bin_mean_pred": 0.3428957362969716,
+        "bin_freq": 0.16666666666666666
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 5,
+        "bin_mean_pred": 0.4470838367938995,
+        "bin_freq": 0.6
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 8,
+        "bin_mean_pred": 0.5414141044020653,
+        "bin_freq": 0.125
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 8,
+        "bin_mean_pred": 0.6439371556043625,
+        "bin_freq": 0.375
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 10,
+        "bin_mean_pred": 0.7435788571834564,
+        "bin_freq": 0.3
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 29,
+        "bin_mean_pred": 0.8568269363765059,
+        "bin_freq": 0.27586206896551724
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 96,
+        "bin_mean_pred": 0.9723755506177744,
+        "bin_freq": 0.78125
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "xgboost",
+    "split": "test",
+    "region": "MH",
+    "n": 8784,
+    "positive_rate": 0.03529143897996357,
+    "brier": 0.010383138807026666,
+    "log_loss": 0.03262692786107404,
+    "roc_auc": 0.9978164708748583,
+    "pr_auc": 0.9470588251512336,
+    "precision": 0.7177033492822966,
+    "recall": 0.967741935483871,
+    "f1": 0.8241758241758241,
+    "ece": 0.010610042118594258,
+    "confusion_matrix": [
+      [
+        8356,
+        118
+      ],
+      [
+        10,
+        300
+      ]
+    ],
+    "mean_predicted_prob": 0.04590148109855782,
+    "n_pos": 310,
+    "n_pred_pos": 418,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 8286,
+        "bin_mean_pred": 0.0003698633673924973,
+        "bin_freq": 0.0003620564808110065
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 30,
+        "bin_mean_pred": 0.14176731432477632,
+        "bin_freq": 0.13333333333333333
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 14,
+        "bin_mean_pred": 0.2374838548047202,
+        "bin_freq": 0.0
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 20,
+        "bin_mean_pred": 0.35334777235984804,
+        "bin_freq": 0.1
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 16,
+        "bin_mean_pred": 0.4540614914149046,
+        "bin_freq": 0.0625
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 22,
+        "bin_mean_pred": 0.5552376021038402,
+        "bin_freq": 0.2727272727272727
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 26,
+        "bin_mean_pred": 0.6400807706209329,
+        "bin_freq": 0.19230769230769232
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 35,
+        "bin_mean_pred": 0.7533739430563791,
+        "bin_freq": 0.3142857142857143
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 43,
+        "bin_mean_pred": 0.855930881444798,
+        "bin_freq": 0.5116279069767442
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 292,
+        "bin_mean_pred": 0.9801155692093992,
+        "bin_freq": 0.8767123287671232
+      }
+    ]
+  },
+  {
+    "target": "revival",
+    "model": "xgboost",
+    "split": "test",
+    "region": "TN",
+    "n": 25254,
+    "positive_rate": 0.03888492912013938,
+    "brier": 0.01253181918136582,
+    "log_loss": 0.0412287280350509,
+    "roc_auc": 0.9973602380757389,
+    "pr_auc": 0.941967652362218,
+    "precision": 0.7096774193548387,
+    "recall": 0.9633401221995926,
+    "f1": 0.8172786177105832,
+    "ece": 0.01302876719157688,
+    "confusion_matrix": [
+      [
+        23885,
+        387
+      ],
+      [
+        36,
+        946
+      ]
+    ],
+    "mean_predicted_prob": 0.05191369631171626,
+    "n_pos": 982,
+    "n_pred_pos": 1333,
+    "reliability": [
+      {
+        "bin_edges": [
+          0.0,
+          0.1
+        ],
+        "bin_count": 23668,
+        "bin_mean_pred": 0.0005125911582618677,
+        "bin_freq": 0.00029575798546560756
+      },
+      {
+        "bin_edges": [
+          0.1,
+          0.2
+        ],
+        "bin_count": 87,
+        "bin_mean_pred": 0.14199606911546883,
+        "bin_freq": 0.04597701149425287
+      },
+      {
+        "bin_edges": [
+          0.2,
+          0.30000000000000004
+        ],
+        "bin_count": 56,
+        "bin_mean_pred": 0.24386370661003248,
+        "bin_freq": 0.07142857142857142
+      },
+      {
+        "bin_edges": [
+          0.30000000000000004,
+          0.4
+        ],
+        "bin_count": 61,
+        "bin_mean_pred": 0.35441148476522477,
+        "bin_freq": 0.13114754098360656
+      },
+      {
+        "bin_edges": [
+          0.4,
+          0.5
+        ],
+        "bin_count": 49,
+        "bin_mean_pred": 0.44889111725651487,
+        "bin_freq": 0.2653061224489796
+      },
+      {
+        "bin_edges": [
+          0.5,
+          0.6000000000000001
+        ],
+        "bin_count": 59,
+        "bin_mean_pred": 0.550097074549077,
+        "bin_freq": 0.2033898305084746
+      },
+      {
+        "bin_edges": [
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "bin_count": 62,
+        "bin_mean_pred": 0.6491373921594312,
+        "bin_freq": 0.2903225806451613
+      },
+      {
+        "bin_edges": [
+          0.7000000000000001,
+          0.8
+        ],
+        "bin_count": 78,
+        "bin_mean_pred": 0.7533185298626239,
+        "bin_freq": 0.3333333333333333
+      },
+      {
+        "bin_edges": [
+          0.8,
+          0.9
+        ],
+        "bin_count": 122,
+        "bin_mean_pred": 0.8544984391478242,
+        "bin_freq": 0.3770491803278688
+      },
+      {
+        "bin_edges": [
+          0.9,
+          1.0
+        ],
+        "bin_count": 1012,
+        "bin_mean_pred": 0.9817804225348672,
+        "bin_freq": 0.83399209486166
+      }
+    ]
+  }
+]

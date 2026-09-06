@@ -1,0 +1,43 @@
+{
+  "decision": {
+    "winner": {
+      "onset": {
+        "winner": "persistence",
+        "kind": "baseline",
+        "val_brier_climatology": 0.00906,
+        "val_brier_persistence": 0.00792
+      },
+      "break": {
+        "winner": "persistence",
+        "kind": "baseline",
+        "val_brier_climatology": 0.21135,
+        "val_brier_persistence": 0.05566
+      },
+      "revival": {
+        "winner": "xgboost",
+        "kind": "learned",
+        "val_brier_climatology": 0.03203,
+        "val_brier_persistence": 0.0281
+      },
+      "dry_spell": {
+        "winner": "persistence",
+        "kind": "baseline",
+        "val_brier_climatology": 0.16076,
+        "val_brier_persistence": 0.0334
+      }
+    }
+  },
+  "frozen_at": "2026-09-06T14:01:23Z",
+  "seed": 42,
+  "rule": "winner = learned model that materiallly improves validation Brier over BOTH climatology and persistence (>=0.001) and has a defined ROC-AUC; tie-break lowest validation ECE then lowest Brier; otherwise the better baseline (climatology vs persistence) is declared winner.",
+  "note": "2024 TEST LABELS WERE NOT USED at any point up to and including this freeze.",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.2.3",
+    "sklearn": "1.5.2",
+    "xgboost": "3.2.0",
+    "matplotlib": "3.8.4",
+    "pyarrow": "24.0.0",
+    "python": "3.10.11"
+  }
+}
