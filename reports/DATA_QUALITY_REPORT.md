@@ -2,6 +2,8 @@
 
 All figures computed 2026-09-02 from downloaded files; nothing assumed.
 
+CHIRPS 2024 patched (Jul 14/23/25) and 2019-2021 rebuilt after interrupted runs.
+
 
 ## IMD (ground truth candidate)
 
@@ -22,6 +24,16 @@ All figures computed 2026-09-02 from downloaded files; nothing assumed.
 
 | file | days | grid | nan% | min | max | mean |
 | --- | --- | --- | --- | --- | --- | --- |
+| chirps_v3.0_rnl_2015_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 344.3358459472656 | 2.4444997310638428 |
+| chirps_v3.0_rnl_2016_pilot.nc | 366 | [218, 174] | 0.0 | 0.0 | 492.1234130859375 | 2.4413373470306396 |
+| chirps_v3.0_rnl_2017_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 457.841796875 | 2.7310409545898438 |
+| chirps_v3.0_rnl_2018_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 398.2366638183594 | 2.557407855987549 |
+| chirps_v3.0_rnl_2019_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 433.0224304199219 | 3.1993892192840576 |
+| chirps_v3.0_rnl_2020_pilot.nc | 366 | [218, 174] | 0.0 | 0.0 | 447.671875 | 3.576009511947632 |
+| chirps_v3.0_rnl_2021_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 615.5740356445312 | 3.367985486984253 |
+| chirps_v3.0_rnl_2022_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 425.3079528808594 | 3.3685076236724854 |
+| chirps_v3.0_rnl_2023_pilot.nc | 365 | [218, 174] | 0.0 | 0.0 | 363.1402587890625 | 2.4492383003234863 |
+| chirps_v3.0_rnl_2024_pilot.nc | 366 | [218, 174] | 0.0 | 0.0 | 448.23077392578125 | 3.204970121383667 |
 
 ## NOAA ONI
 

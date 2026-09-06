@@ -25,18 +25,22 @@ institution/network from IMD). The quantitative cross-check table is reproduced 
 RAINFALL_DATASET_COMPARISON.md (added after that report completes).
 
 ### Rainfall comparison verdict
-- Full table lives in RAINFALL_DATASET_COMPARISON.md.
-- Partial results from the first available years (2015-2016, full period will be recomputed once all
-  10 CHIRPS years are extracted):
-  - Pixel-day correlation IMD vs CHIRPS: ~0.48 (moderate; expected given 0.25 vs 0.05 grid + blend).
-  - MAE ~3.4 mm, RMSE ~10.5 mm, bias +0.18~+0.22 mm (CHIRPS slightly wetter overall).
-  - CHIRPS wet-day frequency 28-30% vs IMD 20-22% -> CHIRPS over-counts light-rain days (classic
-    drizzle bias in satellite blends).
-  - Monsoon (JJAS) CHIRPS mean BELOW IMD (4.8-6.1 vs 5.6-7.4 over pilot bbox).
+- Full table lives in RAINFALL_DATASET_COMPARISON.md (10-year period, 3653 matched days, pilot bbox).
+- **Full 2015-2024 results (IMD vs CHIRPS, CHIRPS regridded to IMD grid):**
+  - Pixel-day correlation: **0.521**
+  - MAE **3.99 mm**, RMSE **11.5 mm**, bias **+0.26 mm** (CHIRPS slightly wetter)
+  - CHIRPS wet-day frequency **32.3%** vs IMD **23.6%** -> CHIRPS over-counts light-rain days
+    (classic drizzle bias in satellite/ERA5-downscaled blends), consistently across years.
+  - Per-year corr: 0.47-0.59 (2015-2024), weakest in 2021 (0.47) and 2015/2020 (0.48);
+    strongest in 2019 (0.59) and 2023 (0.56); 2024 = 0.53 after patch.
+  - Monsoon (JJAS) CHIRPS mean systematically BELOW IMD (typically 1-1.5 mm/day lower).
 - **Verdict**: IMD remains GROUND_TRUTH for labels. CHIRPS is a CONFIRMED valid *independent*
-  high-res validation/downscaling layer, but its drizzle over-counting means any CHIRPS-based label
-  needs a wet-threshold correction. Use IMD for labels; use CHIRPS for spatial detail + independent
-  cross-check; do NOT blend the two in one label stream.
+  high-res validation/downscaling layer (r~0.52, low bias) but its drizzle over-counting means any
+  CHIRPS-based label needs a wet-threshold correction. Use IMD for labels; use CHIRPS for spatial
+  detail + independent cross-check; do NOT blend the two in one label stream.
+- **Data completeness**: all datasets now FULL_COVERAGE (imd 3653, chirps 3653, nasa, noaa); the
+  previously missing CHIRPS 2024 days (Jul 14, 23, 25) were fetched and patched in on a later
+  attempt (server-side error), and truncated 2019-2021 files were rebuilt.
 
 ## 2. Predictors (multi-source)
 

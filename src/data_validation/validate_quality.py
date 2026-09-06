@@ -144,7 +144,8 @@ def main() -> None:
     }
     REPORTS.mkdir(parents=True, exist_ok=True)
     lines = ["# DATA_QUALITY_REPORT\n",
-             "All figures computed 2026-09-02 from downloaded files; nothing assumed.\n"]
+             "All figures computed 2026-09-02 from downloaded files; nothing assumed.\n",
+             "CHIRPS 2024 patched (Jul 14/23/25) and 2019-2021 rebuilt after interrupted runs.\n"]
 
     lines.append("\n## IMD (ground truth candidate)\n")
     lines.append("| year | shape | nan% | zero% | min | max | mean | std |")

@@ -64,10 +64,27 @@ def year_path(year: int) -> Path:
     return OUT_DIR / f"chirps_v3.0_rnl_{year}_pilot.nc"
 
 
+def year_complete(year: int) -> bool:
+    """True only when the NetCDF holds the full calendar year (no silent truncation)."""
+    import calendar
+
+    dest = year_path(year)
+    if not (dest.exists() and dest.stat().st_size > 1_000_000):
+        return False
+    try:
+        import xarray as xr
+
+        n = int(xr.open_dataset(dest).sizes["time"])
+        expected = 366 if calendar.isleap(year) else 365
+        return n == expected
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def run_year(year: int) -> None:
     dest = year_path(year)
-    if dest.exists() and dest.stat().st_size > 1_000_000:
-        print(f"[skip] {year} already built")
+    if year_complete(year):
+        print(f"[skip] {year} already built (complete)")
         return
     start, end = date(year, 1, 1), date(year, 12, 31)
     days = [start + timedelta(days=i) for i in range((end - start).days + 1)]
@@ -118,7 +135,9 @@ def run_year(year: int) -> None:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for y in YEARS:
+    only = [int(a) for a in sys.argv[1:]]
+    years = only or YEARS
+    for y in years:
         run_year(y)
     print("CHIRPS complete.")
 

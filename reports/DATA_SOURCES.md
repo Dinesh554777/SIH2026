@@ -40,7 +40,10 @@ Required period: **2015-01-01 .. 2024-12-31** (daily). Pilot bbox: lat 9.8–20.
   - `daily/final/rnl/netcdf/byYear|byMonth|...` — packaged netCDF.
 - Full-res download for the 10-year period ≈ 47 GB — NOT adopted; instead COG windowed reads over the
   pilot bbox only (~218×174 cells/day) were used to write `chirps_v3.0_rnl_<year>_pilot.nc`.
-- Status: **VERIFIED + EXTRACTION-IN-PROGRESS (pilot bbox, 2015–2024)**.
+- Status: **VERIFIED + EXTRACTED (pilot bbox, 2015-2024)**. 3653/3653 days complete (100%);
+  truncated 2019-2021 files rebuilt after interrupted runs; 2024 (Jul 14, 23, 25) patched in later.
+  Coverage = FULL_COVERAGE. Each year is 0.05°×0.05° over lat 9.8-20.7N, lon 72.4-81.1E, ~55 MB.
+  Checksums in data/checksums.csv.
 
 ## 3. ERA5 (Copernicus CDS) hourly single levels — ATMOSPHERIC_PREDICTORS
 

@@ -13,11 +13,11 @@
   ],
   "geographic_coverage": "Global 50S-50N (pilot bbox extracted only)",
   "access_method": "COG range-read window over pilot bbox (verified)",
-  "download_timestamp": "2026-09-02T00:00:00Z",
-  "checksum": "see data/checksums.csv (per-year pilot netcdf)",
+  "download_timestamp": "2026-09-05T00:00:00Z",
+  "checksum": "see data/checksums.csv (per-year pilot netcdf; 10 files, 2015-2024)",
   "citation": "Funk et al. (2015) Scientific Data 2:150066",
   "role": "HIGH_RESOLUTION_RAINFALL / VALIDATION",
   "suitability": "0.05-deg finer than IMD; used for cross-validation and spatial downscaling at block scale",
-  "limitations": "Satellite+station blend; overestimates light rain, rare extremes; INDIA 2015-on final uses rnl chain; not gauge-truth-verified locally",
+  "limitations": "Satellite+station blend; overestimates light rain, rare extremes; INDIA 2015-on final uses rnl chain; not gauge-truth-verified locally. 3653/3653 days extracted; 2019-2021 rebuilt after interrupted runs, 2024 (Jul 14,23,25) patched in later.",
   "status": "VERIFIED"
 }

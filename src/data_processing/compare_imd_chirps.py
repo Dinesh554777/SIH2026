@@ -144,8 +144,11 @@ def main() -> None:
         rows.append({"year": year, **r})
     # whole-period
     n = min(len(a_dates), len(b_dates))
+    months = np.array([int(str(x)[5:7]) for x in a_dates[:n]])
+    jj_idx_all = np.argwhere((months >= 6) & (months <= 9)).ravel()
     r0 = compare(imd["data"][:n].reshape(-1), chirps[:n].reshape(-1))
-    r0.update({"days": n})
+    r0.update({"days": n, "jjas_a": float(np.nanmean(imd["data"][jj_idx_all])),
+                   "jjas_b": float(np.nanmean(chirps[jj_idx_all]))})
     rows.append({"year": "2015-2024 (available)", **r0})
 
     REPORTS.mkdir(parents=True, exist_ok=True)
@@ -153,7 +156,7 @@ def main() -> None:
         "# RAINFALL_DATASET_COMPARISON (IMD 0.25 vs CHIRPS v3.0 0.05 -> IMD grid)\n",
         "Metrics over pilot bbox (lat 9.8-20.7N, lon 72.4-81.1E). Wet-day = >=1 mm. "
         "A=IMD, B=CHIRPS. bias = mean(B-A). Days = CHIRPS days matched that year.\n",
-        "NOTE: rows/progress limited to years where CHIRPS pilot extraction has completed.\n",
+        "NOTE: all 10 years complete; CHIRPS 3653/3653 days (2019-2021 rebuilt, 2024 patched).\n",
         "| period | days | corr | MAE | RMSE | bias | wet A% | wet B% | p95 A | p95 B | p99 A | p99 B | JJAS A | JJAS B |",
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
