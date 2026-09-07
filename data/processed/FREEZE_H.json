@@ -1,0 +1,80 @@
+{
+  "phase": "H",
+  "test_locked_until_freeze": true,
+  "train_period": "2015-2021",
+  "validation_period": "2022-2023",
+  "test_period": "2024",
+  "seed": 42,
+  "note": "2024 TEST DATA WAS NOT USED FOR FEATURE SELECTION OR MODEL SELECTION.",
+  "imputation": {
+    "method": "SimpleImputer(strategy='median') fitted on TRAIN (2015-2021) only; statistic frozen and applied identically to validation and test",
+    "fit_split": "train",
+    "imputed_features": {
+      "th_rstd7": {"train_median": 3.5964910592677426},
+      "th_rstd14": {"train_median": 5.236467544766282},
+      "sp_mean_lag1": {"train_median": 1.0941673889756203}
+    },
+    "rationale": "Structural season-boundary NaNs (1 per cell-season on June 1). None dropped; explicit train-only median imputation; same frozen statistic for val and test."
+  },
+  "groups": {
+    "A": {"name": "frozen_reference", "n_features": 51, "description": "exact Phase G D_full feature set, unchanged"},
+    "B": {"name": "temporal", "n_features": 64, "description": "A + H1 temporal (th_*)"},
+    "C": {"name": "seasonal", "n_features": 57, "description": "A + H2 seasonal (sh_*)"},
+    "D": {"name": "event_state", "n_features": 60, "description": "A + H3 event-state (es_*)"},
+    "E": {"name": "spatial", "n_features": 57, "description": "A + H4 spatial (sp_*)"},
+    "F": {"name": "selected_combination", "constructed": false,
+          "rationale": "Not constructed. Only Group B (temporal) demonstrated validation value, and only for revival. No evidence that combining multiple groups improves any target, so an over-complex F was avoided (H8.1)."}
+  },
+  "targets": {
+    "onset": {
+      "selected_model": "persistence",
+      "feature_group": "frozen_reference",
+      "feature_list": null,
+      "preprocessing": "none (baseline)",
+      "hyperparameters": "two-state Markov P(y_t|y_{t-1}) from train; dseason==1 uses climatology",
+      "validation_brier": 0.007916278486173394,
+      "validation_pr_auc": 0.0081,
+      "validation_ece": 6.601692151380484e-05,
+      "rationale": "No ML or representation (groups A-E) beat frozen persistence on validation (best ML B/xgb 0.00894). Keep frozen reference.",
+      "decision": "KEEP_FROZEN_REFERENCE"
+    },
+    "break": {
+      "selected_model": "persistence",
+      "feature_group": "frozen_reference",
+      "feature_list": null,
+      "preprocessing": "none (baseline)",
+      "hyperparameters": "two-state Markov P(y_t|y_{t-1}) from train; dseason==1 uses climatology",
+      "validation_brier": 0.055655775862588144,
+      "validation_pr_auc": 0.8544,
+      "validation_ece": 0.0018282876344275266,
+      "rationale": "No ML or representation (groups A-E) beat frozen persistence on validation (best ML A/xgb 0.07870, B/xgb 0.07900). Keep frozen reference.",
+      "decision": "KEEP_FROZEN_REFERENCE"
+    },
+    "revival": {
+      "selected_model": "xgboost",
+      "feature_group": "B_temporal",
+      "feature_list_source": "models/phase_h/B/revival/CONFIG.json (64 predictors: 51 Group A + 13 th_*)",
+      "preprocessing": "SimpleImputer(median) train-only on th_rstd7, th_rstd14, sp_mean_lag1 + StandardScaler(train) for nothing (XGB no scaling)",
+      "hyperparameters": {"n_estimators": 300, "max_depth": 6, "learning_rate": 0.1, "subsample": 0.9, "colsample_bytree": 0.9, "scale_pos_weight": 32.12, "tree_method": "hist", "seed": 42},
+      "validation_brier": 0.008064137687847532,
+      "validation_pr_auc": 0.9487,
+      "validation_ece": 0.00835,
+      "rationale": "XGBoost + temporal (B) beats the frozen Phase G XGBoost reference on validation (Brier 0.01226->0.00806, PR-AUC 0.906->0.949, ECE 0.013->0.008). Improvement is stable across 2022 (0.00709) and 2023 (0.00904) and across all regions (TN/MH/KA). th_accel is the top contributing new feature.",
+      "decision": "CANDIDATE_FOR_FREEZE"
+    },
+    "dry_spell": {
+      "selected_model": "persistence",
+      "feature_group": "frozen_reference",
+      "feature_list": null,
+      "preprocessing": "none (baseline)",
+      "hyperparameters": "two-state Markov P(y_t|y_{t-1}) from train; dseason==1 uses climatology",
+      "validation_brier": 0.033395628559421256,
+      "validation_pr_auc": 0.8523,
+      "validation_ece": 0.0017930262400866956,
+      "rationale": "No ML or representation (groups A-E) beat frozen persistence on validation (best ML A/xgb 0.07870, B/xgb 0.07679). Keep frozen reference.",
+      "decision": "KEEP_FROZEN_REFERENCE"
+    }
+  },
+  "group_f_selection_summary": "Group F not constructed: only temporal features (B) improved one target (revival); seasonal/event-state/spatial added no reliable validation value for any target. Combining groups would add complexity without evidence (H8.1).",
+  "frozen_at": "2026-09-07T00:00:00Z"
+}

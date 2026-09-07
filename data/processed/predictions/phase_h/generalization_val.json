@@ -1,0 +1,89 @@
+{
+  "candidates": {
+    "onset": null,
+    "break": null,
+    "revival": [
+      "B",
+      "xgboost"
+    ],
+    "dry_spell": null
+  },
+  "onset": {
+    "decision": "keep frozen persistence",
+    "reason": "no candidate beat frozen reference on validation"
+  },
+  "break": {
+    "decision": "keep frozen persistence",
+    "reason": "no candidate beat frozen reference on validation"
+  },
+  "revival": {
+    "decision": "candidate",
+    "group": "B",
+    "model": "xgboost",
+    "overall": 0.008063185990140642,
+    "frozen_overall_brier": 0.012258635618408656,
+    "yearly": [
+      {
+        "group_by": "year",
+        "key": "2022",
+        "cand_brier": 0.0070866911272048526,
+        "frozen_brier": 0.011429677758448291,
+        "cand_pr_auc": 0.9630151619814371,
+        "cand_ece": 0.007579865217137408,
+        "cand_recall": 0.9701770736253494,
+        "cand_precision": 0.7592997811816192,
+        "cand_n_pos": 1073
+      },
+      {
+        "group_by": "year",
+        "key": "2023",
+        "cand_brier": 0.009039680853076432,
+        "frozen_brier": 0.013087593478369021,
+        "cand_pr_auc": 0.9314245760532928,
+        "cand_ece": 0.00911936116821458,
+        "cand_recall": 0.9535315985130112,
+        "cand_precision": 0.7210119465917076,
+        "cand_n_pos": 1076
+      }
+    ],
+    "regional": [
+      {
+        "group_by": "region",
+        "key": "TN",
+        "cand_brier": 0.00837717593677843,
+        "frozen_brier": 0.012903246773473497,
+        "cand_pr_auc": 0.9539644830014526,
+        "cand_ece": 0.008990945197046843,
+        "cand_recall": 0.9658284977433914,
+        "cand_precision": 0.7445328031809145,
+        "cand_n_pos": 1551
+      },
+      {
+        "group_by": "region",
+        "key": "MH",
+        "cand_brier": 0.006979470559280157,
+        "frozen_brier": 0.01035779664769665,
+        "cand_pr_auc": 0.933026145129865,
+        "cand_ece": 0.006495721244767166,
+        "cand_recall": 0.9504716981132075,
+        "cand_precision": 0.7354014598540146,
+        "cand_n_pos": 424
+      },
+      {
+        "group_by": "region",
+        "key": "KA",
+        "cand_brier": 0.008584449672857963,
+        "frozen_brier": 0.012395671490122348,
+        "cand_pr_auc": 0.9390146006565454,
+        "cand_ece": 0.008877243095124802,
+        "cand_recall": 0.9540229885057471,
+        "cand_precision": 0.7094017094017094,
+        "cand_n_pos": 174
+      }
+    ]
+  },
+  "dry_spell": {
+    "decision": "keep frozen persistence",
+    "reason": "no candidate beat frozen reference on validation"
+  }
+}
