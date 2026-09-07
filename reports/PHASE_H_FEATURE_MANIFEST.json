@@ -1,0 +1,597 @@
+[
+  {
+    "feature": "doy",
+    "group": "A",
+    "source": "CONTEXT",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "dseason",
+    "group": "A",
+    "source": "CONTEXT",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_rain_t",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_wet1",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_sum3",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_wet3",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_dry3",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_sum7",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_wet7",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_dry7",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_sum14",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_wet14",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_dry14",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_sum30",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_wet30",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_dry30",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_rain_lag1",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_rain_lag3",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_max3",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_days_since_wet",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_consec_dry",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_cum_jjas",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "imd_anom7",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "imd_anom14",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "imd_anom30",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "imd_anom_t",
+    "group": "A",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "chirps_rain",
+    "group": "A",
+    "source": "CHIRPS",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "chirps_lag1",
+    "group": "A",
+    "source": "CHIRPS",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "chirps_sum7",
+    "group": "A",
+    "source": "CHIRPS",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "chirps_sum14",
+    "group": "A",
+    "source": "CHIRPS",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "chirps_wet7",
+    "group": "A",
+    "source": "CHIRPS",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_PS_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_PS_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_RH2M_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_RH2M_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2MDEW_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2MDEW_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2M_MAX_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2M_MAX_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2M_MIN_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2M_MIN_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2M_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_T2M_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_WS10M_MAX_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_WS10M_MAX_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_WS10M_a7",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "nasa_WS10M_t",
+    "group": "A",
+    "source": "NASA",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "oni_1",
+    "group": "A",
+    "source": "ONI",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "oni_2",
+    "group": "A",
+    "source": "ONI",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "lat",
+    "group": "A",
+    "source": "CONTEXT",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "lon",
+    "group": "A",
+    "source": "CONTEXT",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_sum5",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_sum10",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_sum21",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_rmean7",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_rstd7",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_rmean14",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_rstd14",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_cv7",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_wetcount7",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_wetcount14",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_wet_streak",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_dry_streak",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "th_accel",
+    "group": "B",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sh_month",
+    "group": "C",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sh_norm_pos",
+    "group": "C",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sh_z",
+    "group": "C",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "sh_clim_pctile",
+    "group": "C",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "sh_onset_prox",
+    "group": "C",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sh_peak_prox",
+    "group": "C",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_wet_today",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_wet_yest",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_wet_2d",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_wet_days7",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_wet_days14",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_wet_duration",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_dry_duration",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_regime",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "es_rain_deficit",
+    "group": "D",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": true
+  },
+  {
+    "feature": "sp_mean",
+    "group": "E",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sp_max",
+    "group": "E",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sp_min",
+    "group": "E",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sp_wetfrac",
+    "group": "E",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sp_grad",
+    "group": "E",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  },
+  {
+    "feature": "sp_mean_lag1",
+    "group": "E",
+    "source": "IMD",
+    "prediction_time_available": true,
+    "requires_train_only_stats": false
+  }
+]

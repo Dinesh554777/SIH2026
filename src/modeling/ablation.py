@@ -49,12 +49,12 @@ def run_ablation(df: pd.DataFrame, configs: dict[str, list[str]]) -> None:
     dtr = df[df["split"] == "train"]
     dva = df[df["split"] == "val"]
     for cfg_name, cfg_feats in configs.items():
+        if cfg_name == "D_full":
+            continue
         out_path = ABLATION_DIR / f"{cfg_name}.parquet"
         if out_path.exists():
             print(f"[ablation] skip {cfg_name} (predictions exist)")
             continue
-        if cfg_name == "D_full":
-            raise RuntimeError("D_full must reuse Phase E-F artifacts, not be refit.")
         rows = []
         for col, name in TARGETS.items():
             models, scaler, cfgmeta = train_target(dtr, dva, cfg_feats, name, col)

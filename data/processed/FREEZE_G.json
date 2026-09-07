@@ -1,0 +1,50 @@
+{
+  "decision": {
+    "winner": {
+      "onset": {
+        "config": null,
+        "model": "persistence",
+        "kind": "baseline",
+        "val_brier": 0.007916278486173394,
+        "val_ece": 6.601692151380484e-05,
+        "baseline_brier_min": 0.007916278486173394
+      },
+      "break": {
+        "config": null,
+        "model": "persistence",
+        "kind": "baseline",
+        "val_brier": 0.055655775862588144,
+        "val_ece": 0.0018282876344275266,
+        "baseline_brier_min": 0.055655775862588144
+      },
+      "revival": {
+        "config": "D_full",
+        "model": "xgboost",
+        "kind": "learned",
+        "val_brier": 0.012258635618408656,
+        "val_ece": 0.01302453754838386,
+        "baseline_brier_min": 0.02810175776854821
+      },
+      "dry_spell": {
+        "config": null,
+        "model": "persistence",
+        "kind": "baseline",
+        "val_brier": 0.033395628559421256,
+        "val_ece": 0.0017930262400866956,
+        "baseline_brier_min": 0.033395628559421256
+      }
+    }
+  },
+  "frozen_at": "2026-09-07T15:19:41Z",
+  "seed": 42,
+  "note": "2024 TEST LABELS NOT USED up to and including this freeze.",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.2.3",
+    "sklearn": "1.5.2",
+    "xgboost": "3.2.0",
+    "matplotlib": "3.8.4",
+    "pyarrow": "24.0.0",
+    "python": "3.10.11"
+  }
+}
