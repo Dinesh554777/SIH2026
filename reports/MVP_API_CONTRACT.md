@@ -70,6 +70,12 @@ see operational assumption in the product spec).
       {"band": "moderate", "range": [0.30, 0.60]},
       {"band": "high", "range": [0.60, 0.80]},
       {"band": "very_high", "range": [0.80, 1.0]}
+    ],
+    "calibration": [
+      {"state": "onset", "ece": 6.6e-05, "brier": 0.00792, "period": "2022-2023"},
+      {"state": "break", "ece": 0.0018,  "brier": 0.0557,  "period": "2022-2023"},
+      {"state": "revival", "ece": 0.0083, "brier": 0.00806, "period": "2022-2023"},
+      {"state": "dry_spell", "ece": 0.0018, "brier": 0.0334, "period": "2022-2023"}
     ]
   },
   "provenance": {
