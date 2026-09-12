@@ -1,8 +1,14 @@
 """Serving configuration: canonical paths to frozen artifacts.
 
 Environment overrides (optional, keep defaults for the hackathon):
-- SIH_DATA_ROOT : directory containing the `processed` data folder
-- SIH_MODELS_ROOT : directory containing the `models` folder
+- SIH_PROJECT_ROOT : project root directory
+- MODEL_DIR or SIH_MODELS_ROOT : directory containing the `models` folder
+- DATA_DIR or SIH_DATA_ROOT   : directory containing the `data` folder
+
+Backend environment (Phase I-A foundation):
+- ENVIRONMENT   : development | test | production  (default development)
+- GROQ_API_KEY  : empty placeholder until the Groq phase (never commit a real key)
+- DATABASE_URL  : consumed by src.database.config (PostgreSQL phase), not here.
 
 All artifact paths below point at EXISTING frozen files; serving never writes
 into the models/ or data/processed trees.
@@ -15,8 +21,17 @@ from pathlib import Path
 from src.data_pipeline_utils import ROOT as _PROJECT_ROOT
 
 PROJECT_ROOT = Path(os.environ.get("SIH_PROJECT_ROOT", _PROJECT_ROOT))
-PROCESSED = Path(os.environ.get("SIH_DATA_ROOT", PROJECT_ROOT / "data")) / "processed"
-MODELS = Path(os.environ.get("SIH_MODELS_ROOT", PROJECT_ROOT / "models"))
+
+ENVIRONMENT = os.environ.get("ENVIRONMENT", "development")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")  # placeholder only until the Groq phase
+
+MODELS_ROOT = Path(os.environ.get("MODEL_DIR") or os.environ.get("SIH_MODELS_ROOT")
+                   or PROJECT_ROOT / "models")
+DATA_ROOT = Path(os.environ.get("DATA_DIR") or os.environ.get("SIH_DATA_ROOT")
+                 or PROJECT_ROOT / "data")
+
+PROCESSED = DATA_ROOT / "processed"
+MODELS = MODELS_ROOT
 
 PH_MATRIX = PROCESSED / "phase_h_matrix.parquet"
 FREEZE_H = PROCESSED / "FREEZE_H.json"

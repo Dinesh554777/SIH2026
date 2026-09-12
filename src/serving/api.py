@@ -28,6 +28,7 @@ from src.serving.models import ModelService
 from src.serving.registry import CellRegistry
 from src.serving.rules import (BANDS, EXPLAIN_CAVEAT, band_of, band_meaning,
                                build_cards_with_bands)
+from src.serving.schemas import CellsResponse, HealthResponse
 from src.serving.store import ObservationStore, in_jjas
 
 APP_NAME = "SIH26086 Monsoon Decision Support"
@@ -100,6 +101,20 @@ def _band_list() -> list[dict]:
     return [{"band": b[0], "range": [b[1], round(b[2], 4)], "meaning": b[3]} for b in BANDS]
 
 
+def _database_status() -> dict:
+    """Honest database health. Never pretends: reports not_configured when no DSN."""
+    from src.database.config import database_url as resolve_db_url
+    from src.database.db import ping
+
+    dsn = resolve_db_url()
+    if not dsn:
+        return {"status": "not_configured", "dsn_set": False}
+    if ping(dsn):
+        return {"status": "ok", "dsn_set": True}
+    return {"status": "error", "dsn_set": True,
+            "detail": "DATABASE_URL is set but the database is unreachable."}
+
+
 def _card(comps: ServingComponents, pred: dict, target: str) -> dict:
     c = dict(pred[target])
     p = c["probability"]
@@ -111,7 +126,7 @@ def _card(comps: ServingComponents, pred: dict, target: str) -> dict:
 
 
 def create_app(store=None, registry=None, service=None) -> FastAPI:
-    app = FastAPI(title=APP_NAME, version=MODEL_VERSION, docs_url="/api/docs")
+    app = FastAPI(title=APP_NAME, version=MODEL_VERSION, docs_url="/docs")
 
     if store is not None and registry is not None and service is not None:
         app.state.components = ServingComponents(store, registry, service)
@@ -120,18 +135,61 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
     async def _http_exc_handler(request: Request, exc: HTTPException):
         return JSONResponse(status_code=exc.status_code, content=exc.detail)
 
-    @app.get("/health")
+    @app.get("/api/docs", include_in_schema=False)
+    def legacy_docs_redirect():
+        from fastapi.responses import RedirectResponse
+
+        return RedirectResponse(url="/docs")
+
+    @app.get("/health", response_model=HealthResponse)
     def health(request: Request):
-        comps = _components(request)
+        db = _database_status()
+        comps = None
+        load_error = None
+        try:
+            comps = _components(request)
+        except Exception as exc:  # honest degraded state, not a fake "ok"
+            load_error = f"{type(exc).__name__}: {exc}"[:300]
+
+        if comps is None:
+            model = {"status": "error", "detail": load_error}
+            data = {"status": "error", "detail": load_error}
+        else:
+            n_cells = len(comps.registry.ids)
+            lo, hi = comps.store.date_range(comps.registry.ids[0])
+            model = {"status": "ok", "model_version": MODEL_VERSION,
+                     "freeze_digest": comps.service.freeze_digest,
+                     "selected_models": C.MODEL_SPEC}
+            data = {"status": "ok", "matrix": str(C.PH_MATRIX), "n_cells": n_cells,
+                    "observation_period": {"start": str(lo.date()), "end": str(hi.date())}}
+
+        overall = "ok"
+        if model["status"] != "ok" or data["status"] != "ok" or db["status"] == "error":
+            overall = "degraded"
+
         return {
-            "status": "ok",
+            "status": overall,
             "app": APP_NAME,
             "model_version": MODEL_VERSION,
             "data_mode": C.DATA_MODE,
             "freeze": str(C.FREEZE_H),
-            "freeze_digest": comps.service.freeze_digest,
+            "freeze_digest": comps.service.freeze_digest if comps else None,
             "spatial_unit": C.SPATIAL_UNIT,
             "as_of": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "components": {"api": {"status": "ok"}, "model": model, "data": data,
+                           "database": db},
+        }
+
+    @app.get("/api/v1/cells", response_model=CellsResponse)
+    def cells_list(request: Request):
+        comps = _components(request)
+        items = [comps.registry.get(c) for c in comps.registry.ids]
+        return {
+            "count": len(items),
+            "cells": items,
+            "spatial_unit": C.SPATIAL_UNIT,
+            "data_mode": C.DATA_MODE,
+            "forecast_horizon_note": C.FORECAST_HORIZON_NOTE,
         }
 
     @app.get("/locations")
