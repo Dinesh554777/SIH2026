@@ -1,12 +1,34 @@
 # SIH26086 — MVP API Contract
 
-Date: 2026-09-07 · Status: **DRAFT FOR APPROVAL — endpoints not implemented.**
+Date: 2026-07-07 · Updated 2026-09-12 · Status: **IMPLEMENTED — verified by the
+Phase I-F integration suite and live round-trip.**
 
 Conventions: REST over JSON, `application/json`, all timestamps ISO-8601 UTC (with a
 `local_date` convenience for the JJAS seasonal calendar). Responses always include a
 `provenance` block so judges can verify the frozen contract. No auth for the MVP.
 
 Base path: `/api/v1`
+
+## 0. Implemented surface (verified 2026-09-12)
+
+| Endpoint | Purpose | Verified |
+| --- | --- | --- |
+| `GET /health` | Component health: api/model/data/database/groq; honest degraded state | ✅ |
+| `GET /locations` | Alias for the pilot-cell catalog (304 cells) | ✅ |
+| `GET /locations/{cell_id}` | Single cell + observation period | ✅ |
+| `GET /api/v1/cells` | Pilot-cell catalog (304 cells) | ✅ |
+| `GET /api/v1/cells/{cell_id}/forecast?date=` | Frozen-model probabilities + cards + calibration + provenance + persistence | ✅ |
+| `GET /api/v1/cells/{cell_id}/advisory?date=` | Deterministic decision-support bundle + current signal | ✅ |
+| `GET /api/v1/cells/{cell_id}/explain?date=` | Revival sensitivity table (no causality claim) | ✅ |
+| `GET /api/v1/cells/{cell_id}/explanation?date=&lang=` | Deterministic advisory rephrased by Groq (fallback if Groq down) | ✅ |
+| `GET /api/v1/model-info` | Frozen model strategy/provenance per target | ✅ |
+
+CORS: allowed origins are `http://localhost:5173/4173` and `http://127.0.0.1:5173/4173`
+(Vite dev/preview); override with `CORS_ORIGINS` (comma-separated) in `.env`. No
+credentials/cookies → `allow_credentials=false`. The `.env`/API key never leave the server.
+
+Payloads in sections 1–4 are reference schemas; the runnable Swagger UI (OpenAPI) at
+`/docs` is the authoritative contract.
 
 ---
 

@@ -6,16 +6,23 @@ Tables (aligned to the Phase I-B specification):
 - forecasts       : persisted forecast results (one row per cell+date+version+mode)
 - advisories      : decision-support text for a forecast (1 summary + N card rows)
 
+Phase J2 tables (added by migration 0002):
+- observations    : normalized live observations (mm/day, timezone-aware)
+- ingestion_runs  : provenance/metadata for each ingestion cycle
+
 The scientific Parquet pipeline is not represented here and stays untouched.
 """
 from __future__ import annotations
 
 from datetime import datetime
 
-from sqlalchemy import (CheckConstraint, DateTime, ForeignKey, Index, Numeric,
-                        String, Text, UniqueConstraint, func)
+from sqlalchemy import (JSON, CheckConstraint, DateTime, ForeignKey, Index,
+                        Numeric, String, Text, UniqueConstraint, func)
 from sqlalchemy.orm import (DeclarativeBase, Mapped, mapped_column,
                             relationship)
+
+from src.ingestion.models import (QUALITY_FUTURE, QUALITY_INVALID,
+                                  QUALITY_MISSING, QUALITY_STALE, QUALITY_VALID)
 
 
 class Base(DeclarativeBase):
@@ -135,3 +142,104 @@ class Advisory(Base):
         DateTime(timezone=True), server_default=func.now())
 
     forecast: Mapped["Forecast"] = relationship(back_populates="advisories")
+
+
+# Phase J2 — live observation persistence -----------------------------------
+
+
+class Observation(Base):
+    """A normalized live rainfall observation (mm/day, timezone-aware).
+
+    Only observations validated as 'valid' by the ingestion layer are stored
+    here (rejected rows stay in ingestion_runs.rows_rejected + error_message).
+    Missing/invalid rainfall is NEVER silently converted to zero.
+    """
+
+    __tablename__ = "observations"
+    __table_args__ = (
+        UniqueConstraint("cell_id", "observation_time", "source",
+                         name="uq_observations_cell_time_source"),
+        CheckConstraint("rainfall_mm_day >= 0",
+                        name="ck_observations_rainfall_nonnegative"),
+        CheckConstraint(
+            "quality_flag IN ('valid', 'missing', 'invalid', 'stale', 'future')",
+            name="ck_observations_quality_flag"),
+        Index("ix_observations_cell_time", "cell_id", "observation_time"),
+        Index("ix_observations_time", "observation_time"),
+        Index("ix_observations_source", "source"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    cell_id: Mapped[str] = mapped_column(
+        ForeignKey("cells.cell_id", ondelete="RESTRICT"))
+    observation_time: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    latitude: Mapped[float]
+    longitude: Mapped[float]
+    rainfall_mm_day: Mapped[float]
+    source: Mapped[str] = mapped_column(String(32))
+    retrieved_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    quality_flag: Mapped[str] = mapped_column(String(16), default=QUALITY_VALID)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+    cell: Mapped["Cell"] = relationship()
+
+    def as_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "cell_id": self.cell_id,
+            "observation_time": self.observation_time.isoformat(),
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "rainfall_mm_day": self.rainfall_mm_day,
+            "source": self.source,
+            "retrieved_at": self.retrieved_at.isoformat(),
+            "quality_flag": self.quality_flag,
+        }
+
+
+class IngestionRun(Base):
+    """Provenance/status record of one ingestion cycle (Phase J2).
+
+    Statuses: RUNNING -> SUCCESS | PARTIAL | FAILED | BLOCKED.
+    BLOCKED records a source-connectivity failure (SourceUnavailableError) with
+    the real error and ZERO inserted observations — never fabricated data.
+    """
+
+    __tablename__ = "ingestion_runs"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('RUNNING', 'SUCCESS', 'PARTIAL', 'FAILED', 'BLOCKED')",
+            name="ck_ingestion_runs_status"),
+        Index("ix_ingestion_runs_started_at", "started_at"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    source: Mapped[str] = mapped_column(String(32))
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True)
+    status: Mapped[str] = mapped_column(String(16), default="RUNNING")
+    rows_received: Mapped[int] = mapped_column(default=0)
+    rows_inserted: Mapped[int] = mapped_column(default=0)
+    rows_rejected: Mapped[int] = mapped_column(default=0)
+    error_type: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+    run_metadata: Mapped[dict | None] = mapped_column("metadata", JSON, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+    def as_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "source": self.source,
+            "started_at": self.started_at.isoformat(),
+            "completed_at": self.completed_at.isoformat() if self.completed_at else None,
+            "status": self.status,
+            "rows_received": self.rows_received,
+            "rows_inserted": self.rows_inserted,
+            "rows_rejected": self.rows_rejected,
+            "error_type": self.error_type,
+            "error_message": self.error_message,
+            "metadata": self.run_metadata,
+        }

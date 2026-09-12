@@ -30,7 +30,16 @@ export function request(path, { signal, timeoutMs = TIMEOUT_MS } = {}) {
         );
       })
       .then(async (r) => {
-        if (r.ok) return r.json();
+        if (r.ok) {
+          try {
+            return await r.json();
+          } catch {
+            throw Object.assign(
+              new Error("The backend returned an unreadable response."),
+              { code: "malformed_response", status: r.status }
+            );
+          }
+        }
         let detail = null;
         try {
           detail = await r.json();
@@ -38,7 +47,8 @@ export function request(path, { signal, timeoutMs = TIMEOUT_MS } = {}) {
           /* non-JSON error body */
         }
         const payload = detail && detail.error ? detail.error : detail ?? {};
-        const code = payload.code || `http_${r.status}`;
+        const code =
+          r.status >= 500 ? `http_${r.status}` : payload.code || `http_${r.status}`;
         const message =
           payload.message || `Request failed with status ${r.status}.`;
         throw Object.assign(new Error(message), { code, status: r.status });

@@ -5,8 +5,8 @@ function asPct(v) {
 }
 
 const LABEL = {
-  onset: "Onset",
-  break: "Break",
+  onset: "Monsoon Onset",
+  break: "Monsoon Break",
   revival: "Revival",
   dry_spell: "Dry Spell",
 };

@@ -15,9 +15,25 @@ const KINDS = {
     title: "No forecast available",
     hint: "There is no forecast for this cell and date combination.",
   },
+  date_not_available: {
+    title: "No forecast available",
+    hint: "There are no observations for this cell on the selected date.",
+  },
+  missing_forecast: {
+    title: "No forecast available",
+    hint: "There is no forecast for this cell and date combination.",
+  },
   http_422: {
     title: "Invalid request",
     hint: "The request was rejected by the backend. Check the cell and date.",
+  },
+  malformed_response: {
+    title: "Malformed API response",
+    hint: "The backend returned an unexpected payload. Retry, or check the API server.",
+  },
+  http_500: {
+    title: "Backend error",
+    hint: "The API server reported an internal error. Retry, or check its logs.",
   },
   default: {
     title: "Something went wrong",

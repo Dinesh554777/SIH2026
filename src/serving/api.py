@@ -18,12 +18,14 @@ historical data as live; `mode` is "historical" until a live feed exists.
 """
 from __future__ import annotations
 
+import os
 import re
 from datetime import date as date_cls
 from datetime import datetime, timezone
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -41,6 +43,21 @@ from src.serving.store import ObservationStore, in_jjas
 
 APP_NAME = "SIH26086 Monsoon Decision Support"
 MODEL_VERSION = "FREEZE_H"
+
+# Frontend dev/preview origins allowed to call the API directly. Override with
+# CORS_ORIGINS (comma-separated) in .env for LAN/demo use. No credentials/cookies
+# are used, so allow_credentials stays False.
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:5173", "http://127.0.0.1:5173",
+    "http://localhost:4173", "http://127.0.0.1:4173",
+]
+
+
+def _cors_origins() -> list[str]:
+    raw = os.environ.get("CORS_ORIGINS", "")
+    if raw.strip():
+        return [o.strip() for o in raw.split(",") if o.strip()]
+    return list(DEFAULT_CORS_ORIGINS)
 
 
 class ServingComponents:
@@ -191,6 +208,14 @@ def _groq_status(request: Request) -> dict:
 
 def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
     app = FastAPI(title=APP_NAME, version=MODEL_VERSION, docs_url="/docs")
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_cors_origins(),
+        allow_methods=["*"],
+        allow_headers=["*"],
+        allow_credentials=False,
+    )
 
     if store is not None and registry is not None and service is not None:
         app.state.components = ServingComponents(store, registry, service)

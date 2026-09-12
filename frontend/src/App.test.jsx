@@ -28,7 +28,15 @@ function httpError(status, body = {}) {
  *  - groq: the explanation route returns a source:groq payload
  *  - delayForecast: promise awaited before the forecast resolves (loading test)
  */
-function installApi({ forecastError = false, rejectAll = false, groq = false, delayForecast = null } = {}) {
+function installApi({
+  forecastError = false,
+  missingForecast = false,
+  serverError = false,
+  malformedForecast = false,
+  rejectAll = false,
+  groq = false,
+  delayForecast = null,
+} = {}) {
   const calls = [];
   const handler = (input) => {
     const url = typeof input === "string" ? input : input.url;
@@ -44,8 +52,27 @@ function installApi({ forecastError = false, rejectAll = false, groq = false, de
     const m = path.match(/^\/api\/v1\/cells\/([^/]+)\/(forecast|explain|explanation|advisory)$/);
     if (m) {
       const [, , kind] = m;
-      if (kind === "forecast" && forecastError) {
-        return Promise.resolve(httpError(404, { error: { code: "unknown_cell", message: "Unknown grid cell." } }));
+      if (kind === "forecast") {
+        if (forecastError) {
+          return Promise.resolve(httpError(404, { error: { code: "unknown_cell", message: "Unknown grid cell." } }));
+        }
+        if (missingForecast) {
+          return Promise.resolve(
+            httpError(404, { error: { code: "date_not_available", message: "No observations for this cell on the date." } })
+          );
+        }
+        if (serverError) {
+          return Promise.resolve(httpError(500, { error: { code: "internal", message: "boom" } }));
+        }
+        if (malformedForecast) {
+          return Promise.resolve({
+            ok: true,
+            status: 200,
+            json: async () => {
+              throw new SyntaxError("Unexpected end of JSON input");
+            },
+          });
+        }
       }
       const data = {
         forecast: forecastFixture,
@@ -216,6 +243,31 @@ describe("Hyperlocal Monsoon Decision Support frontend", () => {
     const panel = await screen.findByTestId("error-panel");
     expect(panel).toHaveTextContent("Backend unavailable");
     expect(panel).toHaveTextContent(/Start the API server/i);
+  });
+
+  it("shows an understandable error panel for a missing forecast date", async () => {
+    installApi({ missingForecast: true });
+    render(<App />);
+    const panel = await screen.findByTestId("error-panel");
+    expect(panel).toHaveTextContent("No forecast available");
+    expect(panel).toHaveTextContent(/no observations/i);
+  });
+
+  it("shows an understandable error panel for a backend 500", async () => {
+    installApi({ serverError: true });
+    render(<App />);
+    const panel = await screen.findByTestId("error-panel");
+    expect(panel).toHaveTextContent("Backend error");
+    expect(panel).toHaveTextContent(/internal error/i);
+    expect(panel).toHaveTextContent(/boom/i);
+  });
+
+  it("shows an understandable error panel for a malformed (non-JSON) response", async () => {
+    installApi({ malformedForecast: true });
+    render(<App />);
+    const panel = await screen.findByTestId("error-panel");
+    expect(panel).toHaveTextContent("Malformed API response");
+    expect(panel).toHaveTextContent(/unexpected payload/i);
   });
 
   it("maps a request timeout to a clear error code", async () => {
