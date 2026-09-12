@@ -2,7 +2,8 @@
 
 Guarantees that the RUNNING system can never retrain, hardcode probabilities,
 silently swap artifacts, or let an LLM touch numbers. All checks are static source
-scans + frozen-artifact digest checks.
+scans + frozen-artifact digest checks. The Phase I-D Groq explainer is additive and
+vendored alone; numeric serving never references it (see test_groq_is_the_only_vendor...).
 """
 from __future__ import annotations
 
@@ -26,6 +27,16 @@ INFERENCE_FILES = sorted(
 INFERENCE_FILES = [
     f for f in INFERENCE_FILES if f.name not in ("demo.py", "__init__.py")
 ]
+
+# Phase I-D: the generative-AI layer is ADDITIVE and isolated. The numeric core
+# must remain 100% generative-AI-free; api.py is allowed to *wire* the explainer
+# but never to route numbers through it. groq_explain.py is the ONLY module that
+# may reference a generative vendor, and Groq is the only permitted vendor.
+NUMERIC_LLM_SCAN = [
+    f for f in INFERENCE_FILES if f.name not in ("api.py", "groq_explain.py")
+]
+VENDOR_TOKENS = ("openai", "anthropic", "chatgpt", "gpt-", "claude",
+                 "gemini", "cohere", "mistral", "huggingface")
 
 
 def read_text_rel(rel: str) -> str:
@@ -61,11 +72,36 @@ def test_no_hardcoded_probability_literals_in_serving():
 
 
 def test_no_llm_in_serving_pipeline():
-    llm_tokens = ["openai", "llm", "anthropic", "chatgpt", "gpt-", "claude"]
-    for f in INFERENCE_FILES:
+    llm_tokens = ("llm",) + VENDOR_TOKENS
+    for f in NUMERIC_LLM_SCAN:
         src = f.read_text(encoding="utf-8").lower()
         for tok in llm_tokens:
             assert tok not in src, f"{f.name} touches LLM path ({tok})"
+
+
+def test_groq_is_the_only_vendor_and_only_explains():
+    # Exactly one generative vendor, wired in exactly one module, for explanation
+    # only (never numbers). If the vendor changes, this test forces a deliberate,
+    # auditable edit of the safety contract (Phase I-D ground rules).
+    g = C.PROJECT_ROOT / "src" / "serving" / "groq_explain.py"
+    assert g.exists(), "additive Groq explainer module must exist"
+    gsrc = g.read_text(encoding="utf-8").lower()
+    assert "groq" in gsrc, "explainer must use the Groq vendor"
+    for tok in VENDOR_TOKENS:
+        assert tok not in gsrc, f"groq_explain.py pulls another vendor ({tok})"
+    for name in ("models.py", "rules.py", "store.py", "registry.py"):
+        core = (C.PROJECT_ROOT / "src" / "serving" / name).read_text(
+            encoding="utf-8").lower()
+        assert "groq" not in core, f"{name} must never touch the Groq vendor"
+    api_src = (C.PROJECT_ROOT / "src" / "serving" / "api.py").read_text(
+        encoding="utf-8").lower()
+    assert "groq_explain" in api_src, "explainer must be wired through the API"
+    # The numeric response schema is strict: forecasts never carry a Groq field.
+    schemas_src = (C.PROJECT_ROOT / "src" / "serving" / "schemas.py").read_text(
+        encoding="utf-8").lower()
+    assert "class explanationresponse" in schemas_src
+    assert "forecastresponse" in schemas_src
+    assert "class groqmeta" in schemas_src
 
 
 def test_frozen_artifacts_unchanged():

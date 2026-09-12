@@ -20,6 +20,12 @@ from pathlib import Path
 
 from src.data_pipeline_utils import ROOT as _PROJECT_ROOT
 
+# Load .env once so GROQ_API_KEY / MODEL_DIR / DATA_DIR from the local file are
+# honored (same loader and precedence rules as src.database.config).
+from src.database.config import _load_envfile
+
+_load_envfile()
+
 PROJECT_ROOT = Path(os.environ.get("SIH_PROJECT_ROOT", _PROJECT_ROOT))
 
 ENVIRONMENT = os.environ.get("ENVIRONMENT", "development")

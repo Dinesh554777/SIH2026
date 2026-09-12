@@ -4,17 +4,21 @@ Endpoints
 - GET /health
 - GET /locations
 - GET /locations/{cell_id}
+- GET /api/v1/cells
 - GET /api/v1/cells/{cell_id}/forecast?date=YYYY-MM-DD
 - GET /api/v1/cells/{cell_id}/advisory?date=YYYY-MM-DD
 - GET /api/v1/cells/{cell_id}/explain?date=YYYY-MM-DD
+- GET /api/v1/model-info
 
 Static frontend is mounted at "/".
 
 Serving is historical/demo mode: values are computed by the FROZEN models on demand
-from the frozen Phase H feature matrix - never hardcoded.
+from the frozen Phase H feature matrix - never hardcoded. The API never labels
+historical data as live; `mode` is "historical" until a live feed exists.
 """
 from __future__ import annotations
 
+import re
 from datetime import date as date_cls
 from datetime import datetime, timezone
 
@@ -24,11 +28,15 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from src.serving import config as C
+from src.serving.groq_explain import (GroqExplainer, build_explanation_input,
+                                      explain_block)
 from src.serving.models import ModelService
 from src.serving.registry import CellRegistry
 from src.serving.rules import (BANDS, EXPLAIN_CAVEAT, band_of, band_meaning,
                                build_cards_with_bands)
-from src.serving.schemas import CellsResponse, HealthResponse
+from src.serving.schemas import (CellsResponse, ExplanationResponse,
+                                 ForecastResponse, HealthResponse,
+                                 ModelInfoResponse)
 from src.serving.store import ObservationStore, in_jjas
 
 APP_NAME = "SIH26086 Monsoon Decision Support"
@@ -61,6 +69,21 @@ def _error(status: int, code: str, message: str, detail: str | None = None) -> H
     return HTTPException(status_code=status,
                          detail={"error": {"code": code, "message": message,
                                            "detail": detail}})
+
+
+def _mode() -> str:
+    """Historical vs live. No live feed exists, so this is always historical."""
+    return "live" if C.DATA_MODE == "live" else "historical"
+
+
+def _explainer(request: Request) -> GroqExplainer:
+    """Return the injected explainer (tests) or a default env-based one."""
+    injected = getattr(request.app.state, "groq", None)
+    return injected if isinstance(injected, GroqExplainer) else GroqExplainer()
+
+
+def _lang_ok(lang: str) -> bool:
+    return bool(re.match(r"^[a-zA-Z]{2}(?:-[A-Za-z]{2,8})?$", lang))
 
 
 def _parse_date(value: str | None, store: ObservationStore, cell_id: str) -> pd.Timestamp:
@@ -115,6 +138,39 @@ def _database_status() -> dict:
             "detail": "DATABASE_URL is set but the database is unreachable."}
 
 
+def _persist_forecast(comps: ServingComponents, cell_id: str, ts: pd.Timestamp,
+                      pred: dict) -> dict:
+    """Optionally persist the forecast + advisories into PostgreSQL.
+
+    Persistence is best-effort: the forecast endpoint never fails because the
+    database is down. `mode` is recorded as historical/demo (no live feed).
+    """
+    from src.database.config import database_url as resolve_db_url
+    from src.database.db import connect, ping
+    from src.database.repository import store_forecast_bundle
+
+    dsn = resolve_db_url()
+    base = {"database": "postgresql", "mode": "historical"}
+    if not dsn:
+        return {**base, "persisted": False, "note": "not_configured"}
+    if not ping(dsn):
+        return {**base, "persisted": False, "note": "unreachable"}
+    try:
+        bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
+        probabilities = {t: float(pred[t]["probability"]) for t in C.TARGETS}
+        with connect() as session:
+            fid = store_forecast_bundle(
+                session, cell_id=cell_id, forecast_date=ts,
+                probabilities=probabilities,
+                model_version=comps.service.freeze_digest,
+                mode="historical/demo", bundle=bundle)
+        return {**base, "persisted": True, "forecast_id": fid,
+                "note": f"inserted into sih2026_app (digest {comps.service.freeze_digest})"}
+    except Exception as exc:  # pragma: no cover - DB layer problems must never 500 the API
+        return {**base, "persisted": False,
+                "note": f"error: {type(exc).__name__}: {str(exc)[:180]}"}
+
+
 def _card(comps: ServingComponents, pred: dict, target: str) -> dict:
     c = dict(pred[target])
     p = c["probability"]
@@ -125,11 +181,21 @@ def _card(comps: ServingComponents, pred: dict, target: str) -> dict:
     return c
 
 
-def create_app(store=None, registry=None, service=None) -> FastAPI:
+def _groq_status(request: Request) -> dict:
+    """Honest Groq component. Booleans only - the API key is never returned."""
+    ex = _explainer(request)
+    return {"status": "ok" if ex.available else "not_configured",
+            "key_set": ex.available,
+            "model": ex.model if ex.available else None}
+
+
+def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
     app = FastAPI(title=APP_NAME, version=MODEL_VERSION, docs_url="/docs")
 
     if store is not None and registry is not None and service is not None:
         app.state.components = ServingComponents(store, registry, service)
+    if groq is not None:
+        app.state.groq = groq
 
     @app.exception_handler(HTTPException)
     async def _http_exc_handler(request: Request, exc: HTTPException):
@@ -164,7 +230,9 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
                     "observation_period": {"start": str(lo.date()), "end": str(hi.date())}}
 
         overall = "ok"
-        if model["status"] != "ok" or data["status"] != "ok" or db["status"] == "error":
+        # The PostgreSQL persistence layer is best-effort (Phase I-C): a down
+        # database does NOT degrade serving. Its honest state is in components.
+        if model["status"] != "ok" or data["status"] != "ok":
             overall = "degraded"
 
         return {
@@ -177,7 +245,7 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
             "spatial_unit": C.SPATIAL_UNIT,
             "as_of": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "components": {"api": {"status": "ok"}, "model": model, "data": data,
-                           "database": db},
+                           "database": db, "groq": _groq_status(request)},
         }
 
     @app.get("/api/v1/cells", response_model=CellsResponse)
@@ -209,7 +277,7 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
         cell["observation_period"] = {"start": str(lo.date()), "end": str(hi.date())}
         return {"location": cell, "data_mode": C.DATA_MODE}
 
-    @app.get("/api/v1/cells/{cell_id}/forecast")
+    @app.get("/api/v1/cells/{cell_id}/forecast", response_model=ForecastResponse)
     def forecast(cell_id: str, request: Request,
                  date: str | None = Query(default=None, description="YYYY-MM-DD")):
         comps = _components(request)
@@ -219,14 +287,29 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
         _check_data(comps, row, cell_id, ts)
         pred = comps.service.predict(cell_id, ts)
         targets = {t: _card(comps, pred, t) for t in C.TARGETS}
+        data_mode = C.DATA_MODE
+        forecast_mode = _mode()
+        probabilities = {t: float(pred[t]["probability"]) for t in C.TARGETS}
+        fingerprint = lambda t: {k: pred[t][k] for k in ("model", "feature_group")
+                                 if k in pred[t]}
         return {
             "cell_id": cell_id,
             "lat": cell["lat"], "lon": cell["lon"],
             "region": cell["region"],
             "forecast_date": str(ts.date()),
             "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "data_mode": C.DATA_MODE,
+            "mode": forecast_mode,
+            "data_mode": data_mode,
             "spatial_unit": C.SPATIAL_UNIT,
+            "probabilities": probabilities,
+            "models": {t: dict(fingerprint(t),
+                               n_features=pred[t]["n_features"]) if "n_features" in pred[t]
+                       else fingerprint(t) for t in C.TARGETS},
+            "calibration": {
+                t: {"ece": comps.service.freeze["targets"][t]["validation_ece"],
+                    "brier": comps.service.freeze["targets"][t]["validation_brier"]}
+                for t in C.TARGETS
+            },
             "observations_used": comps.service.observations_used(row),
             "targets": targets,
             "confidence": {
@@ -244,6 +327,7 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
                 ],
             },
             "provenance": comps.service.provenance(),
+            "persistence": _persist_forecast(comps, cell_id, ts, pred),
         }
 
     @app.get("/api/v1/cells/{cell_id}/advisory")
@@ -297,6 +381,94 @@ def create_app(store=None, registry=None, service=None) -> FastAPI:
             "sensitivity": sens,
             "caveat": EXPLAIN_CAVEAT,
             "provenance": comps.service.provenance("revival"),
+        }
+
+    @app.get("/api/v1/cells/{cell_id}/explanation", response_model=ExplanationResponse)
+    def explanation(cell_id: str, request: Request,
+                    date: str | None = Query(default=None, description="YYYY-MM-DD"),
+                    lang: str = Query(default="en", description="ISO-639-1 language code")):
+        """Human-friendly explanation of the frozen-model forecast.
+
+        Groq may rephrase what the deterministic rules already computed; it never
+        computes/modifies probabilities, and when it is unavailable the endpoint
+        returns the deterministic fallback advisory (the system keeps working).
+        """
+        if not _lang_ok(lang):
+            raise _error(422, "unsupported_lang", f"Invalid language code '{lang}'.")
+        comps = _components(request)
+        cell = _resolve_cell(comps.registry, cell_id)
+        ts = _parse_date(date, comps.store, cell_id)
+        row = comps.store.row(cell_id, ts)
+        _check_data(comps, row, cell_id, ts)
+        pred = comps.service.predict(cell_id, ts)
+        bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
+        probs = {t: float(pred[t]["probability"]) for t in C.TARGETS}
+        payload = build_explanation_input(
+            cell_id, str(ts.date()), probs, bundle,
+            comps.service.provenance(), MODEL_VERSION)
+        ex = _explainer(request)
+        block = explain_block(ex, payload, bundle, lang)
+        return {
+            "cell_id": cell_id,
+            "lat": cell["lat"], "lon": cell["lon"],
+            "region": cell["region"],
+            "forecast_date": str(ts.date()),
+            "mode": _mode(),
+            "data_mode": C.DATA_MODE,
+            "lang": lang,
+            "source": block["source"],
+            "groq": {"status": block["status"],
+                     "model": ex.model if ex.available else None,
+                     "note": block["note"]},
+            "summary": block["summary"],
+            "why": block["why"],
+            "action": block["action"],
+            "caution": block["caution"],
+            "probabilities": {t: round(probs[t], 4) for t in C.TARGETS},
+            "dominant_state": bundle["dominant"],
+            "provenance": comps.service.provenance(),
+        }
+
+    @app.get("/api/v1/model-info", response_model=ModelInfoResponse)
+    def model_info(request: Request):
+        """Frozen model strategy + provenance for every target (Phase I-C).
+
+        Documents which artifacts produced the probabilities so the output is
+        reproducible. No inference happens here; nothing is retrained or tuned.
+        """
+        comps = _components(request)
+        tf = comps.service.freeze["targets"]
+        models: dict = {}
+        calibration: dict = {}
+        for t in C.TARGETS:
+            models[t] = {
+                "strategy": C.MODEL_SPEC[t],
+                "selected_model": tf[t]["selected_model"],
+                "feature_group": tf[t]["feature_group"],
+            }
+            if t == C.REVIVAL_TARGET:
+                models[t]["model_config"] = {
+                    k: tf[t]["hyperparameters"][k]
+                    for k in ("n_estimators", "max_depth", "learning_rate", "seed")}
+                models[t]["n_features"] = len(comps.service.revival_features)
+                models[t]["artifact"] = str(C.REVIVAL_DIR)
+            calibration[t] = {"ece": tf[t]["validation_ece"],
+                              "brier": tf[t]["validation_brier"]}
+        return {
+            "app": APP_NAME,
+            "model_version": MODEL_VERSION,
+            "freeze_file": str(C.FREEZE_H),
+            "freeze_digest": comps.service.freeze_digest,
+            "data_mode": C.DATA_MODE,
+            "mode": _mode(),
+            "spatial_unit": C.SPATIAL_UNIT,
+            "train_period": comps.service.freeze["train_period"],
+            "validation_period": comps.service.freeze["validation_period"],
+            "test_period": comps.service.freeze["test_period"],
+            "models": models,
+            "calibration": calibration,
+            "note": comps.service.freeze["note"],
+            "forecast_horizon_note": C.FORECAST_HORIZON_NOTE,
         }
 
     return app

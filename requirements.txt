@@ -14,3 +14,5 @@ xgboost>=3.2
 SQLAlchemy>=2.0
 psycopg2-binary>=2.9
 alembic>=1.14
+
+groq>=0.14

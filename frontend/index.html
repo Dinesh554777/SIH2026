@@ -1,85 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Monsoon Decision Support — SIH26086</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div id="modeBanner" class="banner">HISTORICAL / DEMO MODE — no live data · frozen freeze issued 2026-09-07</div>
-  <header>
-    <div class="brand">
-      <h1>Monsoon Decision Support</h1>
-      <p class="subtitle">SIH26086 — Hyperlocal Onset &amp; Break Probabilistic Guidance (0.25° pilot grid cells)</p>
-    </div>
-    <div id="modeBadge" class="badge">data mode: —</div>
-  </header>
-
-  <main>
-    <div id="errorCard" class="error-card" hidden></div>
-    <section class="panel controls">
-      <label>Pilot cell
-        <input id="cellInput" list="cellList" placeholder="e.g. 10.75_77.5" />
-      </label>
-      <datalist id="cellList"></datalist>
-      <label>Observation date (day <em>t</em>, JJAS)
-        <input type="date" id="dateInput" />
-      </label>
-      <button id="loadBtn">Get forecast</button>
-      <div class="demo-row">
-        <span class="muted">Demo scenario (cell 10.75_77.5, TN, 2024 held-out):</span>
-        <button data-date="2024-06-07">False onset</button>
-        <button data-date="2024-08-08">Dry spell eve</button>
-        <button data-date="2024-08-12">Revival</button>
-      </div>
-      <p id="locMeta" class="muted small"></p>
-    </section>
-
-    <section class="panel" id="forecastPanel" hidden>
-      <div class="row between">
-        <h2>Forecast</h2>
-        <span id="generatedAt" class="muted small"></span>
-      </div>
-      <div id="targetCards" class="cards"></div>
-      <div class="confidence note" id="confidenceNote"></div>
-      <div class="calibration" id="calibrationStrip" hidden>
-        <span class="cal-title">Calibration (frozen-model validation 2022–2023)</span>
-        <div id="calibrationRow" class="cal-row"></div>
-      </div>
-    </section>
-
-    <section class="panel" id="signalPanel" hidden>
-      <h2>Current signal</h2>
-      <div id="currentSignal" class="kpis"></div>
-      <h3>Agricultural guidance</h3>
-      <p id="guidanceSummary" class="guidance"></p>
-      <div id="guidanceItems"></div>
-    </section>
-
-    <section class="panel" id="whyPanel" hidden>
-      <h2>Why this revival probability?</h2>
-      <p class="caveat-strong" id="explainCaveat"></p>
-      <table id="sensitivityTable">
-        <thead><tr><th>Feature</th><th>Value (this day)</th><th>Train median</th><th>Effect on revival P</th></tr></thead>
-        <tbody></tbody>
-      </table>
-      <p class="muted small">Sensitivity: frozen model evaluated one feature at a time (actual value vs train median). Descriptive only, not causal.</p>
-    </section>
-
-    <section class="panel provenance" id="provenancePanel" hidden>
-      <h2>Model provenance</h2>
-      <pre id="provenance"></pre>
-      <p class="disclaimer" id="disclaimer"></p>
-    </section>
-  </main>
-
-  <footer class="muted small">
-    Spatial unit: 0.25° pilot grid cell (not an official village/block boundary) ·
-    Forecast generated after same-day rainfall observations are available ·
-    Probability is a calibrated model output, not a guarantee.
-  </footer>
-
-  <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hyperlocal Monsoon Decision Support</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

@@ -36,6 +36,12 @@ def _load_envfile() -> None:
             return
 
 
+# Load `.env` ONCE at import (repo root preferred). Real environment variables
+# already set (e.g. CI) win over the file. After import, only os.environ is
+# consulted, so callers (and tests) can override/simulate freely.
+_load_envfile()
+
+
 def _from_parts() -> Optional[str]:
     user = os.environ.get("PGUSER")
     if not user:
@@ -50,7 +56,6 @@ def _from_parts() -> Optional[str]:
 
 def database_url() -> Optional[str]:
     """Resolve the application DSN. Returns None when not configured (caller decides)."""
-    _load_envfile()
     url = os.environ.get("DATABASE_URL")
     if url:
         return url
@@ -64,7 +69,6 @@ def _swap_dbname(url: str, new_db: str) -> str:
 
 def test_database_url() -> Optional[str]:
     """Test DSN: DATABASE_URL_TEST, else app DSN with `_test` database name."""
-    _load_envfile()
     url = os.environ.get("DATABASE_URL_TEST")
     if url:
         return url

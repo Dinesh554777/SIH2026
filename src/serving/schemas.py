@@ -80,3 +80,73 @@ class CellsResponse(BaseModel):
     spatial_unit: dict[str, Any]
     data_mode: str
     forecast_horizon_note: str | None = None
+
+
+class ForecastResponse(BaseModel):
+    """GET /api/v1/cells/{cell_id}/forecast payload (Phase I-C contract).
+
+    Required fields are the stable contract; extra keys (targets, confidence,
+    provenance, persistence, ...) are permitted and validated as-is.
+    """
+
+    model_config = _SCHEMA_CFG
+
+    cell_id: str
+    forecast_date: str
+    mode: str
+    data_mode: str
+    probabilities: dict[str, float]
+    models: dict[str, Any]
+    calibration: dict[str, Any]
+    provenance: dict[str, Any]
+
+
+class ModelInfoResponse(BaseModel):
+    """GET /api/v1/model-info payload.
+
+    Documents the frozen model strategy + provenance; never retrains or changes
+    frozen artifacts (FREEZE_H.json / model bin files are read-only).
+    """
+
+    model_config = _SCHEMA_CFG
+
+    app: str
+    model_version: str
+    freeze_file: str
+    freeze_digest: str
+    data_mode: str
+    mode: str
+    models: dict[str, Any]
+    calibration: dict[str, Any]
+    note: str
+
+
+class GroqMeta(BaseModel):
+    """Groq status block. Booleans + model name only - NEVER the API key."""
+
+    model_config = _SCHEMA_CFG
+
+    status: str = Field(description="ok | not_configured | error")
+    model: str | None = None
+    note: str | None = None
+
+
+class ExplanationResponse(BaseModel):
+    """GET /api/v1/cells/{cell_id}/explanation payload (Phase I-D)."""
+
+    model_config = _SCHEMA_CFG
+
+    cell_id: str
+    forecast_date: str
+    mode: str
+    data_mode: str
+    lang: str
+    source: str = Field(description="groq | fallback")
+    groq: GroqMeta
+    summary: str
+    why: str
+    action: str
+    caution: str
+    probabilities: dict[str, float]
+    dominant_state: str
+    provenance: dict[str, Any]

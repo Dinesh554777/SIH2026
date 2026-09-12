@@ -10,6 +10,7 @@ proving reproducibility: empty DB -> alembic upgrade head -> seed -> app works.
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -44,18 +45,27 @@ def engine():
     eng = _engine_for(url)
 
     cfg = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
-    cfg.set_main_option("sqlalchemy.url", url)
+    # Drive the DSN through the environment (env.py falls back to DATABASE_URL)
+    # so %-escaped passwords never hit configparser interpolation.
+    os.environ["DATABASE_URL"] = url
 
-    with eng.connect() as conn:
-        conn.execute(text("DROP TABLE IF EXISTS alembic_version"))
-        conn.commit()
-    command.upgrade(cfg, "head")
+    try:
+        # Recreate an empty database from ANY prior state (other test modules
+        # may share this test DB): drop schema now, then twice prove that a
+        # freshly empty schema upgrades cleanly.
+        with eng.connect() as conn:
+            conn.execute(text("DROP SCHEMA public CASCADE"))
+            conn.execute(text("CREATE SCHEMA public"))
+            conn.commit()
+        command.upgrade(cfg, "head")
 
-    with eng.connect() as conn:
-        conn.execute(text("DROP SCHEMA public CASCADE"))
-        conn.execute(text("CREATE SCHEMA public"))
-        conn.commit()
-    command.upgrade(cfg, "head")  # freshly empty -> proves empty-init reproducibility
+        with eng.connect() as conn:
+            conn.execute(text("DROP SCHEMA public CASCADE"))
+            conn.execute(text("CREATE SCHEMA public"))
+            conn.commit()
+        command.upgrade(cfg, "head")  # freshly empty -> proves empty-init reproducibility
+    finally:
+        os.environ.pop("DATABASE_URL", None)
 
     yield eng
 
@@ -220,26 +230,27 @@ def test_forecast_insert_and_retrieve(session_factory, mini_cell, source):
     assert f.mode == "historical/demo"
 
 
-def test_upsert_forecast_idempotent(session_factory, mini_cell, source):
-    _, _, digest = source
-    _mk_cell(session_factory, mini_cell)
+def test_upsert_forecast_idempotent(session_factory, source):
+    cells, _, digest = source
     with session_factory() as s:
+        seed_cells(s, cells)  # 10.75_77.5 must exist for the FK
         a = upsert_forecast(s, **_probs(digest))
         b = upsert_forecast(s, **_probs(digest))
         assert a == b
         assert count_rows(s, Forecast) == 1
 
 
-def test_forecast_probability_check_rejects_out_of_range(session_factory, mini_cell, source):
-    _, _, digest = source
-    _mk_cell(session_factory, mini_cell)
-    kw = _probs(digest)
-    kw["onset_probability"] = 1.5
+def test_forecast_probability_check_rejects_out_of_range(session_factory, source):
+    cells, _, digest = source
     with session_factory() as s:
+        seed_cells(s, cells)  # satisfy FK so only the CHECK can fail
+        kw = _probs(digest)
+        kw["onset_probability"] = 1.5
         with pytest.raises(IntegrityError):
             upsert_forecast(s, **kw)
             s.commit()
         s.rollback()
+        assert count_rows(s, Forecast) == 0
 
 
 def test_forecast_fk_restricts_unknown_cell(session_factory, source):
