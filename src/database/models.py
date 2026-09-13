@@ -243,3 +243,131 @@ class IngestionRun(Base):
             "error_message": self.error_message,
             "metadata": self.run_metadata,
         }
+
+
+# Phase Geography — administrative pilot layer (Product layer only) ----------
+# The scientific `cells` registry is NEVER modified by these tables. Geography
+# entities are populated only from authoritative GIS data (see src/geography).
+
+
+class State(Base):
+    """Administrative state (authoritative GIS source, product layer)."""
+
+    __tablename__ = "states"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    state_id: Mapped[str] = mapped_column(String(16), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(100))
+    latitude: Mapped[float | None]
+    longitude: Mapped[float | None]
+    geometry_ref: Mapped[str | None] = mapped_column(String(256), nullable=True)
+    source: Mapped[str] = mapped_column(String(64))
+    source_version: Mapped[str] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class District(Base):
+    """Administrative district. Annual district-level GIS is authoritative."""
+
+    __tablename__ = "districts"
+    __table_args__ = (
+        UniqueConstraint("district_id", name="uq_districts_district_id"),
+        Index("ix_districts_state", "state_id"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    district_id: Mapped[str] = mapped_column(String(24))
+    state_id: Mapped[str] = mapped_column(ForeignKey("states.state_id", ondelete="RESTRICT"))
+    name: Mapped[str] = mapped_column(String(100))
+    latitude: Mapped[float | None]
+    longitude: Mapped[float | None]
+    geometry_ref: Mapped[str | None] = mapped_column(String(256), nullable=True)
+    source: Mapped[str] = mapped_column(String(64))
+    source_version: Mapped[str] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class Block(Base):
+    """Administrative block (primary agricultural decision unit)."""
+
+    __tablename__ = "blocks"
+    __table_args__ = (
+        UniqueConstraint("block_id", name="uq_blocks_block_id"),
+        Index("ix_blocks_district", "district_id"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    block_id: Mapped[str] = mapped_column(String(32))
+    district_id: Mapped[str] = mapped_column(
+        ForeignKey("districts.district_id", ondelete="RESTRICT"))
+    name: Mapped[str] = mapped_column(String(100))
+    latitude: Mapped[float | None]
+    longitude: Mapped[float | None]
+    agricultural_metadata: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    geometry_ref: Mapped[str | None] = mapped_column(String(256), nullable=True)
+    source: Mapped[str] = mapped_column(String(64))
+    source_version: Mapped[str] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class Village(Base):
+    """Administrative village (navigation context; NOT a prediction unit)."""
+
+    __tablename__ = "villages"
+    __table_args__ = (
+        UniqueConstraint("village_id", name="uq_villages_village_id"),
+        Index("ix_villages_block", "block_id"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    village_id: Mapped[str] = mapped_column(String(32))
+    block_id: Mapped[str] = mapped_column(
+        ForeignKey("blocks.block_id", ondelete="RESTRICT"))
+    name: Mapped[str] = mapped_column(String(100))
+    latitude: Mapped[float | None]
+    longitude: Mapped[float | None]
+    agricultural_metadata: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    geometry_ref: Mapped[str | None] = mapped_column(String(256), nullable=True)
+    source: Mapped[str] = mapped_column(String(64))
+    source_version: Mapped[str] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class GeographyGridMapping(Base):
+    """Deterministic area-weighted mapping grid cell -> administrative polygon.
+
+    Product layer only. `geography_id` is the stable ID of the mapped
+    administrative entity (no polymorphic FK; references are validated by the
+    application layer - see src/database/geography_repository.py).
+    """
+
+    __tablename__ = "geography_grid_mapping"
+    __table_args__ = (
+        UniqueConstraint("grid_cell_id", "geography_type", "geography_id",
+                         name="uq_geography_grid_mapping_cell_type_geo"),
+        CheckConstraint(
+            "geography_type IN ('state', 'district', 'block', 'village')",
+            name="ck_geography_grid_mapping_type"),
+        CheckConstraint("intersection_fraction >= 0 AND intersection_fraction <= 1",
+                        name="ck_geography_grid_mapping_fraction"),
+        Index("ix_geography_grid_mapping_geo", "geography_type", "geography_id"),
+        Index("ix_geography_grid_mapping_cell", "grid_cell_id"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    grid_cell_id: Mapped[str] = mapped_column(
+        ForeignKey("cells.cell_id", ondelete="RESTRICT"))
+    geography_type: Mapped[str] = mapped_column(String(16))
+    geography_id: Mapped[str] = mapped_column(String(32))
+    intersection_fraction: Mapped[float]
+    mapping_method: Mapped[str] = mapped_column(String(48))
+    source: Mapped[str] = mapped_column(String(64))
+    version: Mapped[str] = mapped_column(String(32))
+    cell_area_deg2: Mapped[float | None]
+    intersection_area_deg2: Mapped[float | None]
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
