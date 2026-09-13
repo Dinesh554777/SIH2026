@@ -265,6 +265,70 @@ export const geographyDemoFixture = {
   ],
 };
 
+export const cellsRiskFixture = {
+  mode: "historical",
+  data_mode: "historical/demo",
+  forecast_date: "2024-08-12",
+  n_cells: 6,
+  legend: [
+    { level: "low", label: "Low risk", max_hazard: 0.3 },
+    { level: "moderate", label: "Moderate risk", max_hazard: 0.6 },
+    { level: "high", label: "High risk", max_hazard: 0.8 },
+    { level: "critical", label: "Critical", min_hazard: 0.8 },
+  ],
+  note: "Derived from frozen FREEZE_H probabilities on the frozen matrix (historical/demo).",
+  cells: [
+    {
+      cell_id: "10.75_77.5",
+      lat: 10.75, lon: 77.5, region: "TN",
+      risk_level: "critical", hazard_p: 0.9165, dominant_hazard: "dry_spell",
+      decision: "IRRIGATION_PREPARE", false_onset_risk: "low", monsoon_status: "dry_spell_risk",
+      rain_t_mm: 2.97, dry_streak_days: 26,
+      probabilities: { onset: 0.0082, break: 0.9078, revival: 0.6047, dry_spell: 0.9165 },
+    },
+    {
+      cell_id: "10.0_76.25",
+      lat: 10.0, lon: 76.25, region: "TN",
+      risk_level: "high", hazard_p: 0.66, dominant_hazard: "dry_spell",
+      decision: "MONITOR", false_onset_risk: "low", monsoon_status: "dry_spell_risk",
+      rain_t_mm: 0.4, dry_streak_days: 9,
+      probabilities: { onset: 0.02, break: 0.55, revival: 0.3, dry_spell: 0.66 },
+    },
+    {
+      cell_id: "10.75_77.25",
+      lat: 10.75, lon: 77.25, region: "TN",
+      risk_level: "moderate", hazard_p: 0.45, dominant_hazard: "break",
+      decision: "MONITOR", false_onset_risk: "low", monsoon_status: "active_monsoon",
+      rain_t_mm: 8.1, dry_streak_days: 2,
+      probabilities: { onset: 0.9, break: 0.45, revival: 0.5, dry_spell: 0.2 },
+    },
+    {
+      cell_id: "11.0_77.0",
+      lat: 11.0, lon: 77.0, region: "TN",
+      risk_level: "low", hazard_p: 0.12, dominant_hazard: "dry_spell",
+      decision: "MONITOR", false_onset_risk: "low", monsoon_status: "active_monsoon",
+      rain_t_mm: 12.3, dry_streak_days: 0,
+      probabilities: { onset: 0.95, break: 0.12, revival: 0.5, dry_spell: 0.09 },
+    },
+    {
+      cell_id: "13.5_75.5",
+      lat: 13.5, lon: 75.5, region: "KA",
+      risk_level: "critical", hazard_p: 0.88, dominant_hazard: "break",
+      decision: "IRRIGATION_PREPARE", false_onset_risk: "low", monsoon_status: "dry_spell_risk",
+      rain_t_mm: 0.0, dry_streak_days: 31,
+      probabilities: { onset: 0.01, break: 0.88, revival: 0.2, dry_spell: 0.7 },
+    },
+    {
+      cell_id: "19.5_75.0",
+      lat: 19.5, lon: 75.0, region: "MH",
+      risk_level: "low", hazard_p: 0.05, dominant_hazard: "break",
+      decision: "WAIT", false_onset_risk: "high", monsoon_status: "pre_onset",
+      rain_t_mm: 21.4, dry_streak_days: 0,
+      probabilities: { onset: 0.03, break: 0.05, revival: 0.4, dry_spell: 0.02 },
+    },
+  ],
+};
+
 export const decisionFixture = {
   decision: "IRRIGATION_PREPARE",
   decision_label: "Irrigation prepare",

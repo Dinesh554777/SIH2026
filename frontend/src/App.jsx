@@ -1,20 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { api } from "./api.js";
-import Header from "./components/Header.jsx";
-import DemoBanner from "./components/DemoBanner.jsx";
-import MapExplorer from "./components/MapExplorer.jsx";
-import ScenarioSwitcher from "./components/ScenarioSwitcher.jsx";
-import MonsoonStatus from "./components/MonsoonStatus.jsx";
-import DecisionPanel from "./components/DecisionPanel.jsx";
-import ProbabilityCards from "./components/ProbabilityCards.jsx";
-import CurrentSignal from "./components/CurrentSignal.jsx";
-import Advisory from "./components/Advisory.jsx";
-import WhySection from "./components/WhySection.jsx";
-import VillageAdvisoryPanel from "./components/VillageAdvisoryPanel.jsx";
-import Transparency from "./components/Transparency.jsx";
-import Calibration from "./components/Calibration.jsx";
+
+import CommandBar from "./components/commandbar/CommandBar.jsx";
+import Sidebar from "./components/navigation/Sidebar.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import OfficerDashboard from "./pages/OfficerDashboard.jsx";
 import ErrorPanel from "./components/ErrorPanel.jsx";
-import Loading from "./components/Loading.jsx";
 
 export const TARGET_ORDER = ["onset", "break", "revival", "dry_spell"];
 const DEMO_CELL = "10.75_77.5";
@@ -29,6 +21,7 @@ export default function App() {
   const [village, setVillage] = useState(null);
   const [date, setDate] = useState("");
   const [lang, setLang] = useState("en");
+  const [crop, setCrop] = useState("paddy");
 
   const [geography, setGeography] = useState(null);
   const [scenarios, setScenarios] = useState([]);
@@ -38,15 +31,12 @@ export default function App() {
   const [explanation, setExplanation] = useState(null);
   const [advisory, setAdvisory] = useState(null);
   const [decision, setDecision] = useState(null);
+  const [cellsRisk, setCellsRisk] = useState(null);
   const [detailStatus, setDetailStatus] = useState("idle");
   const [detailError, setDetailError] = useState(null);
 
   const reqId = useRef(0);
 
-  // Load catalog + provenance once on mount; demo geography/scenarios are best-effort.
-  // Note: no StrictMode ref guard here — React 18 dev double-mounts effects (mount →
-  // cleanup → remount), so the guard would cancel the only fetch and strand the app
-  // on the loading screen. A plain `live` flag is enough.
   useEffect(() => {
     let live = true;
     Promise.all([api.cells(), api.modelInfo()])
@@ -82,7 +72,7 @@ export default function App() {
     setDetailStatus("loading");
     setDetailError(null);
     api
-      .decision(selCell, date, "paddy")
+      .decision(selCell, date, crop)
       .then((r) => {
         if (reqId.current === id) setDecision(r.decision ?? r);
       })
@@ -108,11 +98,22 @@ export default function App() {
         setDetailError(err);
         setDetailStatus("error");
       });
-  }, [selCell, date, lang]);
+  }, [selCell, date, lang, crop]);
 
   useEffect(() => {
     loadDetail();
   }, [loadDetail]);
+
+  useEffect(() => {
+    let live = true;
+    api
+      .cellsRisk(date)
+      .then((r) => live && setCellsRisk(r))
+      .catch(() => live && setCellsRisk(null));
+    return () => {
+      live = false;
+    };
+  }, [date]);
 
   const onSelectCell = (cellId) => {
     setSelCell(cellId);
@@ -126,99 +127,103 @@ export default function App() {
     setCellInfo((cells || []).find((c) => c.cell_id === cellId) || null);
   };
 
-  const onScenarioPick = (s) => {
-    setDate(s.forecast_date);
-    if (s.cell_id) onSelectVillage(village, s.cell_id);
-  };
-
-  if (metaError) {
-    return (
-      <Shell>
-        <Header modelInfo={modelInfo} lang={lang} setLang={setLang} />
-        <DemoBanner />
-        <main className="page">
-          <ErrorPanel error={metaError} onRetry={() => window.location.reload()} />
-        </main>
-      </Shell>
-    );
-  }
-
-  if (!cells || !selCell) {
-    return (
-      <Shell>
-        <Header modelInfo={modelInfo} lang={lang} setLang={setLang} />
-        <DemoBanner />
-        <main className="page">
-          <Loading label="Loading pilot grid cells…" />
-        </main>
-      </Shell>
-    );
-  }
-
   const isDemo = Boolean(
     (modelInfo?.data_mode || forecast?.data_mode || "historical/demo")
       .toLowerCase()
       .includes("historical")
   );
 
+  let breadcrumbStr = "";
+  if (village) {
+    const d = village.district?.district?.name ?? village.district?.name ?? "";
+    const bl = village.block?.block?.name ?? village.block?.name ?? "";
+    const st = village.state?.name ?? village.state ?? "";
+    breadcrumbStr = [st, d, bl, village.village_name ?? village.name].filter(Boolean).join(" / ");
+    if (!breadcrumbStr) breadcrumbStr = village.village_id ?? String(village.cell_id ?? "");
+  }
+
+  if (metaError) {
+    return (
+      <div className="app-shell">
+        <CommandBar breadcrumb="Error" lang={lang} setLang={setLang} />
+        <div className="app-body">
+          <ErrorPanel error={metaError} onRetry={() => window.location.reload()} />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Shell>
-      <Header modelInfo={modelInfo} lang={lang} setLang={setLang} />
-      <DemoBanner visible={isDemo} />
-      <main className="page">
-        <MapExplorer
-          geography={geography}
-          cells={cells}
-          selCell={selCell}
-          cellInfo={cellInfo}
-          date={date}
-          village={village}
-          onSelectCell={onSelectCell}
-          onSelectVillage={onSelectVillage}
-          onDateChange={setDate}
-        />
-
-        {detailStatus === "error" && (
-          <ErrorPanel error={detailError} onRetry={loadDetail} />
-        )}
-
-        {detailStatus === "loading" && <Loading label="Requesting forecast…" />}
-
-        {detailStatus === "ready" && (
-          <>
-            <div id="forecast-section">
-              <ScenarioSwitcher scenarios={scenarios} selCell={selCell} onPick={onScenarioPick} />
-            </div>
-            <MonsoonStatus decision={decision} village={village} />
-            <ProbabilityCards forecast={forecast} advisory={advisory} />
-            <CurrentSignal advisory={advisory} />
-            <DecisionPanel decision={decision} village={village} />
-            <Advisory
-              forecast={forecast}
-              explanation={explanation}
-              advisory={advisory}
+    <div className="app-shell">
+      <CommandBar breadcrumb={breadcrumbStr} lang={lang} setLang={setLang} />
+      
+      <div className="app-body">
+        <Sidebar />
+        
+        <div className="app-content">
+          <Routes>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  cells={cells}
+                  selCell={selCell}
+                  cellInfo={cellInfo}
+                  date={date}
+                  village={village}
+                  geography={geography}
+                  scenarios={scenarios}
+                  forecast={forecast}
+                  explainData={explainData}
+                  explanation={explanation}
+                  advisory={advisory}
+                  decision={decision}
+                  detailStatus={detailStatus}
+                  detailError={detailError}
+                  modelInfo={modelInfo}
+                  crop={crop}
+                  setCrop={setCrop}
+                  onSelectCell={onSelectCell}
+                  onSelectVillage={onSelectVillage}
+                  onDateChange={setDate}
+                  loadDetail={loadDetail}
+                  riskIndex={cellsRisk}
+                  isDemo={isDemo}
+                />
+              }
             />
-            <WhySection explainData={explainData} />
-            <VillageAdvisoryPanel
-              cellId={selCell}
-              date={date}
-              decision={decision}
-              village={village}
-              issuedBy={ISSUED_BY}
+            <Route
+              path="/forecast"
+              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
             />
-            <Transparency modelInfo={modelInfo} forecast={forecast} />
-            <Calibration forecast={forecast} />
-          </>
-        )}
-
-        <footer className="footer">
-          Pilot grid cells (regular 0.25° grid) are not village/block boundaries.
-        </footer>
-      </main>
-    </Shell>
+            <Route
+              path="/risk"
+              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
+            />
+            <Route
+              path="/crops"
+              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
+            />
+            <Route
+              path="/history"
+              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
+            />
+            <Route path="/officer" element={<OfficerDashboard />} />
+            <Route path="*" element={<PlaceholderPage />} />
+          </Routes>
+        </div>
+      </div>
+    </div>
   );
 }
 
-function Shell({ children }) {
-  return <div className="app">{children}</div>;
+function PlaceholderPage() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b' }}>
+      <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🚧</div>
+      <h2>Module Under Construction</h2>
+      <p>This section is scheduled for development in a future phase.</p>
+    </div>
+  );
 }

@@ -10,9 +10,11 @@ export default function CellSelector({
   cells,
   selCell,
   cellInfo,
+  fieldLabel,
   date,
   onSelectCell,
   onDateChange,
+  village,
 }) {
   const [filter, setFilter] = useState("");
 
@@ -44,12 +46,12 @@ export default function CellSelector({
         <h2>Pilot grid cell</h2>
         <div className="row-gap">
           <input
-            type="search"
+            type="text"
             className="filter-input"
-            placeholder="Search cell ID / lat / lon…"
+            placeholder="Filter cell ID / lat / lon…"
+            aria-label="Filter pilot grid cells"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            aria-label="Search pilot grid cells"
           />
           <select
             value={selCell}
@@ -87,6 +89,12 @@ export default function CellSelector({
           <span>lon {cellInfo.lon}</span>
           <span>{REGION_LABEL[cellInfo.region] ?? cellInfo.region}</span>
           <span className="muted">{cellInfo.admin_note === "grid_cell_only" ? "grid cell — not a village/block" : ""}</span>
+          {village && (
+            <span>
+              {" · village "}
+              <strong data-testid="village-name">{village.name}</strong>
+            </span>
+          )}
         </div>
       )}
     </section>
