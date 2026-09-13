@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "./api.js";
 import Header from "./components/Header.jsx";
 import DemoBanner from "./components/DemoBanner.jsx";
-import LocationSelector from "./components/LocationSelector.jsx";
+import MapExplorer from "./components/MapExplorer.jsx";
 import ScenarioSwitcher from "./components/ScenarioSwitcher.jsx";
 import MonsoonStatus from "./components/MonsoonStatus.jsx";
 import DecisionPanel from "./components/DecisionPanel.jsx";
@@ -11,7 +11,6 @@ import CurrentSignal from "./components/CurrentSignal.jsx";
 import Advisory from "./components/Advisory.jsx";
 import WhySection from "./components/WhySection.jsx";
 import VillageAdvisoryPanel from "./components/VillageAdvisoryPanel.jsx";
-import CellMap from "./components/CellMap.jsx";
 import Transparency from "./components/Transparency.jsx";
 import Calibration from "./components/Calibration.jsx";
 import ErrorPanel from "./components/ErrorPanel.jsx";
@@ -167,7 +166,7 @@ export default function App() {
       <Header modelInfo={modelInfo} lang={lang} setLang={setLang} />
       <DemoBanner visible={isDemo} />
       <main className="page">
-        <LocationSelector
+        <MapExplorer
           geography={geography}
           cells={cells}
           selCell={selCell}
@@ -187,12 +186,13 @@ export default function App() {
 
         {detailStatus === "ready" && (
           <>
-            <ScenarioSwitcher scenarios={scenarios} selCell={selCell} onPick={onScenarioPick} />
+            <div id="forecast-section">
+              <ScenarioSwitcher scenarios={scenarios} selCell={selCell} onPick={onScenarioPick} />
+            </div>
             <MonsoonStatus decision={decision} village={village} />
             <ProbabilityCards forecast={forecast} advisory={advisory} />
             <CurrentSignal advisory={advisory} />
             <DecisionPanel decision={decision} village={village} />
-            <CellMap cells={cells} selCell={selCell} onSelectCell={onSelectCell} />
             <Advisory
               forecast={forecast}
               explanation={explanation}

@@ -75,6 +75,8 @@ export const api = {
   geographyDemo: () => request("/api/v1/geography/demo"),
   geographyResolve: (villageId) => request(`/api/v1/geography/demo/${villageId}`),
   scenarios: () => request("/api/v1/demo/scenarios"),
+  cellsRisk: (date) =>
+    request(`/api/v1/demo/cells-risk${qs({ date })}`),
   forecast: (cellId, date) =>
     request(`/api/v1/cells/${cellId}/forecast${qs({ date })}`),
   explain: (cellId, date) =>

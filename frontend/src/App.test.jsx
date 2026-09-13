@@ -323,9 +323,7 @@ describe("Hyperlocal Monsoon Decision Support frontend", () => {
     render(<App />);
     await screen.findByText(/Dry spell probability is 92%/i);
 
-    await user.click(screen.getByRole("button", { name: /tamil nadu/i }));
-    await user.click(screen.getByRole("button", { name: /thanjavur/i }));
-    await user.click(screen.getByRole("button", { name: /orathanadu/i }));
+    await user.type(screen.getByRole("searchbox"), "demo rainfed village");
     await user.click(screen.getByRole("button", { name: /demo rainfed village/i }));
 
     await waitFor(() =>
