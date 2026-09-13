@@ -104,3 +104,41 @@ def test_demo_scenarios_are_computed_not_fabricated(client):
     # the false-onset day must produce WAIT (honest derived signal)
     day0607 = next(s for s in sc if s["forecast_date"] == "2024-06-07")
     assert day0607["decision"]["decision"] == "WAIT"
+
+
+def test_cells_risk_serves_whole_grid(client):
+    r = client.get("/api/v1/demo/cells-risk?date=2024-08-12")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["mode"] in ("historical", "demo/simulated")
+    assert body["data_mode"] == "historical/demo"
+    assert str(body["forecast_date"]) == "2024-08-12"
+    assert body["n_cells"] > 10
+    levels = {c["risk_level"] for c in body["cells"]}
+    assert levels <= {"low", "moderate", "high", "critical"}
+    for c in body["cells"]:
+        for field in ("cell_id", "lat", "lon", "region", "risk_level", "hazard_p",
+                      "dominant_hazard", "decision", "false_onset_risk",
+                      "monsoon_status", "rain_t_mm", "dry_streak_days"):
+            assert field in c, f"cells field missing: {field}"
+        assert 0.0 <= c["hazard_p"] <= 1.0
+        assert c["decision"] in ("SOW", "WAIT", "MONITOR", "PREPARE",
+                                 "IRRIGATION_PREPARE")
+    assert body["legend"][0]["level"] == "low" and body["legend"][3]["level"] == "critical"
+
+
+def test_cells_risk_not_fabricated_and_reproducible(client):
+    a = client.get("/api/v1/demo/cells-risk?date=2024-08-12").json()["cells"]
+    b = client.get("/api/v1/demo/cells-risk?date=2024-08-12").json()["cells"]
+    assert a == b, "same date must give identical (deterministic) risk index"
+    c1 = next(c for c in a if c["cell_id"] == "10.75_77.5")
+    assert 0.0 <= c1["probabilities"]["dry_spell"] <= 1.0
+    assert 0.0 <= c1["probabilities"]["revival"] <= 1.0
+
+
+def test_cells_risk_defaults_and_bad_date(client):
+    r = client.get("/api/v1/demo/cells-risk")
+    assert r.status_code == 200
+    assert r.json()["n_cells"] > 0
+    bad = client.get("/api/v1/demo/cells-risk?date=2020-05-01")
+    assert bad.status_code == 422

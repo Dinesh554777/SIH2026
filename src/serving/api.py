@@ -39,7 +39,7 @@ from src.serving.groq_explain import (GroqExplainer, build_explanation_input,
 from src.serving.models import ModelService
 from src.serving.registry import CellRegistry
 from src.serving.rules import (BANDS, EXPLAIN_CAVEAT, band_of, band_meaning,
-                               build_cards_with_bands)
+                               build_cards_with_bands, current_signal as current_signal_from_row)
 from src.serving.schemas import (CellsResponse, ExplanationResponse,
                                  ForecastResponse, HealthResponse,
                                  ModelInfoResponse)
@@ -684,6 +684,88 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
                 "mode": _mode(),
                 "note": "Computed from frozen FREEZE_H models on the frozen matrix; "
                         "observed/modelled data distinguished server-side."}
+
+    @app.get("/api/v1/demo/cells-risk")
+    def demo_cells_risk(request: Request,
+                        date: str | None = Query(default=None,
+                                                 description="YYYY-MM-DD")):
+        """Whole-grid risk index for the interactive map (demo, additive).
+
+        Deterministic and derived ONLY from frozen FREEZE_H probabilities on the
+        frozen matrix: one vectorized batch pass for all pilot cells on one date,
+        then the same decision engine + signal the per-cell endpoints use. Risk
+        level = dominant agricultural hazard band (break/dry-spell probabilities),
+        pulled up to `moderate` when the derived false-onset warning is high.
+        Never hardcoded, never rephrased by Groq, nothing persisted.
+        """
+        from src.decision.engine import build_decision
+        from src.decision.signals import false_onset_risk, monsoon_status
+        from src.decision.config import load_rules
+
+        comps = _components(request)
+        ts = _parse_date(date, comps.store, comps.registry.ids[0])
+        by_id = {r["cell_id"]: {
+            "cell_id": r["cell_id"],
+            "lat": float(r["lat"]),
+            "lon": float(r["lon"]),
+            "region": str(r["region"]),
+        } for _, r in comps.registry.cells.iterrows()}
+        probs_df = comps.service.predict_batch(ts)
+        rules = load_rules()
+
+        out = []
+        for cell_id, prob in probs_df.set_index("cell_id").iterrows():
+            row = comps.store.row(cell_id, ts)
+            if row is None:
+                continue
+            probs = {t: float(prob[t]) for t in C.TARGETS}
+            signal = current_signal_from_row(row)
+            fo = false_onset_risk(probs, signal, rules)
+            status = monsoon_status(probs, signal, rules, fo.level)
+            try:
+                dec = build_decision(probs, signal, rules=rules, mode=_mode())
+            except Exception:  # noqa: BLE001 - degrade gracefully, keep map usable
+                continue
+            hazard = max(probs["break"], probs["dry_spell"])
+            level = ("critical" if hazard >= 0.80 else
+                     "high" if hazard >= 0.60 else
+                     "moderate" if hazard >= 0.30 else "low")
+            if level == "low" and fo.level == "high":
+                level = "moderate"
+            c = by_id[cell_id]
+            out.append({
+                "cell_id": cell_id,
+                "lat": c["lat"], "lon": c["lon"], "region": c["region"],
+                "risk_level": level,
+                "hazard_p": round(hazard, 4),
+                "dominant_hazard": ("break" if probs["break"] >= probs["dry_spell"]
+                                    else "dry_spell"),
+                "decision": dec.decision,
+                "false_onset_risk": fo.level,
+                "monsoon_status": status,
+                "rain_t_mm": signal["rain_t_mm"],
+                "dry_streak_days": signal["dry_streak_days"],
+                "probabilities": {t: round(probs[t], 4) for t in C.TARGETS},
+            })
+        out.sort(key=lambda d: d["cell_id"])
+        return {
+            "mode": _mode(),
+            "data_mode": C.DATA_MODE,
+            "forecast_date": str(ts.date()),
+            "n_cells": len(out),
+            "legend": [
+                {"level": "low", "label": "Low risk", "max_hazard": 0.30},
+                {"level": "moderate", "label": "Moderate risk", "max_hazard": 0.60},
+                {"level": "high", "label": "High risk", "max_hazard": 0.80},
+                {"level": "critical", "label": "Critical",
+                 "min_hazard": 0.80},
+            ],
+            "note": "Derived from frozen FREEZE_H probabilities on the frozen matrix "
+                    "(historical/demo). Risk level is the dominant break/dry-spell "
+                    "hazard band; derived false-onset warning may raise it to "
+                    "moderate. Not an official warning.",
+            "cells": out,
+        }
 
     @app.get("/api/v1/geography/demo")
     def geography_demo(request: Request):

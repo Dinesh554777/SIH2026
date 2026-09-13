@@ -103,6 +103,67 @@ class ModelService:
             "n_features": len(feats),
         }
 
+    def predict_batch(self, date: pd.Timestamp) -> pd.DataFrame:
+        """Vectorized probabilities for ALL cells on one date (frozen models only).
+
+        Mirrors `predict(cell_id, date)` exactly (same persistence transitions,
+        same dseason-1 climatology, same XGBoost + imputer) but evaluates every
+        cell in one pass so the demo map can colour the whole pilot grid quickly.
+        Cells without a previous-day observation on `date` are skipped.
+        """
+        df = self.store.df
+        key = np.datetime64(pd.Timestamp(date))
+        rows_t = df[df["_ts"].eq(key)].copy()
+        if rows_t.empty:
+            raise ValueError(f"no rows for date {pd.Timestamp(date).date()}")
+
+        # previous available observation per cell (per-cell order = calendar order)
+        prev_ts = df.groupby("cell_id", sort=False)["_ts"].shift(1)
+
+        # 1) for each row at `date`, find its _prev_ts
+        prev_meta = df.assign(_prev_ts=prev_ts)[["cell_id", "_ts", "_prev_ts"]]
+        step = rows_t.merge(prev_meta, on=["cell_id", "_ts"], how="left")
+        # 2) labels of that previous row (inner join drops cells w/o a prev day)
+        prev_labels = (df[["cell_id", "_ts", "onset_active", "break_active",
+                           "dry_spell_active"]]
+                       .rename(columns={"onset_active": "prev_onset",
+                                        "break_active": "prev_break",
+                                        "dry_spell_active": "prev_dry"}))
+        merged = step.merge(prev_labels, left_on=["cell_id", "_prev_ts"],
+                            right_on=["cell_id", "_ts"], how="inner",
+                            suffixes=("", "_x"))
+
+        if merged.empty:
+            raise ValueError(
+                f"no cells with a previous-day row before {pd.Timestamp(date).date()}")
+        rows_t = merged[list(rows_t.columns)].copy()
+        prev = merged[["prev_onset", "prev_break", "prev_dry"]]
+
+        ds = rows_t["dseason"].astype(np.int64).rename("dseason")
+        clim = self._clim_lookup.reindex(
+            pd.MultiIndex.from_arrays([rows_t["cell_id"], ds.to_numpy()]))
+
+        prob = {}
+        for target in C.PERSISTENCE_TARGETS:
+            col = {"onset": "prev_onset", "break": "prev_break",
+                   "dry_spell": "prev_dry"}[target]
+            prev_label = prev[col].to_numpy(dtype=float)
+            p11, p01 = float(self.trans[target]["p11"]), float(self.trans[target]["p01"])
+            base = np.where(prev_label == 1.0, p11, p01)
+            clim_p = clim[f"{target}_clim_p"].to_numpy(dtype=float)
+            prob[target] = np.where(ds.to_numpy() == 1, clim_p, base)
+
+        feats = self.revival_features
+        X = rows_t[feats].to_numpy(dtype=np.float64)
+        X = self.imputer.transform(X)
+        prob["revival"] = self.xgb.predict_proba(X)[:, 1]
+
+        out = pd.DataFrame({
+            "cell_id": rows_t["cell_id"].to_numpy(),
+            **{t: np.round(prob[t], 4) for t in C.TARGETS},
+        })
+        return out
+
     # ------------------------------------------------------------------ evidence
     def sensitivity(self, cell_id: str, date: pd.Timestamp,
                     features: list[str] | None = None) -> list[dict]:

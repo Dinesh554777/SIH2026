@@ -43,13 +43,13 @@ export default function App() {
   const [detailError, setDetailError] = useState(null);
 
   const reqId = useRef(0);
-  const didMeta = useRef(false);
 
-  // Load catalog + provenance once; demo geography/scenarios are best-effort.
+  // Load catalog + provenance once on mount; demo geography/scenarios are best-effort.
+  // Note: no StrictMode ref guard here — React 18 dev double-mounts effects (mount →
+  // cleanup → remount), so the guard would cancel the only fetch and strand the app
+  // on the loading screen. A plain `live` flag is enough.
   useEffect(() => {
     let live = true;
-    if (didMeta.current) return;
-    didMeta.current = true;
     Promise.all([api.cells(), api.modelInfo()])
       .then(([c, m]) => {
         if (!live) return;
