@@ -72,6 +72,9 @@ export function qs(params) {
 export const api = {
   cells: () => request("/api/v1/cells"),
   modelInfo: () => request("/api/v1/model-info"),
+  geographyDemo: () => request("/api/v1/geography/demo"),
+  geographyResolve: (villageId) => request(`/api/v1/geography/demo/${villageId}`),
+  scenarios: () => request("/api/v1/demo/scenarios"),
   forecast: (cellId, date) =>
     request(`/api/v1/cells/${cellId}/forecast${qs({ date })}`),
   explain: (cellId, date) =>
@@ -80,4 +83,26 @@ export const api = {
     request(`/api/v1/cells/${cellId}/explanation${qs({ date, lang })}`),
   advisory: (cellId, date) =>
     request(`/api/v1/cells/${cellId}/advisory${qs({ date })}`),
+  decision: (cellId, date, crop, season) =>
+    request(`/api/v1/cells/${cellId}/decision${qs({ date, crop, season })}`),
+  villageAdvisory: (cellId, date, opts = {}) =>
+    request(
+      `/api/v1/cells/${cellId}/village-advisory${qs({
+        date,
+        crop: opts.crop,
+        season: opts.season,
+        village_name: opts.villageName,
+        village_id: opts.villageId,
+      })}`
+    ),
+  deliver: (cellId, date, opts = {}) =>
+    request(
+      `/api/v1/cells/${cellId}/deliver${qs({
+        date,
+        channel: opts.channel,
+        crop: opts.crop,
+        season: opts.season,
+        issued_by: opts.issuedBy,
+      })}`
+    ),
 };

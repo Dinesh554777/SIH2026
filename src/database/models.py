@@ -371,3 +371,153 @@ class GeographyGridMapping(Base):
     intersection_area_deg2: Mapped[float | None]
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now())
+
+
+# Product decision-support layer (added by migration 0004) -------------------
+# These tables store decision + advisory traceability per master build prompt
+# sections 18-19. They reference forecasts/geography for provenance and do not
+# alter the scientific tables.
+
+
+DECISION_CODES = ("SOW", "WAIT", "MONITOR", "PREPARE", "IRRIGATION_PREPARE")
+RISK_LEVELS = ("low", "medium", "high")
+LOCATION_TYPES = ("state", "district", "block", "village", "cell")
+
+
+class RiskAssessment(Base):
+    """One composite decision for a location, capturing full traceability."""
+
+    __tablename__ = "risk_assessments"
+    __table_args__ = (
+        CheckConstraint(
+            "decision IN ('SOW', 'WAIT', 'MONITOR', 'PREPARE', 'IRRIGATION_PREPARE')",
+            name="ck_risk_assessments_decision"),
+        CheckConstraint(
+            "location_type IN ('state', 'district', 'block', 'village', 'cell')",
+            name="ck_risk_assessments_location_type"),
+        CheckConstraint(
+            "false_onset_risk IN ('low', 'medium', 'high')",
+            name="ck_risk_assessments_false_onset_risk"),
+        Index("ix_risk_assessments_loc_time", "location_type", "location_id", "created_at"),
+        Index("ix_risk_assessments_forecast", "forecast_id"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    forecast_id: Mapped[int | None] = mapped_column(
+        ForeignKey("forecasts.id", ondelete="SET NULL"), nullable=True)
+    location_type: Mapped[str] = mapped_column(String(16))
+    location_id: Mapped[str] = mapped_column(String(64))
+    cell_id: Mapped[str | None] = mapped_column(
+        ForeignKey("cells.cell_id", ondelete="RESTRICT"), nullable=True)
+    decision: Mapped[str] = mapped_column(String(24))
+    confidence: Mapped[str] = mapped_column(String(8), default="medium")
+    monsoon_status: Mapped[str] = mapped_column(String(24))
+    false_onset_risk: Mapped[str] = mapped_column(String(8))
+    onset_probability: Mapped[float] = mapped_column(Numeric(6, 4))
+    dry_spell_probability: Mapped[float] = mapped_column(Numeric(6, 4))
+    break_probability: Mapped[float] = mapped_column(Numeric(6, 4))
+    risk_summary: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    evidence: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    thresholds_version: Mapped[str] = mapped_column(String(16))
+    mode: Mapped[str] = mapped_column(String(32), default="prototype/demo")
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class AgriculturalContext(Base):
+    """Representative agricultural scenario profile for a location (config-driven)."""
+
+    __tablename__ = "agricultural_context"
+    __table_args__ = (
+        UniqueConstraint("location_type", "location_id", "crop", "season",
+                         name="uq_agri_ctx_loc_crop_season"),
+        CheckConstraint(
+            "location_type IN ('state', 'district', 'block', 'village', 'cell')",
+            name="ck_agri_ctx_location_type"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    location_type: Mapped[str] = mapped_column(String(16))
+    location_id: Mapped[str] = mapped_column(String(64))
+    crop: Mapped[str] = mapped_column(String(32))
+    season: Mapped[str] = mapped_column(String(16))
+    sowing_window_start: Mapped[str] = mapped_column(String(16))
+    sowing_window_end: Mapped[str] = mapped_column(String(16))
+    sow_confidence_needed: Mapped[float] = mapped_column(Numeric(4, 2))
+    dry_spell_sensitivity: Mapped[str] = mapped_column(String(16))
+    irrigation_availability: Mapped[str] = mapped_column(String(32))
+    rainfall_requirement_mm: Mapped[float | None]
+    soil: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    source: Mapped[str] = mapped_column(String(64), default="demo/prototype")
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class AdvisoryDelivery(Base):
+    """Traceability record per last-mile advisory dispatch (channel/language)."""
+
+    __tablename__ = "advisory_deliveries"
+    __table_args__ = (
+        CheckConstraint(
+            "channel IN ('field_worker', 'panchayat', 'notice_print', 'sms', "
+            "'ivr', 'whatsapp', 'fpo')",
+            name="ck_advisory_deliveries_channel"),
+        CheckConstraint("language IN ('en', 'ta', 'en,ta')",
+                        name="ck_advisory_deliveries_language"),
+        CheckConstraint(
+            "status IN ('generated', 'sent', 'failed', 'pending')",
+            name="ck_advisory_deliveries_status"),
+        Index("ix_advisory_deliveries_risk", "risk_assessment_id"),
+        Index("ix_advisory_deliveries_loc_time", "location_type", "location_id",
+              "created_at"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    risk_assessment_id: Mapped[int] = mapped_column(
+        ForeignKey("risk_assessments.id", ondelete="CASCADE"))
+    location_type: Mapped[str] = mapped_column(String(16))
+    location_id: Mapped[str] = mapped_column(String(64))
+    decision: Mapped[str] = mapped_column(String(24))
+    channel: Mapped[str] = mapped_column(String(24))
+    language: Mapped[str] = mapped_column(String(8), default="en")
+    status: Mapped[str] = mapped_column(String(16), default="generated")
+    recipient_scope: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    issued_by: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    payload: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    mock_notice: Mapped[str | None] = mapped_column(Text, nullable=True)
+    delivered_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())
+
+
+class MonsoonEvent(Base):
+    """Event timeline (onset / false onset / dry spell / break / recovery)."""
+
+    __tablename__ = "monsoon_events"
+    __table_args__ = (
+        CheckConstraint(
+            "event_type IN ('onset', 'false_onset', 'dry_spell', 'break', "
+            "'recovery')",
+            name="ck_monsoon_events_type"),
+        CheckConstraint(
+            "location_type IN ('state', 'district', 'block', 'village', 'cell')",
+            name="ck_monsoon_events_location_type"),
+        Index("ix_monsoon_events_loc_time", "location_type", "location_id",
+              "start_date"),
+    )
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    location_type: Mapped[str] = mapped_column(String(16))
+    location_id: Mapped[str] = mapped_column(String(64))
+    cell_id: Mapped[str | None] = mapped_column(
+        ForeignKey("cells.cell_id", ondelete="RESTRICT"), nullable=True)
+    event_type: Mapped[str] = mapped_column(String(16))
+    start_date: Mapped[datetime] = mapped_column(DateTime(timezone=False))
+    end_date: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=False), nullable=True)
+    risk_level: Mapped[str] = mapped_column(String(8), default="medium")
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source: Mapped[str] = mapped_column(String(64), default="decision-engine")
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now())

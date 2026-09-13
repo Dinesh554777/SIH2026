@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "note": "Deterministic decision-support thresholds. The decision engine is the authority; the UI/API never hard-codes these values. Defaults are conservative for the prototype and require agronomic + extension review before Level 2 pilot. Probability bands for communication stay in src/serving/rules.py (unchanged).",
+  "targets": {
+    "onset": {
+      "moderate": 0.3,
+      "strong": 0.6
+    },
+    "dry_spell": {
+      "elevated": 0.45,
+      "high": 0.6
+    },
+    "break": {
+      "high": 0.6
+    },
+    "revival": {
+      "moderate": 0.6
+    }
+  },
+  "false_onset": {
+    "elevated_rain_mm": 20.0,
+    "sustained_wet_days": 3,
+    "wet_days7_needed": 3,
+    "escalation_dry_streak": 3
+  },
+  "decision_priority": [
+    "wait_false_onset",
+    "irrigation_prepare",
+    "sow",
+    "prepare",
+    "monitor"
+  ]
+}

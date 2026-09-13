@@ -29,6 +29,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+from src.decision.advisory import generate_village_advisory
+from src.decision.delivery import CHANNELS, deliver, ivr_script
+from src.decision.engine import DecisionError, decision_from_serving
+from src.serving.demo_hierarchy import filter_to_registry, resolve_village
 from src.serving import config as C
 from src.serving.groq_explain import (GroqExplainer, build_explanation_input,
                                       explain_block)
@@ -204,6 +208,87 @@ def _groq_status(request: Request) -> dict:
     return {"status": "ok" if ex.available else "not_configured",
             "key_set": ex.available,
             "model": ex.model if ex.available else None}
+
+
+def _persist_decision(comps: ServingComponents, cell_id: str, ts: pd.Timestamp,
+                      dec) -> dict:
+    """Best-effort persistence of a composite decision (traceability)."""
+    from src.database.config import database_url as resolve_db_url
+    from src.database.db import connect, ping
+    from src.database.decision_repository import (DecisionIntegrityError,
+                                                  record_risk_assessment)
+
+    dsn = resolve_db_url()
+    base = {"database": "postgresql", "persisted": False}
+    if not dsn:
+        return {**base, "note": "not_configured"}
+    if not ping(dsn):
+        return {**base, "note": "unreachable"}
+    try:
+        d = dec.as_dict()
+        rs = d["risk_summary"]
+        with connect() as session:
+            ra_id = record_risk_assessment(
+                session, location_type="cell", location_id=cell_id,
+                decision=d["decision"], confidence=d["confidence"],
+                monsoon_status=d["monsoon_status"],
+                false_onset_risk=d["false_onset_risk"],
+                onset_probability=float(rs["onset"]["probability"]),
+                dry_spell_probability=float(rs["dry_spell"]["probability"]),
+                break_probability=float(rs["break"]["probability"]),
+                risk_summary=rs, evidence=d["reasoning"],
+                thresholds_version=d["thresholds_version"], mode=d["mode"],
+                cell_id=cell_id)
+            session.commit()
+        return {**base, "persisted": True, "risk_assessment_id": ra_id}
+    except (DecisionIntegrityError, Exception) as exc:  # noqa: BLE001 - best-effort
+        return {**base, "note": f"error: {type(exc).__name__}: {str(exc)[:180]}"}
+
+
+def _persist_delivery(comps: ServingComponents, cell_id: str, ts: pd.Timestamp,
+                      dec, adv, payload: dict, channel: str,
+                      issued_by: str | None) -> dict:
+    """Best-effort persistence of an advisory dispatch (traceability)."""
+    from src.database.config import database_url as resolve_db_url
+    from src.database.db import connect, ping
+    from src.database.decision_repository import (DecisionIntegrityError,
+                                                  record_advisory_delivery,
+                                                  record_risk_assessment)
+
+    dsn = resolve_db_url()
+    base = {"database": "postgresql", "persisted": False}
+    if not dsn:
+        return {**base, "note": "not_configured"}
+    if not ping(dsn):
+        return {**base, "note": "unreachable"}
+    try:
+        d = dec.as_dict()
+        rs = d["risk_summary"]
+        lang = "ta" if payload.get("language") == "ta" else "en,ta"
+        with connect() as session:
+            ra_id = record_risk_assessment(
+                session, location_type="cell", location_id=cell_id,
+                decision=d["decision"], confidence=d["confidence"],
+                monsoon_status=d["monsoon_status"],
+                false_onset_risk=d["false_onset_risk"],
+                onset_probability=float(rs["onset"]["probability"]),
+                dry_spell_probability=float(rs["dry_spell"]["probability"]),
+                break_probability=float(rs["break"]["probability"]),
+                risk_summary=rs, evidence=d["reasoning"],
+                thresholds_version=d["thresholds_version"], mode=d["mode"],
+                cell_id=cell_id)
+            delivery_id = record_advisory_delivery(
+                session, risk_assessment_id=ra_id, location_type="cell",
+                location_id=cell_id, decision=d["decision"], channel=channel,
+                language=lang, status="generated",
+                recipient_scope=payload.get("recipient_scope", "Village"),
+                issued_by=issued_by, payload=payload,
+                mock_notice=payload.get("mock_notice"))
+            session.commit()
+        return {**base, "persisted": True, "risk_assessment_id": ra_id,
+                "delivery_id": delivery_id}
+    except (DecisionIntegrityError, Exception) as exc:  # noqa: BLE001 - best-effort
+        return {**base, "note": f"error: {type(exc).__name__}: {str(exc)[:180]}"}
 
 
 def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
@@ -453,6 +538,174 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             "dominant_state": bundle["dominant"],
             "provenance": comps.service.provenance(),
         }
+
+    # ---- Product decision-support endpoints (master build prompt) --------
+
+    @app.get("/api/v1/cells/{cell_id}/decision")
+    def decision(cell_id: str, request: Request,
+                 date: str | None = Query(default=None, description="YYYY-MM-DD"),
+                 crop: str | None = Query(default=None),
+                 season: str | None = Query(default=None)):
+        """Composite agricultural decision (SOW/WAIT/MONITOR/PREPARE/IRRIGATION_PREPARE).
+
+        Deterministic. Probabilities always come from the frozen models; the engine
+        only merges them with observation-derived signals. Best-effort persistence
+        records the risk assessment for traceability.
+        """
+        comps = _components(request)
+        cell = _resolve_cell(comps.registry, cell_id)
+        ts = _parse_date(date, comps.store, cell_id)
+        row = comps.store.row(cell_id, ts)
+        _check_data(comps, row, cell_id, ts)
+        pred = comps.service.predict(cell_id, ts)
+        bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
+        try:
+            dec = decision_from_serving(bundle, crop=crop, season=season,
+                                        mode=_mode())
+        except DecisionError as exc:
+            raise _error(422, "decision_input", str(exc))
+        persistence = _persist_decision(comps, cell_id, ts, dec)
+        return {
+            "cell_id": cell_id,
+            "lat": cell["lat"], "lon": cell["lon"],
+            "region": cell["region"],
+            "forecast_date": str(ts.date()),
+            "data_mode": C.DATA_MODE,
+            "decision": dec.as_dict(),
+            "persistence": persistence,
+            "provenance": comps.service.provenance(),
+        }
+
+    @app.get("/api/v1/cells/{cell_id}/village-advisory")
+    def village_advisory(cell_id: str, request: Request,
+                         date: str | None = Query(default=None),
+                         crop: str | None = Query(default=None),
+                         season: str | None = Query(default=None),
+                         village_name: str | None = Query(default=None),
+                         village_id: str | None = Query(default=None)):
+        """Bilingual (EN+TA) village advisory built from the composite decision."""
+        comps = _components(request)
+        cell = _resolve_cell(comps.registry, cell_id)
+        ts = _parse_date(date, comps.store, cell_id)
+        row = comps.store.row(cell_id, ts)
+        _check_data(comps, row, cell_id, ts)
+        pred = comps.service.predict(cell_id, ts)
+        bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
+        try:
+            dec = decision_from_serving(bundle, crop=crop, season=season,
+                                        mode=_mode())
+            adv = generate_village_advisory(
+                dec, str(ts.date()), village_id=village_id,
+                village_name=village_name,
+                location_hint=f"{cell['lat']:.3f},{cell['lon']:.3f}",
+                crop=crop)
+        except DecisionError as exc:
+            raise _error(422, "decision_input", str(exc))
+        return {
+            "cell_id": cell_id,
+            "lat": cell["lat"], "lon": cell["lon"],
+            "region": cell["region"],
+            "forecast_date": str(ts.date()),
+            "data_mode": C.DATA_MODE,
+            "decision": dec.decision,
+            "advisory": adv.as_dict(),
+            "provenance": comps.service.provenance(),
+        }
+
+    @app.get("/api/v1/cells/{cell_id}/deliver")
+    def deliver_advisory(cell_id: str, request: Request,
+                         date: str | None = Query(default=None),
+                         channel: str = Query(default="notice_print"),
+                         crop: str | None = Query(default=None),
+                         season: str | None = Query(default=None),
+                         issued_by: str | None = Query(default=None)):
+        """Last-mile delivery simulation (MOCK transport) with traceability."""
+        if channel not in CHANNELS:
+            raise _error(422, "unknown_channel",
+                         f"Channel must be one of: {', '.join(CHANNELS)}.")
+        comps = _components(request)
+        cell = _resolve_cell(comps.registry, cell_id)
+        ts = _parse_date(date, comps.store, cell_id)
+        row = comps.store.row(cell_id, ts)
+        _check_data(comps, row, cell_id, ts)
+        pred = comps.service.predict(cell_id, ts)
+        bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
+        try:
+            dec = decision_from_serving(bundle, crop=crop, season=season,
+                                        mode=_mode())
+            adv = generate_village_advisory(dec, str(ts.date()), village_name="Village",
+                                            crop=crop)
+            en_text = adv.messages["en"]["block"]
+            ta_text = adv.messages["ta"]["block"]
+            payload = deliver(channel, en_text, ta_text, str(ts.date()))
+            if channel == "ivr":
+                payload["ivr_script"] = ivr_script(dec.decision_label, ta_text)
+        except DecisionError as exc:
+            raise _error(422, "decision_input", str(exc))
+        persistence = _persist_delivery(comps, cell_id, ts, dec, adv, payload,
+                                        channel, issued_by)
+        return {
+            "cell_id": cell_id,
+            "lat": cell["lat"], "lon": cell["lon"],
+            "region": cell["region"],
+            "forecast_date": str(ts.date()),
+            "decision": dec.decision,
+            "channel": channel,
+            "delivery": payload,
+            "traceability": persistence,
+            "mode": _mode(),
+        }
+
+    @app.get("/api/v1/demo/scenarios")
+    def demo_scenarios(request: Request):
+        """Three reproducible demo scenarios computed from the REAL frozen pipeline.
+
+        Each scenario is the frozen model + observation signal for the pilot cell on
+        a known pivot date; the decision engine turns that into an honest decision.
+        No probability or decision is fabricated.
+        """
+        from src.serving.demo import DEMO_CELL, PIVOT_DATES
+        comps = _components(request)
+        out = []
+        for date_str, note in PIVOT_DATES:
+            ts = pd.Timestamp(date_str)
+            pred = comps.service.predict(DEMO_CELL, ts)
+            bundle = build_cards_with_bands(comps.service, DEMO_CELL, ts, pred)
+            dec = decision_from_serving(bundle, mode=_mode())
+            out.append({
+                "id": f"demo_{date_str}",
+                "cell_id": DEMO_CELL,
+                "forecast_date": date_str,
+                "note": note,
+                "current_signal": bundle["current_signal"],
+                "decision": dec.as_dict(),
+            })
+        return {"scenarios": out, "pilot_cell": DEMO_CELL,
+                "mode": _mode(),
+                "note": "Computed from frozen FREEZE_H models on the frozen matrix; "
+                        "observed/modelled data distinguished server-side."}
+
+    @app.get("/api/v1/geography/demo")
+    def geography_demo(request: Request):
+        """Demo administrative hierarchy (State→District→Block→Village) → pilot cell.
+
+        Clearly labelled demo/simulated: no authoritative GIS boundaries exist in
+        this pilot. Each village resolves to a REAL pilot grid cell whose frozen
+        model output approximates village-level conditions.
+        """
+        comps = _components(request)
+        tree = filter_to_registry(set(comps.registry.ids))
+        return tree
+
+    @app.get("/api/v1/geography/demo/{village_id}")
+    def geography_demo_resolve(village_id: str, request: Request):
+        """Resolve one demo village to its pilot cell + hierarchy path."""
+        comps = _components(request)
+        hit = resolve_village(village_id)
+        if hit is None or hit["cell_id"] not in set(comps.registry.ids):
+            raise _error(404, "unknown_location",
+                         f"Unknown or unmapped demo location '{village_id}'.")
+        return {"mode": "demo/simulated", **hit}
 
     @app.get("/api/v1/model-info", response_model=ModelInfoResponse)
     def model_info(request: Request):

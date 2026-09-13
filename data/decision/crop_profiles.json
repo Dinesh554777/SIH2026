@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "note": "Representative agricultural scenario profiles for the prototype (limited, extensible; see master prompt section 'Agricultural context'). Values are illustrative defaults for DEMO/SIMULATION MODE and require on-ground validation. Fields drive only deterministic advisory wording - they never alter model probabilities.",
+  "profiles": [
+    {
+      "crop": "paddy",
+      "season": "kharif",
+      "sowing_window_start": "Jun-15",
+      "sowing_window_end": "Jul-15",
+      "sow_confidence_needed": 0.6,
+      "dry_spell_sensitivity": "high",
+      "irrigation_availability": "canal_optional",
+      "rainfall_requirement_mm": 400,
+      "soil": "clay_loam"
+    },
+    {
+      "crop": "groundnut_rainfed",
+      "season": "kharif",
+      "sowing_window_start": "Jun-20",
+      "sowing_window_end": "Aug-15",
+      "sow_confidence_needed": 0.55,
+      "dry_spell_sensitivity": "high",
+      "irrigation_availability": "rainfed",
+      "rainfall_requirement_mm": 500,
+      "soil": "sandy_loam"
+    },
+    {
+      "crop": "cotton",
+      "season": "kharif",
+      "sowing_window_start": "May-15",
+      "sowing_window_end": "Jul-31",
+      "sow_confidence_needed": 0.6,
+      "dry_spell_sensitivity": "moderate",
+      "irrigation_availability": "supplemental",
+      "rainfall_requirement_mm": 600,
+      "soil": "black_loam"
+    }
+  ]
+}

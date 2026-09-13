@@ -1,9 +1,10 @@
-"""Geography database tests (live PostgreSQL, migration 0003).
+"""Geography database tests (live PostgreSQL, migration 0003 + 0004).
 
 Skipped entirely when no PostgreSQL test DSN is configured/reachable (the same
 convention as tests/test_database.py). Each run rebuilds an EMPTY schema and
-upgrades to head (0003) twice, proving empty-init reproducibility and that the
-scientific `cells` registry survives the geography migration untouched.
+upgrades to head twice, proving empty-init reproducibility and that the
+scientific `cells` registry survives the geography + product-layer migrations
+untouched.
 """
 from __future__ import annotations
 
@@ -47,7 +48,7 @@ def engine():
     cfg = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
     os.environ["DATABASE_URL"] = url
     try:
-        for _ in range(2):  # twice: empty-init reproducibility at 0003
+        for _ in range(2):  # twice: empty-init reproducibility at head
             with eng.connect() as conn:
                 conn.execute(text("DROP SCHEMA public CASCADE"))
                 conn.execute(text("CREATE SCHEMA public"))
@@ -55,7 +56,7 @@ def engine():
             command.upgrade(cfg, "head")
         with eng.connect() as conn:
             assert conn.execute(text(
-                "SELECT version_num FROM alembic_version")).scalar_one() == "0003"
+                "SELECT version_num FROM alembic_version")).scalar_one() == "0004"
     finally:
         os.environ.pop("DATABASE_URL", None)
     yield eng
@@ -101,10 +102,10 @@ def test_geography_tables_exist_after_migration(session_factory):
     assert {"cells", "forecasts", "observations", "ingestion_runs"} <= names
 
 
-def test_head_is_0003(session_factory):
+def test_head_is_0004(session_factory):
     with session_factory() as s:
         v = s.execute(text("SELECT version_num FROM alembic_version")).scalar_one()
-    assert v == "0003"
+    assert v == "0004"
 
 
 # ------------------------------------------------------- scientific compat

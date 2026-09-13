@@ -6,11 +6,16 @@ import App from "./App.jsx";
 import {
   advisoryFixture,
   cellsFixture,
+  decisionFixture,
+  deliveryFixture,
   explainFixture,
   explanationFixture,
   explanationGroqFixture,
   forecastFixture,
+  geographyDemoFixture,
   modelInfoFixture,
+  scenariosFixture,
+  villageAdvisoryFixture,
 } from "./test/fixtures.js";
 
 function ok(body) {
@@ -49,7 +54,11 @@ function installApi({
       Promise.resolve(delayForecast && path.endsWith("/forecast") ? delayForecast.then(() => ok(body)) : ok(body));
     if (path === "/api/v1/cells") return Promise.resolve(ok(cellsFixture()));
     if (path === "/api/v1/model-info") return Promise.resolve(ok(modelInfoFixture));
-    const m = path.match(/^\/api\/v1\/cells\/([^/]+)\/(forecast|explain|explanation|advisory)$/);
+    if (path === "/api/v1/geography/demo") return Promise.resolve(ok(geographyDemoFixture));
+    if (path === "/api/v1/demo/scenarios") return Promise.resolve(ok(scenariosFixture));
+    const m = path.match(
+      /^\/api\/v1\/cells\/([^/]+)\/(forecast|explain|explanation|advisory|decision|village-advisory|deliver)$/
+    );
     if (m) {
       const [, , kind] = m;
       if (kind === "forecast") {
@@ -79,6 +88,9 @@ function installApi({
         explain: explainFixture,
         explanation: groq ? explanationGroqFixture : explanationFixture,
         advisory: advisoryFixture,
+        decision: { decision: decisionFixture },
+        "village-advisory": { advisory: villageAdvisoryFixture.advisory, ...villageAdvisoryFixture },
+        deliver: deliveryFixture,
       }[kind];
       return respond(data);
     }
@@ -303,5 +315,76 @@ describe("Hyperlocal Monsoon Decision Support frontend", () => {
     render(<App />);
     expect(screen.queryByText("100%")).not.toBeInTheDocument();
     expect(screen.queryByTestId("card-onset")).not.toBeInTheDocument();
+  });
+
+  it("browses the demo hierarchy and resolves a village to its pilot cell decision", async () => {
+    const { calls } = installApi();
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/Dry spell probability is 92%/i);
+
+    await user.click(screen.getByRole("button", { name: /tamil nadu/i }));
+    await user.click(screen.getByRole("button", { name: /thanjavur/i }));
+    await user.click(screen.getByRole("button", { name: /orathanadu/i }));
+    await user.click(screen.getByRole("button", { name: /demo rainfed village/i }));
+
+    await waitFor(() =>
+      expect(screen.getByTestId("cell-meta")).toHaveTextContent("10.0_76.25")
+    );
+    expect(screen.getByTestId("cell-meta")).toHaveTextContent("Demo Rainfed Village");
+    expect(screen.getByTestId("status-where")).toHaveTextContent("Demo Rainfed Village");
+    await waitFor(() =>
+      expect(calls.some((u) => u.includes("/api/v1/cells/10.0_76.25/decision"))).toBe(true)
+    );
+  });
+
+  it("renders the officer decision card with action badge and risk summary", async () => {
+    installApi();
+    render(<App />);
+    await screen.findByText(/Dry spell probability is 92%/i);
+    expect(screen.getByTestId("status-hero")).toHaveTextContent("Dry-spell risk");
+    const card = screen.getByTestId("decision-card");
+    expect(card).toHaveTextContent("Irrigation prepare");
+    expect(within(card).getByTestId("risk-dry_spell")).toHaveTextContent("92% · high");
+    expect(within(card).getByTestId("risk-onset")).toHaveTextContent("1% · low");
+    expect(
+      screen.getAllByText(/Decision-support suggestion, not a professional.*guarantee/i).length
+    ).toBeGreaterThan(0);
+  });
+
+  it("generates a bilingual village advisory and shows MOCK delivery traceability", async () => {
+    const { calls } = installApi();
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/Dry spell probability is 92%/i);
+
+    await user.click(screen.getByRole("button", { name: /generate advisory/i }));
+    expect(await screen.findByTestId("advisory-preview")).toHaveTextContent("VILLAGE:");
+    expect(screen.getByTestId("advisory-preview")).toHaveTextContent("Demo Rainfed Village");
+    await user.selectOptions(screen.getByTestId("advisory-lang"), "ta");
+    expect(screen.getByTestId("advisory-preview")).toHaveTextContent(/ஊர்/);
+
+    await user.click(screen.getByRole("button", { name: "SMS" }));
+    await waitFor(() => expect(calls.some((u) => u.includes("deliver") && u.includes("channel=sms"))).toBe(true));
+    const result = await screen.findByTestId("delivery-result");
+    expect(result).toHaveTextContent("[MOCK SMS]");
+    expect(result).toHaveTextContent("delivery # 7");
+    expect(result).toHaveTextContent("risk_assessment # 12");
+    expect(result).toHaveTextContent("MOCK gateway");
+  });
+
+  it("replays a frozen scenario date and recomputes the decision", async () => {
+    const { calls } = installApi();
+    const user = userEvent.setup();
+    render(<App />);
+    await screen.findByText(/Dry spell probability is 92%/i);
+    expect(screen.getByTestId("scenario-strip")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /2024-06-07.*false onset/i }));
+    await waitFor(() =>
+      expect(calls.some((u) => u.includes("/decision?date=2024-06-07"))).toBe(true)
+    );
+    await waitFor(() =>
+      expect(calls.some((u) => u.includes("/forecast?date=2024-06-07"))).toBe(true)
+    );
   });
 });

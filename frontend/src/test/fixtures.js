@@ -235,3 +235,184 @@ export const advisoryFixture = {
   disclaimer: "Decision-support suggestion, not a professional agricultural guarantee.",
   provenance: { freeze_digest: "4f122044f8710b53", data_mode: "historical/demo" },
 };
+
+export const geographyDemoFixture = {
+  mode: "demo/simulated",
+  note: "Demo hierarchy for the SIH 2026 prototype. Administrative names are representative examples, NOT authoritative GIS boundaries. Village numbers are approximated from the mapped pilot grid cell (0.25 deg, ~25 x 25 km).",
+  pilot_cell_count: 304,
+  hierarchy: [
+    {
+      state: { geography_id: "TN", name: "Tamil Nadu" },
+      pilot_cell: "10.75_77.5",
+      districts: [
+        {
+          district: { geography_id: "TN-thanjavur", name: "Thanjavur" },
+          pilot_cell: "10.75_77.5",
+          blocks: [
+            {
+              block: { geography_id: "TN-orathanadu", name: "Orathanadu" },
+              pilot_cell: "10.75_77.5",
+              villages: [
+                { village_id: "TN-ORA-001", name: "Demo Agricultural Village", cell_id: "10.75_77.5" },
+                { village_id: "TN-ORA-002", name: "Demo Irrigated Village", cell_id: "10.75_77.25" },
+                { village_id: "TN-ORA-003", name: "Demo Rainfed Village", cell_id: "10.0_76.25" },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const decisionFixture = {
+  decision: "IRRIGATION_PREPARE",
+  decision_label: "Irrigation prepare",
+  confidence: "medium",
+  monsoon_status: "dry_spell_risk",
+  monsoon_status_label: "Dry-spell risk",
+  false_onset_risk: "low",
+  risk_summary: {
+    onset: { probability: 0.0082, band: "low" },
+    dry_spell: { probability: 0.9165, band: "high" },
+    break: { probability: 0.9078, band: "high" },
+    false_onset_derived: { level: "low" },
+  },
+  reasoning: [
+    { claim: "Onset probability is moderate-to-strong", status: false, detail: "onset_p = 0.008" },
+    { claim: "Recent rainfall is observed", status: true, detail: "rain_t = 3.0 mm, sum7 = 3.2 mm" },
+    { claim: "Wet spell is persistent (>= required wet days)", status: false, detail: "wet_streak = 0 days" },
+    { claim: "Dry-spell risk is low", status: false, detail: "dry_spell_p = 0.916" },
+    { claim: "Break risk is low", status: false, detail: "break_p = 0.908" },
+    { claim: "False-onset warning is not high", status: true, detail: "derived false-onset risk = low" },
+    { claim: "Elevated dry-spell risk following a wet recent period.", status: true, detail: "" },
+    { claim: "Prioritize water conservation and targeted irrigation for critical crop stages.", status: true, detail: "" },
+  ],
+  critical_reasons: [
+    "Elevated dry-spell risk following a wet recent period.",
+    "Prioritize water conservation and targeted irrigation for critical crop stages.",
+  ],
+  explanation:
+    "  - Elevated dry-spell risk following a wet recent period.\n  - Prioritize water conservation and targeted irrigation for critical crop stages.",
+  thresholds_version: "1.0.0",
+  mode: "prototype/demo",
+  disclaimer: "Decision-support suggestion, not a professional agricultural guarantee.",
+};
+
+export const villageAdvisoryFixture = {
+  cell_id: "10.75_77.5",
+  lat: 10.75,
+  lon: 77.5,
+  region: "TN",
+  forecast_date: "2024-08-12",
+  data_mode: "historical/demo",
+  decision: "IRRIGATION_PREPARE",
+  advisory: {
+    village_id: "TN-ORA-003",
+    village_name: "Demo Rainfed Village",
+    location_hint: "10.750,77.500",
+    issue_date: "2024-08-12",
+    monsoon_status: "dry_spell_risk",
+    monsoon_status_label: "Dry-spell risk",
+    decision: "IRRIGATION_PREPARE",
+    decision_label: "Irrigation prepare",
+    next_review: "daily (or on next rainfall event)",
+    messages: {
+      en: {
+        title: "Village Monsoon Advisory",
+        block: "Advisory for Demo Rainfed Village (crop: paddy).\nMonsoon status: dry-spell risk.\nDecision: Irrigation prepare.\nElevated dry-spell risk following a wet recent period.",
+        print_head:
+          "+-------------------------------------------------------------+\n|  VILLAGE: Demo Rainfed Village\n|  DATE   : 2024-08-12\n|  MONSOON STATUS: Dry-spell risk\n|  ACTION : Irrigation prepare\n+-------------------------------------------------------------+",
+      },
+      ta: {
+        title: "ஊர் வானிலை ஆலோசனை",
+        block:
+          "பாசனத் தயாரிப்பு செய்யுங்கள் - தண்ணீரையும் பாசனக் கருவிகளையும் தயார் செய்யுங்கள்.\nமுக்கியமான பயிர் நிலையில் தண்ணீர் தேங்காமல், குறைவான அளவில் திறமையாக பாசனம் செய்யுங்கள்.\nசமீபத்தில் மழை பெய்த பின் வறட்சி வருவதற்கான ஆபத்து உள்ளது.",
+        print_head:
+          "+-------------------------------------------------------------+\n|  ஊர் : Demo Rainfed Village\n|  தேதி : 2024-08-12\n|  வானிலை நிலை : வறட்சி ஆபத்து\n|  செயல் : பாசனத் தயாரிப்பு\n+-------------------------------------------------------------+",
+      },
+    },
+  },
+  provenance: { freeze_digest: "4f122044f8710b53", data_mode: "historical/demo" },
+};
+
+export const deliveryFixture = {
+  cell_id: "10.75_77.5",
+  lat: 10.75,
+  lon: 77.5,
+  region: "TN",
+  forecast_date: "2024-08-12",
+  decision: "IRRIGATION_PREPARE",
+  channel: "sms",
+  delivery: {
+    channel: "sms",
+    language: "en",
+    message: "Monsoon status: dry-spell risk.\nDecision: Irrigation prepare. Pre-mobilize irrigation/water-conservation measures: prioritize water for critical crop stages.",
+    recipient_scope: "Farmer group / individual",
+    via: "SMS text (MOCK gateway)",
+    mock_notice: "[MOCK SMS] No real transport is used in the prototype. Payload generated for traceability at 2024-08-12.",
+  },
+  traceability: { database: "postgresql", persisted: true, risk_assessment_id: 12, delivery_id: 7 },
+  mode: "historical",
+};
+
+export const scenariosFixture = {
+  pilot_cell: "10.75_77.5",
+  mode: "historical/demo",
+  note: "Computed from the frozen blueprint, never hard-coded.",
+  scenarios: [
+    {
+      id: "demo_2024-06-07",
+      cell_id: "10.75_77.5",
+      forecast_date: "2024-06-07",
+      note: "False onset day (40.1 mm rain; calibrated low onset P)",
+      decision: {
+        decision: "WAIT",
+        decision_label: "Wait",
+        confidence: "high",
+        monsoon_status: "pre_onset",
+        monsoon_status_label: "Pre-onset",
+        false_onset_risk: "high",
+      },
+    },
+    {
+      id: "demo_2024-08-08",
+      cell_id: "10.75_77.5",
+      forecast_date: "2024-08-08",
+      note: "Post-onset dry stretch begins",
+      decision: {
+        decision: "MONITOR",
+        decision_label: "Monitor",
+        confidence: "medium",
+        monsoon_status: "dry_spell_risk",
+        false_onset_risk: "low",
+      },
+    },
+    {
+      id: "demo_2024-08-12",
+      cell_id: "10.75_77.5",
+      forecast_date: "2024-08-12",
+      note: "Dry spell day 26 with wet recent window",
+      decision: {
+        decision: "IRRIGATION_PREPARE",
+        decision_label: "Irrigation prepare",
+        confidence: "medium",
+        monsoon_status: "dry_spell_risk",
+        false_onset_risk: "low",
+      },
+    },
+    {
+      id: "demo_2024-09-29",
+      cell_id: "10.75_77.5",
+      forecast_date: "2024-09-29",
+      note: "Late-season dry risk persists",
+      decision: {
+        decision: "IRRIGATION_PREPARE",
+        decision_label: "Irrigation prepare",
+        confidence: "medium",
+        monsoon_status: "dry_spell_risk",
+        false_onset_risk: "low",
+      },
+    },
+  ],
+};
