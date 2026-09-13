@@ -1,21 +1,24 @@
-const LABEL = {
-  onset: "Monsoon Onset",
-  break: "Monsoon Break",
-  revival: "Revival",
-  dry_spell: "Dry Spell",
-};
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function Transparency({ modelInfo, forecast }) {
+  const { t } = useLanguage();
   const models = modelInfo?.models ?? {};
   const periods =
     modelInfo?.train_period || forecast?.provenance?.train_period;
   const dataMode =
     modelInfo?.data_mode ?? forecast?.data_mode ?? "historical/demo";
 
-  const rows = Object.keys(LABEL).map((t) => {
-    const m = models[t] ?? {};
+  const LABEL = {
+    onset: t("risk.onset") || "Monsoon Onset",
+    break: t("risk.break") || "Monsoon Break",
+    revival: "Revival",
+    dry_spell: t("risk.dry_spell") || "Dry Spell",
+  };
+
+  const rows = Object.keys(LABEL).map((key) => {
+    const m = models[key] ?? {};
     return {
-      target: LABEL[t],
+      target: LABEL[key],
       model: m.selected_model ?? m.model ?? "—",
       featureGroup: m.feature_group ?? "—",
       extra: m.n_features ? `${m.n_features} features` : "",
@@ -24,12 +27,12 @@ export default function Transparency({ modelInfo, forecast }) {
 
   return (
     <section className="panel">
-      <h2>Model transparency</h2>
+      <h2>{t("history.transparencyTitle")}</h2>
       <table className="transparency-table">
         <thead>
           <tr>
             <th>Target</th>
-            <th>Model</th>
+            <th>Algorithm</th>
             <th>Feature group</th>
             <th>Detail</th>
           </tr>
@@ -47,7 +50,7 @@ export default function Transparency({ modelInfo, forecast }) {
       </table>
       <dl className="meta-grid">
         <div>
-          <dt>Training period</dt>
+          <dt>{t("history.trainingPeriod")}</dt>
           <dd>{periods ?? "—"}</dd>
         </div>
         <div>
@@ -59,7 +62,7 @@ export default function Transparency({ modelInfo, forecast }) {
           <dd>{modelInfo?.test_period ?? forecast?.provenance?.test_period ?? "—"}</dd>
         </div>
         <div>
-          <dt>Mode</dt>
+          <dt>{t("history.dataMode")}</dt>
           <dd data-testid="transparency-mode">{dataMode}</dd>
         </div>
         <div>

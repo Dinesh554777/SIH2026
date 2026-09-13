@@ -7,6 +7,7 @@ import Sidebar from "./components/navigation/Sidebar.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import OfficerDashboard from "./pages/OfficerDashboard.jsx";
 import ErrorPanel from "./components/ErrorPanel.jsx";
+import { useLanguage } from "./context/LanguageContext.jsx";
 
 export const TARGET_ORDER = ["onset", "break", "revival", "dry_spell"];
 const DEMO_CELL = "10.75_77.5";
@@ -20,7 +21,7 @@ export default function App() {
   const [cellInfo, setCellInfo] = useState(null);
   const [village, setVillage] = useState(null);
   const [date, setDate] = useState("");
-  const [lang, setLang] = useState("en");
+  const { lang } = useLanguage();
   const [crop, setCrop] = useState("paddy");
 
   const [geography, setGeography] = useState(null);
@@ -145,7 +146,7 @@ export default function App() {
   if (metaError) {
     return (
       <div className="app-shell">
-        <CommandBar breadcrumb="Error" lang={lang} setLang={setLang} />
+        <CommandBar breadcrumb="Error" />
         <div className="app-body">
           <ErrorPanel error={metaError} onRetry={() => window.location.reload()} />
         </div>
@@ -155,7 +156,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <CommandBar breadcrumb={breadcrumbStr} lang={lang} setLang={setLang} />
+      <CommandBar breadcrumb={breadcrumbStr} />
       
       <div className="app-body">
         <Sidebar />

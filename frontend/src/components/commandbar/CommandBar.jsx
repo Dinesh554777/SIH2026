@@ -1,21 +1,24 @@
 import React from 'react';
 import { Search, Bell, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
-export default function CommandBar({ breadcrumb, lang, setLang }) {
+export default function CommandBar({ breadcrumb }) {
+  const { lang, setLang, t } = useLanguage();
+
   return (
     <header className="command-bar">
       <h1 className="sr-only">Hyperlocal Monsoon Decision Support</h1>
       <div className="cb-brand">
         <Link to="/" className="cb-logo-link">
           <span className="cb-logo">🌾</span>
-          <span className="cb-title">AGRI-MONSOON</span>
+          <span className="cb-title">{t('brand.title')}</span>
         </Link>
-        <span className="cb-tagline">Probabilistic agricultural decision support</span>
+        <span className="cb-tagline">{t('brand.tagline')}</span>
       </div>
 
       <div className="cb-breadcrumb">
-        {breadcrumb || "Select Location"}
+        {breadcrumb || t('common.selectLocation')}
       </div>
 
       <div className="cb-actions">

@@ -1,28 +1,25 @@
 import React from 'react';
 import { Sprout } from 'lucide-react';
-
-const SUPPORTED_CROPS = [
-  { id: 'paddy', name: 'Paddy', icon: '🌾' },
-  { id: 'cotton', name: 'Cotton', icon: '☁️' },
-  { id: 'maize', name: 'Maize', icon: '🌽' },
-];
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function CropDock({ crop, setCrop }) {
+  const { t } = useLanguage();
+  const crops = ['paddy', 'cotton', 'maize', 'groundnut'];
+
   return (
     <div className="crop-dock">
       <div className="cd-header">
         <Sprout size={16} />
-        <span>SELECT CROP SYSTEM</span>
+        <span>{t('dashboard.cropSystem')}</span>
       </div>
       <div className="cd-list">
-        {SUPPORTED_CROPS.map(c => (
+        {crops.map((c) => (
           <button
-            key={c.id}
-            className={`cd-btn ${crop === c.id ? 'active' : ''}`}
-            onClick={() => setCrop(c.id)}
+            key={c}
+            onClick={() => setCrop(c)}
+            className={`cd-btn ${crop === c ? 'active' : ''}`}
           >
-            <span className="cd-icon">{c.icon}</span>
-            <span className="cd-name">{c.name}</span>
+            {t(`crops.${c}`) || c}
           </button>
         ))}
       </div>

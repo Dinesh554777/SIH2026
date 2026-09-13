@@ -1,17 +1,19 @@
 import React from 'react';
 import { Map, CloudRain, AlertTriangle, Sprout, History, Bell } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function Sidebar() {
   const location = useLocation();
+  const { t } = useLanguage();
 
   const navItems = [
-    { path: '/dashboard', icon: Map, label: 'MAP' },
-    { path: '/forecast', icon: CloudRain, label: 'FORECAST' },
-    { path: '/risk', icon: AlertTriangle, label: 'RISK' },
-    { path: '/crops', icon: Sprout, label: 'CROPS' },
-    { path: '/history', icon: History, label: 'HISTORY' },
-    { path: '/officer', icon: Bell, label: 'ALERTS' },
+    { path: '/dashboard', icon: Map, label: t('nav.map') },
+    { path: '/forecast', icon: CloudRain, label: t('nav.forecast') },
+    { path: '/risk', icon: AlertTriangle, label: t('nav.risk') },
+    { path: '/crops', icon: Sprout, label: t('nav.crops') },
+    { path: '/history', icon: History, label: t('nav.history') },
+    { path: '/officer', icon: Bell, label: t('nav.alerts') },
   ];
 
   return (

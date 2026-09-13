@@ -1,32 +1,24 @@
 import React from 'react';
-
-const ACTION_VERB = {
-  SOW: "Sow",
-  WAIT: "Wait — hold sowing",
-  MONITOR: "Monitor",
-  PREPARE: "Prepare land & inputs",
-  IRRIGATION_PREPARE: "Irrigation prepare",
-};
+import { AlertCircle } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function AgriculturalAction({ decision }) {
+  const { t } = useLanguage();
   if (!decision) return null;
 
-  return (
-    <div className="action-panel">
-      <div className="ap-header">WHAT SHOULD I DO NOW?</div>
-      
-      <div className="ap-card">
-        <div className="ap-main-action">
-          {ACTION_VERB[decision.decision] ?? decision.decision}
-        </div>
-        
-        <p className="ap-explainer">
-          {decision.decision_label}
-        </p>
+  const decisionCode = decision?.decision || decision;
 
-        <div className="ap-next-step">
-          <strong>NEXT STEP</strong><br />
-          Monitor rainfall persistence for the next 3-5 days.
+  return (
+    <div className="panel agricultural-action">
+      <div className="action-header">
+        <AlertCircle size={18} className="action-icon" />
+        <h2>{t('dashboard.whatShouldIDo')}</h2>
+      </div>
+      
+      <div className="action-card">
+        <div className="action-label">{t('dashboard.actionCard')}</div>
+        <div className="action-badge" data-testid="action-badge">
+          {t(`decisions.${decisionCode}`) || decisionCode}
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx';
+
 const KINDS = {
   backend_unavailable: {
     title: "Backend unavailable",
@@ -42,6 +44,7 @@ const KINDS = {
 };
 
 export default function ErrorPanel({ error, onRetry }) {
+  const { t } = useLanguage();
   const kind = KINDS[error?.code] ?? KINDS.default;
   return (
     <section className="error-panel" data-testid="error-panel" role="alert">
@@ -57,7 +60,7 @@ export default function ErrorPanel({ error, onRetry }) {
       </div>
       {onRetry && (
         <button className="btn" onClick={onRetry}>
-          Retry
+          {t('common.retry')}
         </button>
       )}
     </section>

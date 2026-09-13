@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx';
+
 function fmt(x, digits = 2) {
   if (x == null) return "—";
   const n = Number(x);
@@ -22,6 +24,7 @@ const FEATURE_LABEL = {
 };
 
 export default function WhySection({ explainData }) {
+  const { t } = useLanguage();
   if (!explainData) {
     return (
       <section className="panel">
@@ -33,9 +36,9 @@ export default function WhySection({ explainData }) {
   const sens = explainData.sensitivity ?? [];
   return (
     <section className="panel">
-      <h2>Why this forecast?</h2>
+      <h2>{t('advisory.whySectionTitle', 'Why this forecast?')}</h2>
       <p className="caveat-strong" role="note" data-testid="sensitivity-caveat">
-        Model sensitivity — not causal explanation
+        {t('advisory.modelSensitivity', 'Model sensitivity — not causal explanation')}
       </p>
       <p className="lede">
         One-at-a-time sensitivity of the {LABEL_TARGET(explainData.target)} model (

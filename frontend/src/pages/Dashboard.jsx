@@ -19,6 +19,7 @@ import Loading from "../components/Loading.jsx";
 import CellSelector from "../components/CellSelector.jsx";
 import { ISSUED_BY } from "../App.jsx";
 import { useLocation } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Dashboard({
   cells,
@@ -47,6 +48,7 @@ export default function Dashboard({
 }) {
   const location = useLocation();
   const path = location.pathname;
+  const { t } = useLanguage();
 
   if (!cells || !selCell) {
     return (
@@ -95,7 +97,7 @@ export default function Dashboard({
             <ErrorPanel error={detailError} onRetry={loadDetail} />
           )}
 
-          {detailStatus === "loading" && <Loading label="Requesting forecast…" />}
+          {detailStatus === "loading" && <Loading label={t('common.loading')} />}
 
           {detailStatus === "ready" && (
             <div className="intel-panels">

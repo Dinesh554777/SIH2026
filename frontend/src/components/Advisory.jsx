@@ -1,3 +1,5 @@
+import { useLanguage } from '../context/LanguageContext.jsx';
+
 const LABEL = {
   onset: "Monsoon Onset",
   break: "Monsoon Break",
@@ -6,6 +8,7 @@ const LABEL = {
 };
 
 export default function Advisory({ forecast, explanation, advisory }) {
+  const { t, lang } = useLanguage();
   if (!explanation) {
     return (
       <section className="panel">
@@ -18,14 +21,14 @@ export default function Advisory({ forecast, explanation, advisory }) {
   const isGroq = explanation.source === "groq";
   const dom = explanation.dominant_state ?? advisory?.dominant_state;
   const domCard = (advisory?.items ?? []).find((c) => c.state === dom);
-  const domLabel = LABEL[dom] ?? dom;
+  const domLabel = t(`risk.${dom}`) || LABEL[dom] || dom;
   const domPct = domCard
     ? `${domCard.probability_pct?.toFixed?.(1) ?? Number(domCard.probability_pct) ?? "—"}%`
     : null;
 
   return (
     <section className="panel">
-      <h2>Advisory</h2>
+      <h2>{t('advisory.lastMileTitle', 'Advisory')}</h2>
 
       <div className="dominant-callout" data-testid="dominant-callout">
         <span className="callout-tag">Dominant signal</span>
@@ -36,11 +39,11 @@ export default function Advisory({ forecast, explanation, advisory }) {
         <span className="source-badge" data-testid="advisory-source">
           {isGroq ? (
             <>
-              <span className="dot-green" /> Groq explanation
+              <span className="dot-green" /> {t('advisory.groqExplanation')}
             </>
           ) : (
             <>
-              <span className="dot-gray" /> Deterministic advisory
+              <span className="dot-gray" /> {t('advisory.deterministicFallback')}
             </>
           )}
         </span>
@@ -62,15 +65,15 @@ export default function Advisory({ forecast, explanation, advisory }) {
 
       <div className="advisory-blocks">
         <div className="adv-block">
-          <h3>What is happening?</h3>
+          <h3>{t('advisory.whatIsHappening', 'What is happening?')}</h3>
           <p>{explanation.summary}</p>
         </div>
         <div className="adv-block">
-          <h3>What does it mean?</h3>
+          <h3>{t('advisory.whatDoesItMean', 'What does it mean?')}</h3>
           <p>{explanation.why}</p>
         </div>
         <div className="adv-block">
-          <h3>What should the user consider?</h3>
+          <h3>{t('advisory.actionableAdvice', 'What should the user consider?')}</h3>
           <p>{explanation.action}</p>
         </div>
         <div className="adv-block adv-caution">

@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { REGION_LABEL } from "./labels";
 import { Search } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -51,10 +52,19 @@ export default function MapExplorer({
   onSelectCell,
   onSelectVillage,
 }) {
+  const { t, lang } = useLanguage();
   const [recent, pushRecent] = useRecent();
   const [query, setQuery] = useState("");
   const [mapCenter, setMapCenter] = useState([20.0, 77.0]);
   const [mapZoom, setMapZoom] = useState(6);
+
+  const getName = (obj) => {
+    if (!obj) return "";
+    if (lang === 'ta') {
+      return obj.name_ta || obj.state_name_ta || obj.district_name_ta || obj.block_name_ta || obj.village_name_ta || obj.name || "";
+    }
+    return obj.name_en || obj.state_name_en || obj.district_name_en || obj.block_name_en || obj.village_name_en || obj.name || "";
+  };
 
   const riskById = useMemo(() => {
     const m = new Map();
@@ -78,7 +88,7 @@ export default function MapExplorer({
           for (const b of d.blocks)
             for (const v of b.villages) {
               const list = m.get(v.cell_id) || [];
-              list.push(`${v.name} · ${b.block.name}`);
+              list.push(`${getName(v)} · ${getName(b.block)}`);
               m.set(v.cell_id, list);
             }
     }
@@ -96,10 +106,10 @@ export default function MapExplorer({
           for (const v of b.villages) {
             const cell = cells.find((c) => c.cell_id === v.cell_id);
             if (
-              v.name.toLowerCase().includes(q) ||
+              getName(v).toLowerCase().includes(q) ||
               v.cell_id.toLowerCase().includes(q) ||
-              b.block.name.toLowerCase().includes(q) ||
-              d.district.name.toLowerCase().includes(q) ||
+              getName(b.block).toLowerCase().includes(q) ||
+              getName(d.district).toLowerCase().includes(q) ||
               (cell && REGION_LABEL[cell.region]?.toLowerCase().includes(q))
             ) {
               out.push({
@@ -123,7 +133,7 @@ export default function MapExplorer({
     setQuery("");
     pushRecent({
       type: "village",
-      label: `${villageObj.name} · ${villageObj.village_id}`,
+      label: `${getName(villageObj)} · ${villageObj.village_id}`,
       cell_id: villageObj.cell_id,
       village_id: villageObj.village_id,
     });
@@ -165,21 +175,21 @@ export default function MapExplorer({
           
           {currentHierarchy ? (
             <div style={{ fontSize: '0.8rem', color: '#64748b', display: 'flex', gap: 6 }}>
-              <span>{currentHierarchy.state.name}</span>›
-              <span>{currentHierarchy.district.name}</span>›
-              <span>{currentHierarchy.block.name}</span>›
-              <span style={{ fontWeight: 600, color: '#1e293b' }}>{currentHierarchy.village.name}</span>
+              <span>{getName(currentHierarchy.state)}</span>›
+              <span>{getName(currentHierarchy.district)}</span>›
+              <span>{getName(currentHierarchy.block)}</span>›
+              <span style={{ fontWeight: 600, color: '#1e293b' }}>{getName(currentHierarchy.village)}</span>
             </div>
           ) : (
-            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Select a location to begin</div>
+            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{t('common.selectLocation', 'Select a location to begin')}</div>
           )}
 
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
             <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: 12 }} />
             <input
               type="search"
-              placeholder="Search village, block or district"
-              aria-label="Search village, block or district"
+              placeholder={t('common.searchPlaceholder')}
+              aria-label={t('common.searchPlaceholder')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               style={{ width: '100%', padding: '10px 10px 10px 36px', borderRadius: 6, border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.9rem' }}
@@ -206,8 +216,8 @@ export default function MapExplorer({
                   }
                     style={{ width: '100%', textAlign: 'left', padding: '8px', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}
                   >
-                    <span style={{ fontWeight: 600, color: '#334155' }}>{m.village.name}</span>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{m.block.name} · {m.district.name}</span>
+                    <span style={{ fontWeight: 600, color: '#334155' }}>{getName(m.village)}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>{getName(m.block)} · {getName(m.district)}</span>
                   </button>
                 </li>
               ))}
@@ -217,16 +227,16 @@ export default function MapExplorer({
       </div>
 
       <div className="risk-legend" data-testid="risk-legend">
-        <span className="legend-title">Risk level (whole grid)</span>
+        <span className="legend-title">{t('risk.legendTitle')}</span>
         {["critical", "high", "moderate", "low"].map((lvl) => (
           <span key={lvl} className="legend-item">
             <span className={`legend-dot risk-dot risk-dot-${lvl}`} />
-            <span>{lvl.charAt(0).toUpperCase() + lvl.slice(1)}</span>
+            <span>{t(`risk.${lvl === 'moderate' ? 'medium' : lvl}`) || lvl.charAt(0).toUpperCase() + lvl.slice(1)}</span>
             <strong>{riskCounts[lvl] ?? 0}</strong>
           </span>
         ))}
         <span className="legend-note">
-          derived from frozen model probabilities · date {riskIndex?.forecast_date ?? "—"}
+          {t('risk.legendDerived')} · {riskIndex?.forecast_date ?? "—"}
         </span>
       </div>
 
@@ -288,11 +298,11 @@ export default function MapExplorer({
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 8 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span>Risk:</span>
-                        <strong style={{ textTransform: 'capitalize', color }}>{risk.risk_level}</strong>
+                        <strong style={{ textTransform: 'capitalize', color }}>{t(`risk.${risk.risk_level === 'moderate' ? 'medium' : risk.risk_level}`) || risk.risk_level}</strong>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span>Action:</span>
-                        <strong>{risk.decision}</strong>
+                        <strong>{t(`decisions.${risk.decision}`) || risk.decision}</strong>
                       </div>
                     </div>
                   )}
@@ -307,15 +317,15 @@ export default function MapExplorer({
       {village && currentHierarchy && (
         <div style={{ position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)', zIndex: 1000, background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 8px 24px rgba(0,0,0,0.15)', minWidth: 280, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#64748b', letterSpacing: 1 }}>SELECTED LOCATION</div>
-          <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#1e293b' }}>📍 {village.name}</div>
+          <div style={{ fontSize: '1.2rem', fontWeight: 700, color: '#1e293b' }}>📍 {getName(village)}</div>
           <div style={{ display: 'flex', gap: 16, fontSize: '0.85rem', color: '#475569', marginTop: 4 }}>
             <div>
               <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: '#94a3b8' }}>Block</div>
-              <div style={{ fontWeight: 600 }}>{currentHierarchy.block.name}</div>
+              <div style={{ fontWeight: 600 }}>{getName(currentHierarchy.block)}</div>
             </div>
             <div>
               <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: '#94a3b8' }}>District</div>
-              <div style={{ fontWeight: 600 }}>{currentHierarchy.district.name}</div>
+              <div style={{ fontWeight: 600 }}>{getName(currentHierarchy.district)}</div>
             </div>
           </div>
         </div>

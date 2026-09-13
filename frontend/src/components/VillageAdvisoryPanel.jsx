@@ -2,6 +2,7 @@ import { useState } from "react";
 import { api } from "../api";
 import { ShieldAlert, Phone, Users, FileText, UserCheck } from 'lucide-react';
 import VoicePlayer from './voice/VoicePlayer.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 const CHANNELS = [
   { key: "sms", label: "SMS", icon: Phone },
@@ -14,8 +15,8 @@ const CHANNELS = [
 ];
 
 export default function VillageAdvisoryPanel({ cellId, date, decision, village, issuedBy, crop }) {
+  const { lang, t } = useLanguage();
   const [advisory, setAdvisory] = useState(null);
-  const [lang, setLang] = useState("en");
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(null);
   const [delivery, setDelivery] = useState(null);
@@ -54,32 +55,31 @@ export default function VillageAdvisoryPanel({ cellId, date, decision, village, 
 
   const v = advisory?.messages?.[lang] ?? advisory?.messages?.en;
 
+  const getName = (obj) => {
+    if (!obj) return "";
+    if (lang === 'ta') {
+      return obj.name_ta || obj.state_name_ta || obj.district_name_ta || obj.block_name_ta || obj.village_name_ta || obj.name || "";
+    }
+    return obj.name_en || obj.state_name_en || obj.district_name_en || obj.block_name_en || obj.village_name_en || obj.name || "";
+  };
+
   return (
     <div className="field-note-panel">
       <div className="fn-header">
-        <span>LAST-MILE ADVISORY</span>
-        <select
-          value={lang}
-          onChange={(e) => setLang(e.target.value)}
-          className="fn-lang-select"
-          data-testid="advisory-lang"
-        >
-          <option value="en">EN</option>
-          <option value="ta">TA</option>
-        </select>
+        <span>{t('advisory.lastMileTitle')}</span>
       </div>
 
       {!v ? (
         <div className="fn-empty">
-          <p>Generate a localized field advisory for {village ? village.name : 'the selected region'}.</p>
+          <p>{t('advisory.generateAdvisory', { village: village ? getName(village) : 'the selected region' })}</p>
           <button className="fn-btn-primary" onClick={generate} disabled={generating}>
-            {generating ? "Generating..." : "Generate Advisory"}
+            {generating ? t('common.loading') : t('common.generate')}
           </button>
         </div>
       ) : (
         <div className="fn-content">
           <div className="advisory-preview" data-testid="advisory-preview">
-            <div className="ap-line">VILLAGE: <strong>{advisory?.village_name ?? v.print_head?.match(/VILLAGE:\s*([^\n|]+)/i)?.[1] ?? village?.name ?? "Demo Village"}</strong></div>
+            <div className="ap-line">VILLAGE: <strong>{advisory?.village_name ?? v.print_head?.match(/VILLAGE:\s*([^\n|]+)/i)?.[1] ?? getName(village) ?? "Demo Village"}</strong></div>
             <div className="ap-line">DATE: {advisory?.issue_date ?? date ?? "—"}</div>
             <div className="ap-line">MONSOON STATUS: {advisory?.monsoon_status_label ?? "—"}</div>
             <div className="ap-line">ACTION: {advisory?.decision_label ?? "—"}</div>
@@ -88,14 +88,14 @@ export default function VillageAdvisoryPanel({ cellId, date, decision, village, 
           </div>
 
           <div className="fn-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <VoicePlayer text={v.block} lang={lang} />
+            <VoicePlayer text={v.block} />
             <button className="fn-btn-secondary" onClick={generate} disabled={generating}>
-              Regenerate
+              {t('common.regenerate')}
             </button>
           </div>
 
           <div className="fn-delivery">
-            <div className="fn-subtitle">DELIVERY CHANNELS</div>
+            <div className="fn-subtitle">{t('advisory.deliveryChannels')}</div>
             <div className="fn-channels">
               {CHANNELS.map((c) => (
                 <button
@@ -114,7 +114,7 @@ export default function VillageAdvisoryPanel({ cellId, date, decision, village, 
           {delivery && (
             <div className="fn-receipt" data-testid="delivery-result">
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#10b981', fontWeight: 600, marginBottom: 8 }}>
-                <ShieldAlert size={16} /> Delivery Confirmed
+                <ShieldAlert size={16} /> {t('advisory.deliveryConfirmed')}
               </div>
               <div style={{ fontSize: '0.8rem', color: '#475569' }}>
                 <div><strong>Channel:</strong> {delivery.channel}</div>

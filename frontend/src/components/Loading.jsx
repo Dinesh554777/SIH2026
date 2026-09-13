@@ -1,8 +1,11 @@
-export default function Loading({ label = "Loading…" }) {
+import { useLanguage } from '../context/LanguageContext.jsx';
+
+export default function Loading({ label }) {
+  const { t } = useLanguage();
   return (
-    <section className="loading" role="status" data-testid="loading">
+    <div className="loading" role="status">
       <div className="spinner" aria-hidden="true" />
-      <p>{label}</p>
-    </section>
+      <span>{label || t('common.loading')}</span>
+    </div>
   );
 }

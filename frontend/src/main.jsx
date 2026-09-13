@@ -5,9 +5,12 @@ import "./styles.css";
 import "./commandcenter.css";
 
 import { BrowserRouter } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <App />
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
   </BrowserRouter>
-);;
+);

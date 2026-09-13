@@ -7,13 +7,15 @@ const ROWS = [
   { key: "dry_streak_days", label: "Dry streak", unit: "days" },
   { key: "wet_streak_days", label: "Wet streak", unit: "days" },
 ];
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function CurrentSignal({ advisory }) {
+  const { t } = useLanguage();
   const signal = advisory?.current_signal;
   if (!signal) return null;
   return (
     <section className="panel">
-      <h2>Current signal</h2>
+      <h2>{t('advisory.currentSignal', 'Current signal')}</h2>
       <p className="lede">Observed inputs used by the frozen models.</p>
       <div className="signal-grid">
         {ROWS.map(({ key, label, unit }) => (

@@ -106,11 +106,15 @@ function installApi({
   return { fetchMock, calls };
 }
 
+import { LanguageProvider } from "./context/LanguageContext.jsx";
+
 function renderApp() {
   return render(
-    <MemoryRouter initialEntries={["/"]}>
-      <App />
-    </MemoryRouter>
+    <LanguageProvider>
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>
+    </LanguageProvider>
   );
 }
 
@@ -369,7 +373,7 @@ describe("Hyperlocal Monsoon Decision Support frontend", () => {
     renderApp();
     await screen.findByText(/Dry spell probability is 92%/i);
 
-    await user.click(screen.getByRole("button", { name: /generate advisory/i }));
+    await user.click(screen.getByRole("button", { name: /generate/i }));
     expect(await screen.findByTestId("advisory-preview")).toHaveTextContent("VILLAGE:");
     expect(screen.getByTestId("advisory-preview")).toHaveTextContent("Demo Rainfed Village");
     await user.selectOptions(screen.getByTestId("advisory-lang"), "ta");
