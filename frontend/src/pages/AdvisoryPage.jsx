@@ -37,7 +37,14 @@ export default function AdvisoryPage({
 
   return (
     <main className="page-content">
-      <DemoBanner visible={isDemo} />
+            <DemoBanner 
+        isDemo={isDemo} 
+        liveMeta={
+          detailError?.detail?.error?.detail ||
+          forecast?.live_meta || 
+          null
+        } 
+      />
       <h1>Agricultural advisory</h1>
       <p className="muted">
         Decision-support suggestion for the selected cell: what is happening, why,

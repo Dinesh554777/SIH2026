@@ -59,7 +59,7 @@ MODEL_SPEC = {
     "revival": "xgboost_groupB",
 }
 
-DATA_MODE = "historical/demo"  # no live feed in the MVP; UI must state this
+DATA_MODE = os.environ.get("FORECAST_MODE", "historical/demo")
 SPATIAL_UNIT = {
     "type": "regular_grid_0.25deg",
     "step_degrees": 0.25,

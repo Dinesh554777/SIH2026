@@ -44,6 +44,9 @@ from src.serving.schemas import (CellsResponse, ExplanationResponse,
                                  ForecastResponse, HealthResponse,
                                  ModelInfoResponse)
 from src.serving.store import ObservationStore, in_jjas
+from src.serving.live_store import LiveObservationStore
+from src.serving.live_pipeline import get_live_row_and_metadata
+import copy
 
 APP_NAME = "SIH26086 Monsoon Decision Support"
 MODEL_VERSION = "FREEZE_H"
@@ -130,15 +133,30 @@ def _resolve_cell(registry: CellRegistry, cell_id: str) -> dict:
     return cell
 
 
-def _check_data(comps: ServingComponents, row, cell_id: str, date: pd.Timestamp) -> None:
-    if row is None:
-        raise _error(404, "date_not_available",
-                     f"No observations for cell {cell_id} on {date.date()}.")
-    completeness = comps.store.data_completeness(row, comps.service.revival_features)
-    if completeness < 0.9:
-        raise _error(409, "insufficient_data",
-                     f"Insufficient observations for cell {cell_id} on {date.date()} "
-                     f"(completeness={completeness:.0%}).")
+def _resolve_live_data(comps: ServingComponents, cell_id: str, date: str | None) -> tuple[ServingComponents, pd.Timestamp, pd.Series, dict]:
+    if date is None and C.DATA_MODE == "live":
+        row, meta = get_live_row_and_metadata(cell_id, comps.store)
+        if row is None:
+            raise _error(503, "live_unavailable", "Live data is currently unavailable.", detail=meta)
+            
+        ts = pd.Timestamp(row["date"])
+        
+        # Wrap components for this request
+        live_store = LiveObservationStore(comps.store, cell_id, ts, row)
+        
+        # Shallow copy service and override store
+        live_service = copy.copy(comps.service)
+        live_service.store = live_store
+        
+        live_comps = ServingComponents(live_store, comps.registry, live_service)
+        
+        return live_comps, ts, row, meta
+        
+    ts = _parse_date(date, comps.store, cell_id)
+    row = comps.store.row(cell_id, ts)
+    _check_data(comps, row, cell_id, ts)
+    meta = {"mode": "historical", "source": {"status": "ok"}}
+    return comps, ts, row, meta
 
 
 def _band_list() -> list[dict]:
@@ -392,13 +410,11 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
                  date: str | None = Query(default=None, description="YYYY-MM-DD")):
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         pred = comps.service.predict(cell_id, ts)
         targets = {t: _card(comps, pred, t) for t in C.TARGETS}
         data_mode = C.DATA_MODE
-        forecast_mode = _mode()
+        forecast_mode = meta["mode"]
         probabilities = {t: float(pred[t]["probability"]) for t in C.TARGETS}
         fingerprint = lambda t: {k: pred[t][k] for k in ("model", "feature_group")
                                  if k in pred[t]}
@@ -422,6 +438,7 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             },
             "observations_used": comps.service.observations_used(row),
             "targets": targets,
+            "live_meta": meta.get("source") if meta.get("mode") == "live" else None,
             "confidence": {
                 "note": "Probability is a calibrated model output, not a guarantee. "
                         "Bands are communication aids.",
@@ -445,9 +462,7 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
                  date: str | None = Query(default=None, description="YYYY-MM-DD")):
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         pred = comps.service.predict(cell_id, ts)
         bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
         dom = bundle["dominant"]
@@ -474,9 +489,7 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
                 date: str | None = Query(default=None, description="YYYY-MM-DD")):
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         sens = comps.service.sensitivity(cell_id, ts)
         rev = comps.service.predict(cell_id, ts)["revival"]
         return {
@@ -507,9 +520,7 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             raise _error(422, "unsupported_lang", f"Invalid language code '{lang}'.")
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         pred = comps.service.predict(cell_id, ts)
         bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
         probs = {t: float(pred[t]["probability"]) for t in C.TARGETS}
@@ -523,7 +534,7 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             "lat": cell["lat"], "lon": cell["lon"],
             "region": cell["region"],
             "forecast_date": str(ts.date()),
-            "mode": _mode(),
+            "mode": meta["mode"],
             "data_mode": C.DATA_MODE,
             "lang": lang,
             "source": block["source"],
@@ -554,14 +565,12 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
         """
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         pred = comps.service.predict(cell_id, ts)
         bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
         try:
             dec = decision_from_serving(bundle, crop=crop, season=season,
-                                        mode=_mode())
+                                        mode=meta["mode"])
         except DecisionError as exc:
             raise _error(422, "decision_input", str(exc))
         persistence = _persist_decision(comps, cell_id, ts, dec)
@@ -586,14 +595,12 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
         """Bilingual (EN+TA) village advisory built from the composite decision."""
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         pred = comps.service.predict(cell_id, ts)
         bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
         try:
             dec = decision_from_serving(bundle, crop=crop, season=season,
-                                        mode=_mode())
+                                        mode=meta["mode"])
             adv = generate_village_advisory(
                 dec, str(ts.date()), village_id=village_id,
                 village_name=village_name,
@@ -625,14 +632,12 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
                          f"Channel must be one of: {', '.join(CHANNELS)}.")
         comps = _components(request)
         cell = _resolve_cell(comps.registry, cell_id)
-        ts = _parse_date(date, comps.store, cell_id)
-        row = comps.store.row(cell_id, ts)
-        _check_data(comps, row, cell_id, ts)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, date)
         pred = comps.service.predict(cell_id, ts)
         bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
         try:
             dec = decision_from_serving(bundle, crop=crop, season=season,
-                                        mode=_mode())
+                                        mode=meta["mode"])
             adv = generate_village_advisory(dec, str(ts.date()), village_name="Village",
                                             crop=crop)
             en_text = adv.messages["en"]["block"]
@@ -653,7 +658,7 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             "channel": channel,
             "delivery": payload,
             "traceability": persistence,
-            "mode": _mode(),
+            "mode": meta["mode"],
         }
 
     @app.get("/api/v1/demo/scenarios")

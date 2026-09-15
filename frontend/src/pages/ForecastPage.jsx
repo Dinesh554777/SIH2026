@@ -47,7 +47,14 @@ export default function ForecastPage({
 
   return (
     <main className="page-content">
-      <DemoBanner visible={isDemo} />
+            <DemoBanner 
+        isDemo={isDemo} 
+        liveMeta={
+          detailError?.detail?.error?.detail ||
+          forecast?.live_meta || 
+          null
+        } 
+      />
       <h1>Forecast workspace</h1>
       <p className="muted">
         Onset prediction, expected rainfall, timeline and honest outlook for the

@@ -37,7 +37,14 @@ export default function CropAdvisoryPage({
 
   return (
     <main className="page-content">
-      <DemoBanner visible={isDemo} />
+            <DemoBanner 
+        isDemo={isDemo} 
+        liveMeta={
+          detailError?.detail?.error?.detail ||
+          forecast?.live_meta || 
+          null
+        } 
+      />
       <h1>Crop advisory</h1>
       <p className="muted">
         Select a crop system and view the officer recommendation, risk context

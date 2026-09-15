@@ -33,7 +33,14 @@ export default function CommandCenterPage({
 
   return (
     <main className="page-content">
-      <DemoBanner visible={isDemo} />
+            <DemoBanner 
+        isDemo={isDemo} 
+        liveMeta={
+          detailError?.detail?.error?.detail ||
+          forecast?.live_meta || 
+          null
+        } 
+      />
       <h1>{t("officer.commandCenter")}</h1>
       <p className="muted">
         Regional monitoring derived from the live cells-risk payload and the

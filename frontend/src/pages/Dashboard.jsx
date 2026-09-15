@@ -62,7 +62,14 @@ export default function Dashboard({
 
   return (
     <main className="dashboard-layout">
-      <DemoBanner visible={isDemo} />
+            <DemoBanner 
+        isDemo={isDemo} 
+        liveMeta={
+          detailError?.detail?.error?.detail ||
+          forecast?.live_meta || 
+          null
+        } 
+      />
       
       <div className="dashboard-workspace">
         <div className="workspace-map">

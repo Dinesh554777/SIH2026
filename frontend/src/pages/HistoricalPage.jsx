@@ -34,7 +34,14 @@ export default function HistoricalPage({
 
   return (
     <main className="page-content">
-      <DemoBanner visible={isDemo} />
+            <DemoBanner 
+        isDemo={isDemo} 
+        liveMeta={
+          detailError?.detail?.error?.detail ||
+          forecast?.live_meta || 
+          null
+        } 
+      />
       <h1>Historical analysis</h1>
       <p className="muted">
         Model transparency, calibration metrics, and the past→current forecast
