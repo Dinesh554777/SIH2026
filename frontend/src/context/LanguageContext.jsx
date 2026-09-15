@@ -4,10 +4,7 @@ import { getTranslation } from '../i18n';
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-  // Initialize from localStorage or default to 'en'
   const [lang, setLangState] = useState('en');
-    return 'en';
-  });
 
   const setLang = useCallback((newLang) => {
     setLangState(newLang);
