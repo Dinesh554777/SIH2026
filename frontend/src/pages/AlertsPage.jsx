@@ -130,6 +130,8 @@ export default function AlertsPage({
   village,
   decision,
   detailStatus,
+  detailError,
+  forecast,
   riskIndex,
   isDemo,
 }) {

@@ -15,8 +15,9 @@ export default function DeliveryTracePage({
   advisory,
   decision,
   detailStatus,
-  crop,
+  detailError,
   isDemo,
+  crop,
 }) {
   const { t } = useLanguage();
 

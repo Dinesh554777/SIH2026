@@ -18,7 +18,7 @@ export function LanguageProvider({ children }) {
         return key;
       }
       Object.entries(params).forEach(([k, v]) => {
-        text = text.replace(new RegExp(`{${k}}`, 'g'), v);
+        text = text.split(`{${k}}`).join(v);
       });
       return text;
     },

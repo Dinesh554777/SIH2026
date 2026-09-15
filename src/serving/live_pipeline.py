@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timezone
+import threading
 import pandas as pd
 
 from src.ingestion.clients.imd import IMDGridSource
@@ -11,7 +12,12 @@ from src.features.build_features import build_imd_features, add_imd_anomalies, t
 from src.serving.store import ObservationStore
 from src.serving.registry import default_registry
 
+_ingest_lock = threading.Lock()
+_cached_ingest_result = None
+_cached_ingest_time = None
+
 def get_live_row_and_metadata(cell_id: str, store: ObservationStore) -> tuple[pd.Series | None, dict]:
+    global _cached_ingest_result, _cached_ingest_time
     cfg = load_live_config()
     cells = default_registry().cells
     mapper = CellMapper(cells)
@@ -31,8 +37,15 @@ def get_live_row_and_metadata(cell_id: str, store: ObservationStore) -> tuple[pd
     )
     
     now = datetime.now(timezone.utc)
-    res = svc.ingest(now=now)
     
+    with _ingest_lock:
+        if _cached_ingest_time and _cached_ingest_result and (now - _cached_ingest_time).total_seconds() < 300:
+            res = _cached_ingest_result
+        else:
+            res = svc.ingest(now=now)
+            _cached_ingest_result = res
+            _cached_ingest_time = now
+            
     metadata = {
         "mode": "live",
         "source": {

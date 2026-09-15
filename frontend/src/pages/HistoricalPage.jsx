@@ -18,6 +18,7 @@ export default function HistoricalPage({
   decision,
   modelInfo,
   detailStatus,
+  detailError,
   onDateChange,
   isDemo,
 }) {

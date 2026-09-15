@@ -15,6 +15,8 @@ export default function CommandCenterPage({
   decision,
   riskIndex,
   detailStatus,
+  detailError,
+  forecast,
   isDemo,
 }) {
   const { t } = useLanguage();

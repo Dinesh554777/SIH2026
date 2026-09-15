@@ -2,7 +2,7 @@
 // after TIMEOUT_MS so the UI never hangs; the error thrown carries a stable
 // `code` that the UI maps to a human-readable state.
 const API_BASE = import.meta.env.VITE_API_BASE ?? "";
-const TIMEOUT_MS = 12000;
+const TIMEOUT_MS = 60000;
 
 export function request(path, { signal, timeoutMs = TIMEOUT_MS } = {}) {
   const controller = new AbortController();
