@@ -15,7 +15,7 @@ const CHANNELS = [
 ];
 
 export default function VillageAdvisoryPanel({ cellId, date, decision, village, issuedBy, crop }) {
-  const { lang, t } = useLanguage();
+  const { lang, setLang, t } = useLanguage();
   const [advisory, setAdvisory] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(null);
@@ -78,6 +78,22 @@ export default function VillageAdvisoryPanel({ cellId, date, decision, village, 
         </div>
       ) : (
         <div className="fn-content">
+          <div className="ap-controls" style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            <label htmlFor="advisory-lang" className="ap-label" style={{ fontSize: '0.75rem', color: '#475569' }}>
+              {t('advisory.previewLanguage')}:
+            </label>
+            <select
+              id="advisory-lang"
+              data-testid="advisory-lang"
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="ap-select"
+              style={{ padding: '2px 6px', fontSize: '0.8rem' }}
+            >
+              <option value="en">English</option>
+              <option value="ta">தமிழ்</option>
+            </select>
+          </div>
           <div className="advisory-preview" data-testid="advisory-preview">
             <div className="ap-line">VILLAGE: <strong>{advisory?.village_name ?? v.print_head?.match(/VILLAGE:\s*([^\n|]+)/i)?.[1] ?? getName(village) ?? "Demo Village"}</strong></div>
             <div className="ap-line">DATE: {advisory?.issue_date ?? date ?? "—"}</div>

@@ -18,7 +18,6 @@ import ErrorPanel from "../components/ErrorPanel.jsx";
 import Loading from "../components/Loading.jsx";
 import CellSelector from "../components/CellSelector.jsx";
 import { ISSUED_BY } from "../App.jsx";
-import { useLocation } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function Dashboard({
@@ -46,8 +45,6 @@ export default function Dashboard({
   loadDetail,
   isDemo,
 }) {
-  const location = useLocation();
-  const path = location.pathname;
   const { t } = useLanguage();
 
   if (!cells || !selCell) {
@@ -97,58 +94,37 @@ export default function Dashboard({
             <ErrorPanel error={detailError} onRetry={loadDetail} />
           )}
 
-          {detailStatus === "loading" && <Loading label={t('common.loading')} />}
+          {detailStatus === "loading" && <Loading label="Requesting forecast…" />}
 
           {detailStatus === "ready" && (
             <div className="intel-panels">
-              {(path === "/dashboard" || path === "/forecast") && (
-                <div id="forecast-section">
-                  <ScenarioSwitcher scenarios={scenarios} selCell={selCell} onPick={onScenarioPick} />
-                </div>
-              )}
+              <div id="forecast-section">
+                <ScenarioSwitcher scenarios={scenarios} selCell={selCell} onPick={onScenarioPick} />
+              </div>
               
-              {(path === "/dashboard" || path === "/crops") && (
-                <CropDock crop={crop} setCrop={setCrop} />
-              )}
+              <CropDock crop={crop} setCrop={setCrop} />
               
-              {(path === "/dashboard" || path === "/crops" || path === "/forecast") && (
-                <MonsoonStatus decision={decision} village={village} />
-              )}
+              <MonsoonStatus decision={decision} village={village} />
 
-              {(path === "/dashboard" || path === "/forecast" || path === "/risk") && (
-                <ProbabilityCards forecast={forecast} advisory={advisory} />
-              )}
+              <ProbabilityCards forecast={forecast} advisory={advisory} />
 
-              {(path === "/dashboard" || path === "/risk") && (
-                <CurrentSignal advisory={advisory} />
-              )}
+              <CurrentSignal advisory={advisory} />
 
-              {(path === "/dashboard" || path === "/risk" || path === "/forecast") && (
-                <RiskCards forecast={forecast} advisory={advisory} decision={decision} />
-              )}
+              <RiskCards forecast={forecast} advisory={advisory} decision={decision} />
 
-              {(path === "/dashboard" || path === "/crops") && (
-                <DecisionPanel decision={decision} village={village} />
-              )}
+              <DecisionPanel decision={decision} village={village} />
 
-              {(path === "/dashboard" || path === "/forecast" || path === "/risk") && (
-                <ForecastTimeline forecast={forecast} advisory={advisory} decision={decision} />
-              )}
+              <ForecastTimeline forecast={forecast} advisory={advisory} decision={decision} />
 
-              {(path === "/dashboard" || path === "/forecast") && (
-                <Advisory
-                  forecast={forecast}
-                  explanation={explanation}
-                  advisory={advisory}
-                />
-              )}
+              <Advisory
+                forecast={forecast}
+                explanation={explanation}
+                advisory={advisory}
+              />
               
-              {(path === "/dashboard" || path === "/forecast") && (
-                <WhySection explainData={explainData} />
-              )}
+              <WhySection explainData={explainData} />
               
-              {(path === "/dashboard" || path === "/crops") && (
-                <VillageAdvisoryPanel
+              <VillageAdvisoryPanel
                   cellId={selCell}
                   date={date}
                   decision={decision}
@@ -156,14 +132,9 @@ export default function Dashboard({
                   issuedBy={ISSUED_BY}
                   crop={crop}
                 />
-              )}
               
-              {(path === "/dashboard" || path === "/history") && (
-                <>
-                  <Transparency modelInfo={modelInfo} forecast={forecast} />
-                  <Calibration forecast={forecast} />
-                </>
-              )}
+              <Transparency modelInfo={modelInfo} forecast={forecast} />
+              <Calibration forecast={forecast} />
             </div>
           )}
         </div>

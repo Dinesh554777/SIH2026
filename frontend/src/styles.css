@@ -207,6 +207,47 @@ body {
   font-size: 13px;
 }
 
+/* Dedicated route pages (non-dashboard) */
+.page-content {
+  padding: 16px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+.page-content > .panel { margin: 0 0 16px; }
+.page-content > .panel:last-child { margin-bottom: 0; }
+.page-content h1 {
+  font-size: 20px;
+  margin: 0 0 12px;
+  color: #1e293b;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+.data-table th,
+.data-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.data-table th { color: #64748b; font-weight: 600; font-size: 11px; letter-spacing: .4px; text-transform: uppercase; }
+.data-table td { color: #334155; }
+.risk-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: capitalize;
+}
+.risk-badge.critical { background: #991b1b; }
+.risk-badge.high { background: #b45309; }
+.risk-badge.moderate { background: #a16207; }
+.risk-badge.low { background: #1d4ed8; }
+
 /* Selector */
 .selector-main .row-gap {
   display: flex;

@@ -2,10 +2,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { api } from "./api.js";
 
-import CommandBar from "./components/commandbar/CommandBar.jsx";
-import Sidebar from "./components/navigation/Sidebar.jsx";
+import AppLayout from "./pages/AppLayout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
-import OfficerDashboard from "./pages/OfficerDashboard.jsx";
+import ForecastPage from "./pages/ForecastPage.jsx";
+import RiskPage from "./pages/RiskPage.jsx";
+import AdvisoryPage from "./pages/AdvisoryPage.jsx";
+import CropAdvisoryPage from "./pages/CropAdvisoryPage.jsx";
+import AlertsPage from "./pages/AlertsPage.jsx";
+import HistoricalPage from "./pages/HistoricalPage.jsx";
+import DeliveryTracePage from "./pages/DeliveryTracePage.jsx";
+import CommandCenterPage from "./pages/CommandCenterPage.jsx";
 import ErrorPanel from "./components/ErrorPanel.jsx";
 import { useLanguage } from "./context/LanguageContext.jsx";
 
@@ -146,76 +152,55 @@ export default function App() {
   if (metaError) {
     return (
       <div className="app-shell">
-        <CommandBar breadcrumb="Error" />
-        <div className="app-body">
-          <ErrorPanel error={metaError} onRetry={() => window.location.reload()} />
-        </div>
+        <ErrorPanel error={metaError} onRetry={() => window.location.reload()} />
       </div>
     );
   }
 
+  const pageProps = {
+    cells,
+    selCell,
+    cellInfo,
+    date,
+    village,
+    geography,
+    scenarios,
+    forecast,
+    explainData,
+    explanation,
+    advisory,
+    decision,
+    detailStatus,
+    detailError,
+    modelInfo,
+    riskIndex: cellsRisk,
+    crop,
+    setCrop,
+    onSelectCell,
+    onSelectVillage,
+    onDateChange: setDate,
+    loadDetail,
+    isDemo,
+  };
+
   return (
-    <div className="app-shell">
-      <CommandBar breadcrumb={breadcrumbStr} />
-      
-      <div className="app-body">
-        <Sidebar />
-        
-        <div className="app-content">
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route
-              path="/dashboard"
-              element={
-                <Dashboard
-                  cells={cells}
-                  selCell={selCell}
-                  cellInfo={cellInfo}
-                  date={date}
-                  village={village}
-                  geography={geography}
-                  scenarios={scenarios}
-                  forecast={forecast}
-                  explainData={explainData}
-                  explanation={explanation}
-                  advisory={advisory}
-                  decision={decision}
-                  detailStatus={detailStatus}
-                  detailError={detailError}
-                  modelInfo={modelInfo}
-                  crop={crop}
-                  setCrop={setCrop}
-                  onSelectCell={onSelectCell}
-                  onSelectVillage={onSelectVillage}
-                  onDateChange={setDate}
-                  loadDetail={loadDetail}
-                  riskIndex={cellsRisk}
-                  isDemo={isDemo}
-                />
-              }
-            />
-            <Route
-              path="/forecast"
-              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
-            />
-            <Route
-              path="/risk"
-              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
-            />
-            <Route
-              path="/crops"
-              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
-            />
-            <Route
-              path="/history"
-              element={<Dashboard cells={cells} selCell={selCell} cellInfo={cellInfo} date={date} village={village} geography={geography} scenarios={scenarios} forecast={forecast} explainData={explainData} explanation={explanation} advisory={advisory} decision={decision} detailStatus={detailStatus} detailError={detailError} modelInfo={modelInfo} crop={crop} setCrop={setCrop} onSelectCell={onSelectCell} onSelectVillage={onSelectVillage} onDateChange={setDate} loadDetail={loadDetail} riskIndex={cellsRisk} isDemo={isDemo} />}
-            />
-            <Route path="/officer" element={<OfficerDashboard />} />
-            <Route path="*" element={<PlaceholderPage />} />
-          </Routes>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route element={<AppLayout breadcrumb={breadcrumbStr} />}>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<Dashboard {...pageProps} />} />
+        <Route path="/forecast" element={<ForecastPage {...pageProps} />} />
+        <Route path="/risk" element={<RiskPage {...pageProps} />} />
+        <Route path="/advisory" element={<AdvisoryPage {...pageProps} />} />
+        <Route path="/crops" element={<CropAdvisoryPage {...pageProps} />} />
+        <Route path="/alerts" element={<AlertsPage {...pageProps} />} />
+        <Route path="/history" element={<HistoricalPage {...pageProps} />} />
+        <Route path="/historical" element={<HistoricalPage {...pageProps} />} />
+        <Route path="/delivery" element={<DeliveryTracePage {...pageProps} />} />
+        <Route path="/officer" element={<CommandCenterPage {...pageProps} />} />
+        <Route path="/command-center" element={<CommandCenterPage {...pageProps} />} />
+        <Route path="*" element={<PlaceholderPage />} />
+      </Route>
+    </Routes>
   );
 }
 

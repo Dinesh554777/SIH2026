@@ -5,12 +5,11 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   // Initialize from localStorage or default to 'en'
-  const [lang, setLangState] = useState(() => {
-    return localStorage.getItem('language') || 'en';
+  const [lang, setLangState] = useState('en');
+    return 'en';
   });
 
   const setLang = useCallback((newLang) => {
-    localStorage.setItem('language', newLang);
     setLangState(newLang);
     document.documentElement.lang = newLang;
   }, []);
