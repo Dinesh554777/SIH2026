@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import RiskCards from "../components/RiskCards.jsx";
 import CurrentSignal from "../components/CurrentSignal.jsx";
 import DecisionPanel from "../components/DecisionPanel.jsx";
@@ -98,14 +98,7 @@ export default function RiskPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>Agricultural risk analysis</h1>
       <p className="muted">
         Overall risk, false-onset, dry-spell, monsoon-break, rainfall deficit and

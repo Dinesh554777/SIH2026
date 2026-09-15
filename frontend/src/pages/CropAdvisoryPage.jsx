@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import CropDock from "../components/crops/CropDock.jsx";
 import MonsoonStatus from "../components/MonsoonStatus.jsx";
 import DecisionPanel from "../components/DecisionPanel.jsx";
@@ -37,14 +37,7 @@ export default function CropAdvisoryPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>Crop advisory</h1>
       <p className="muted">
         Select a crop system and view the officer recommendation, risk context

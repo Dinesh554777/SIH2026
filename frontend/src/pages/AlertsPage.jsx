@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import Loading from "../components/Loading.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 
@@ -147,14 +147,7 @@ export default function AlertsPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>Alerts</h1>
       <p className="muted">
         Actionable alerts derived from the frozen decision engine and the

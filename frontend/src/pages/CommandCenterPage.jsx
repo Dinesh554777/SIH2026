@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import Loading from "../components/Loading.jsx";
 import { AlertTriangle, TrendingUp, Users } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -35,14 +35,7 @@ export default function CommandCenterPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>{t("officer.commandCenter")}</h1>
       <p className="muted">
         Regional monitoring derived from the live cells-risk payload and the

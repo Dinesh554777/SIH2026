@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import VillageAdvisoryPanel from "../components/VillageAdvisoryPanel.jsx";
 import Calibration from "../components/Calibration.jsx";
 import Loading from "../components/Loading.jsx";
@@ -31,14 +31,7 @@ export default function DeliveryTracePage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>Advisory delivery &amp; traceability</h1>
       <p className="muted">
         Generate the bilingual village advisory, preview it, and deliver it over

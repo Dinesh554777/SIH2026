@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import ScenarioSwitcher from "../components/ScenarioSwitcher.jsx";
 import ForecastTimeline from "../components/ForecastTimeline.jsx";
 import Transparency from "../components/Transparency.jsx";
@@ -35,14 +35,7 @@ export default function HistoricalPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>Historical analysis</h1>
       <p className="muted">
         Model transparency, calibration metrics, and the past→current forecast

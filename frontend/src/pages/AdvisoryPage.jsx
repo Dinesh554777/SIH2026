@@ -1,5 +1,5 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
+
 import DecisionPanel from "../components/DecisionPanel.jsx";
 import Advisory from "../components/Advisory.jsx";
 import WhySection from "../components/WhySection.jsx";
@@ -37,14 +37,7 @@ export default function AdvisoryPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
+            
       <h1>Agricultural advisory</h1>
       <p className="muted">
         Decision-support suggestion for the selected cell: what is happening, why,
