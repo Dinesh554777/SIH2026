@@ -181,7 +181,7 @@ export default function MapExplorer({
               <span style={{ fontWeight: 600, color: '#1e293b' }}>{getName(currentHierarchy.village)}</span>
             </div>
           ) : (
-            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{t('common.selectLocation', 'Select a location to begin')}</div>
+            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{t('common.selectLocation')}</div>
           )}
 
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
