@@ -134,6 +134,12 @@ export default function App() {
     setCellInfo((cells || []).find((c) => c.cell_id === cellId) || null);
   };
 
+  const onSelectLocation = (loc) => {
+    setVillage(loc);
+    setSelCell(loc.cell_id);
+    setCellInfo((cells || []).find((c) => c.cell_id === loc.cell_id) || null);
+  };
+
   const isDemo = Boolean(
     (modelInfo?.data_mode || forecast?.data_mode || "historical/demo")
       .toLowerCase()
@@ -178,6 +184,7 @@ export default function App() {
     setCrop,
     onSelectCell,
     onSelectVillage,
+    onSelectLocation,
     onDateChange: setDate,
     loadDetail,
     isDemo,

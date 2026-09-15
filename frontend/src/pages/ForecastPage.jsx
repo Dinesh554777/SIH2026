@@ -1,5 +1,4 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
 import MonsoonStatus from "../components/MonsoonStatus.jsx";
 import ProbabilityCards from "../components/ProbabilityCards.jsx";
 import CurrentSignal from "../components/CurrentSignal.jsx";
@@ -7,7 +6,7 @@ import ForecastTimeline from "../components/ForecastTimeline.jsx";
 import Advisory from "../components/Advisory.jsx";
 import WhySection from "../components/WhySection.jsx";
 import ScenarioSwitcher from "../components/ScenarioSwitcher.jsx";
-import CellSelector from "../components/CellSelector.jsx";
+import LocationSelector from "../components/LocationSelector.jsx";
 import ErrorPanel from "../components/ErrorPanel.jsx";
 import Loading from "../components/Loading.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
@@ -28,6 +27,7 @@ export default function ForecastPage({
   detailStatus,
   detailError,
   onSelectCell,
+  onSelectLocation,
   onDateChange,
   loadDetail,
   isDemo,
@@ -47,14 +47,6 @@ export default function ForecastPage({
 
   return (
     <main className="page-content">
-            <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
-      />
       <h1>Forecast workspace</h1>
       <p className="muted">
         Onset prediction, expected rainfall, timeline and honest outlook for the
@@ -62,14 +54,10 @@ export default function ForecastPage({
         projection.
       </p>
 
-      <CellSelector
-        cells={cells}
-        selCell={selCell}
-        cellInfo={cellInfo}
-        date={date}
-        village={village}
-        onSelectCell={onSelectCell}
-        onDateChange={onDateChange}
+      <LocationSelector
+        geography={geography}
+        currentLoc={village}
+        onSelectLocation={onSelectLocation}
       />
 
       {detailStatus === "error" && (

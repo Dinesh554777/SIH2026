@@ -1,8 +1,7 @@
 import React from "react";
-import DemoBanner from "../components/DemoBanner.jsx";
 import MapExplorer from "../components/MapExplorer.jsx";
 import Loading from "../components/Loading.jsx";
-import CellSelector from "../components/CellSelector.jsx";
+import LocationSelector from "../components/LocationSelector.jsx";
 import ErrorPanel from "../components/ErrorPanel.jsx";
 
 // New Components
@@ -25,6 +24,7 @@ export default function Dashboard({
   detailStatus,
   detailError,
   riskIndex,
+  onSelectLocation,
   onSelectCell,
   onSelectVillage,
   onDateChange,
@@ -41,23 +41,14 @@ export default function Dashboard({
 
   return (
     <main style={{ backgroundColor: '#f8fafc', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
-      <DemoBanner 
-        isDemo={isDemo} 
-        liveMeta={detailError?.detail?.error?.detail || forecast?.live_meta || null} 
-      />
-      
       <div className="dashboard-grid">
         {/* Left Column */}
         <div className="left-panel">
-          <div className="re-card" style={{ padding: '8px' }}>
-            <CellSelector
-              cells={cells}
-              selCell={selCell}
-              cellInfo={cellInfo}
-              date={date}
-              village={village}
-              onSelectCell={onSelectCell}
-              onDateChange={onDateChange}
+          <div className="re-card" style={{ padding: '12px' }}>
+            <LocationSelector
+              geography={geography}
+              currentLoc={village}
+              onSelectLocation={onSelectLocation}
             />
           </div>
           
@@ -112,7 +103,14 @@ export default function Dashboard({
         {/* Right Column */}
         <div className="right-panel">
           {detailStatus === "error" && (
-            <ErrorPanel error={detailError} onRetry={loadDetail} />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px' }}>⛅</div>
+              <h3 style={{ margin: '0 0 8px 0', color: '#334155' }}>Forecast Unavailable</h3>
+              <p style={{ margin: '0 0 16px 0', textAlign: 'center', fontSize: '14px' }}>
+                There is currently no valid forecast data for this location.
+              </p>
+              <button className="btn-primary" onClick={loadDetail}>Retry</button>
+            </div>
           )}
 
           {detailStatus === "loading" && <Loading label="Requesting forecast…" />}

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bell, User, MapPin, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext.jsx';
+import { api } from '../../api.js';
 
 export function Logo({ size = 32 }) {
   return (
@@ -15,6 +16,22 @@ export function Logo({ size = 32 }) {
 
 export default function CommandBar({ breadcrumb }) {
   const { lang, setLang, t } = useLanguage();
+  const [liveStatus, setLiveStatus] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    const fetchStatus = () => {
+      api.liveStatus()
+        .then(res => active && setLiveStatus(res))
+        .catch(() => {}); // silent fallback
+    };
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 30000); // Check every 30s
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <header style={{ 
@@ -53,6 +70,11 @@ export default function CommandBar({ breadcrumb }) {
           <ChevronDown size={14} color="#64748b" />
         </div>
         
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '20px', backgroundColor: liveStatus?.status === 'ACTIVE' ? '#dcfce7' : liveStatus?.status === 'STALE' ? '#fef08a' : '#fee2e2', border: `1px solid ${liveStatus?.status === 'ACTIVE' ? '#bbf7d0' : liveStatus?.status === 'STALE' ? '#fde047' : '#fecaca'}`, fontSize: '12px', fontWeight: '700', color: liveStatus?.status === 'ACTIVE' ? '#166534' : liveStatus?.status === 'STALE' ? '#854d0e' : '#991b1b' }}>
+          <span style={{ fontSize: '16px', lineHeight: '1' }}>●</span>
+          <span>{liveStatus?.status === 'ACTIVE' ? 'LIVE FORECAST' : liveStatus?.status === 'STALE' ? 'FORECAST STALE' : 'FORECAST UNAVAILABLE'}</span>
+        </div>
+
         <button style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#64748b' }}>
           <Bell size={20} />
         </button>

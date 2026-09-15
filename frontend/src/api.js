@@ -72,6 +72,7 @@ export function qs(params) {
 export const api = {
   cells: () => request("/api/v1/cells"),
   modelInfo: () => request("/api/v1/model-info"),
+  liveStatus: () => request("/api/v1/system/live-status"),
   geographyDemo: () => request("/api/v1/geography/demo"),
   geographyResolve: (villageId) => request(`/api/v1/geography/demo/${villageId}`),
   scenarios: () => request("/api/v1/demo/scenarios"),

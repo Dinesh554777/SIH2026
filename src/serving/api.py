@@ -137,7 +137,16 @@ def _resolve_live_data(comps: ServingComponents, cell_id: str, date: str | None)
     if date is None and C.DATA_MODE == "live":
         row, meta = get_live_row_and_metadata(cell_id, comps.store)
         if row is None:
-            raise _error(503, "live_unavailable", "Live data is currently unavailable.", detail=meta)
+            # Fall back to latest historical data if live is unavailable
+            latest_date = comps.store.latest_date(cell_id)
+            row = comps.store.row(cell_id, latest_date)
+            if row is None:
+                raise _error(503, "live_unavailable", "Live data is currently unavailable.", detail=meta)
+            
+            # Mark it as UNAVAILABLE so UI can show Graceful state
+            meta["source"]["status"] = "UNAVAILABLE"
+            ts = pd.Timestamp(latest_date)
+            return comps, ts, row, meta
             
         ts = pd.Timestamp(row["date"])
         
@@ -335,6 +344,57 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
         from fastapi.responses import RedirectResponse
 
         return RedirectResponse(url="/docs")
+
+    @app.get("/api/v1/system/live-status")
+    def live_status(request: Request):
+        comps = None
+        try:
+            comps = _components(request)
+        except Exception:
+            pass
+
+        if not comps or C.DATA_MODE != "live":
+            return {
+                "status": "UNAVAILABLE",
+                "mode": C.DATA_MODE,
+                "source": "unknown",
+                "last_observation": None,
+                "data_age_minutes": None,
+                "database": _database_status()["status"],
+                "model": "ok" if comps else "error"
+            }
+
+        # Try to fetch live metadata (non-blocking if cached, but we'll use a fast check)
+        from src.serving.live_pipeline import _cached_ingest_result, _cached_ingest_time
+        import datetime
+
+        now = datetime.datetime.now(datetime.timezone.utc)
+        
+        status = "ACTIVE"
+        last_obs = None
+        data_age = None
+        
+        if _cached_ingest_time and _cached_ingest_result:
+            if _cached_ingest_result.status == "failed":
+                status = "UNAVAILABLE"
+            elif _cached_ingest_result.freshness == "stale":
+                status = "STALE"
+            
+            if _cached_ingest_result.observation_time:
+                last_obs = _cached_ingest_result.observation_time.isoformat()
+                data_age = int((now - _cached_ingest_result.observation_time).total_seconds() / 60)
+        else:
+            status = "UPDATING"
+
+        return {
+            "status": status,
+            "mode": "LIVE",
+            "source": _cached_ingest_result.source if _cached_ingest_result else "imd",
+            "last_observation": last_obs,
+            "data_age_minutes": data_age,
+            "database": _database_status()["status"],
+            "model": "ok" if comps else "error"
+        }
 
     @app.get("/health", response_model=HealthResponse)
     def health(request: Request):
