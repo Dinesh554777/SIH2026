@@ -1,51 +1,62 @@
 import React from 'react';
-import { Search, Bell, User } from 'lucide-react';
+import { Bell, User, MapPin, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext.jsx';
+
+export function Logo({ size = 32 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true" style={{ marginRight: '8px' }}>
+      <path d="M24 44C13 34 8 26 8 18a16 16 0 0 1 32 0c0 8-5 16-16 26Z" fill="#16a34a" />
+      <path d="M24 20c-3.5-2.5-5-5-5-7a5 5 0 0 1 10 0c0 2-1.5 4.5-5 7Z" fill="#bbf7d0" />
+      <path d="M18 26h12M18 30h9" stroke="#14532d" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export default function CommandBar({ breadcrumb }) {
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <header className="command-bar">
-      <h1 className="sr-only">Hyperlocal Monsoon Decision Support</h1>
-      <div className="cb-brand">
-        <Link to="/" className="cb-logo-link">
-          <span className="cb-logo">🌾</span>
-          <span className="cb-title">{t('brand.title')}</span>
+    <header style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'space-between', 
+      padding: '12px 24px', 
+      backgroundColor: 'white', 
+      borderBottom: '1px solid #e2e8f0',
+      height: '64px'
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <Logo />
+          <span style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.5px' }}>
+            AgriMonsoon
+          </span>
         </Link>
-        <span className="cb-tagline">{t('brand.tagline')}</span>
+        <div style={{ height: '32px', width: '1px', backgroundColor: '#e2e8f0' }}></div>
+        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: '1.2' }}>
+          Hyperlocal Monsoon Intelligence for<br/>Climate-Resilient Agriculture
+        </span>
       </div>
 
-      <div className="cb-breadcrumb">
-        {breadcrumb || t('common.selectLocation')}
-      </div>
-
-      <div className="cb-actions">
-        <button className="cb-action-btn" title="Search">
-          <Search size={18} />
-        </button>
-        <button className="cb-action-btn" title="Alerts">
-          <Bell size={18} />
-        </button>
-        
-        <div className="cb-lang-toggle">
-          <button 
-            className={`cb-lang-btn ${lang === 'en' ? 'active' : ''}`}
-            onClick={() => setLang('en')}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 12px', borderRadius: '20px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
+          <MapPin size={16} color="#64748b" />
+          <select 
+            value={lang} 
+            onChange={e => setLang(e.target.value)}
+            style={{ border: 'none', background: 'transparent', fontSize: '13px', fontWeight: '600', color: '#334155', cursor: 'pointer', outline: 'none', WebkitAppearance: 'none' }}
           >
-            EN
-          </button>
-          <span className="cb-lang-div">|</span>
-          <button 
-            className={`cb-lang-btn ${lang === 'ta' ? 'active' : ''}`}
-            onClick={() => setLang('ta')}
-          >
-            தமிழ்
-          </button>
+            <option value="en">Tamil Nadu (EN)</option>
+            <option value="ta">Tamil Nadu (TA)</option>
+          </select>
+          <ChevronDown size={14} color="#64748b" />
         </div>
-
-        <button className="cb-action-btn" title="Profile">
+        
+        <button style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#64748b' }}>
+          <Bell size={20} />
+        </button>
+        <button style={{ background: '#f1f5f9', border: 'none', cursor: 'pointer', color: '#334155', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <User size={18} />
         </button>
       </div>

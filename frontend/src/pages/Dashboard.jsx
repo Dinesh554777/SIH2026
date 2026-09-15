@@ -1,24 +1,17 @@
 import React from "react";
 import DemoBanner from "../components/DemoBanner.jsx";
 import MapExplorer from "../components/MapExplorer.jsx";
-import ScenarioSwitcher from "../components/ScenarioSwitcher.jsx";
-import MonsoonStatus from "../components/MonsoonStatus.jsx";
-import ProbabilityCards from "../components/ProbabilityCards.jsx";
-import CurrentSignal from "../components/CurrentSignal.jsx";
-import RiskCards from "../components/RiskCards.jsx";
-import DecisionPanel from "../components/DecisionPanel.jsx";
-import ForecastTimeline from "../components/ForecastTimeline.jsx";
-import CropDock from "../components/crops/CropDock.jsx";
-import Advisory from "../components/Advisory.jsx";
-import WhySection from "../components/WhySection.jsx";
-import VillageAdvisoryPanel from "../components/VillageAdvisoryPanel.jsx";
-import Transparency from "../components/Transparency.jsx";
-import Calibration from "../components/Calibration.jsx";
-import ErrorPanel from "../components/ErrorPanel.jsx";
 import Loading from "../components/Loading.jsx";
 import CellSelector from "../components/CellSelector.jsx";
-import { ISSUED_BY } from "../App.jsx";
-import { useLanguage } from "../context/LanguageContext.jsx";
+import ErrorPanel from "../components/ErrorPanel.jsx";
+
+// New Components
+import CurrentAdvisoryCard from "../components/CurrentAdvisoryCard.jsx";
+import QuickInfoCard from "../components/QuickInfoCard.jsx";
+import MonsoonStatusCard from "../components/MonsoonStatusCard.jsx";
+import RainfallTrendChart from "../components/RainfallTrendChart.jsx";
+import RiskIndicators from "../components/RiskIndicators.jsx";
+import RecommendedActionsList from "../components/RecommendedActionsList.jsx";
 
 export default function Dashboard({
   cells,
@@ -27,61 +20,65 @@ export default function Dashboard({
   date,
   village,
   geography,
-  scenarios,
   forecast,
-  explainData,
-  explanation,
-  advisory,
   decision,
   detailStatus,
   detailError,
-  modelInfo,
   riskIndex,
-  crop,
-  setCrop,
   onSelectCell,
   onSelectVillage,
   onDateChange,
   loadDetail,
   isDemo,
 }) {
-  const { t } = useLanguage();
-
   if (!cells || !selCell) {
     return (
-      <main className="dashboard-layout">
+      <main className="dashboard-grid">
         <Loading label="Loading pilot grid cells…" />
       </main>
     );
   }
 
-  const onScenarioPick = (s) => {
-    onDateChange(s.forecast_date);
-    if (s.cell_id) onSelectVillage(village, s.cell_id);
-  };
-
   return (
-    <main className="dashboard-layout">
-            <DemoBanner 
+    <main style={{ backgroundColor: '#f8fafc', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
+      <DemoBanner 
         isDemo={isDemo} 
-        liveMeta={
-          detailError?.detail?.error?.detail ||
-          forecast?.live_meta || 
-          null
-        } 
+        liveMeta={detailError?.detail?.error?.detail || forecast?.live_meta || null} 
       />
       
-      <div className="dashboard-workspace">
-        <div className="workspace-map">
-          <CellSelector
-            cells={cells}
-            selCell={selCell}
-            cellInfo={cellInfo}
-            date={date}
-            village={village}
-            onSelectCell={onSelectCell}
-            onDateChange={onDateChange}
-          />
+      <div className="dashboard-grid">
+        {/* Left Column */}
+        <div className="left-panel">
+          <div className="re-card" style={{ padding: '8px' }}>
+            <CellSelector
+              cells={cells}
+              selCell={selCell}
+              cellInfo={cellInfo}
+              date={date}
+              village={village}
+              onSelectCell={onSelectCell}
+              onDateChange={onDateChange}
+            />
+          </div>
+          
+          {detailStatus === "ready" && (
+            <>
+              <CurrentAdvisoryCard decision={decision} />
+              <QuickInfoCard />
+            </>
+          )}
+        </div>
+
+        {/* Center Column - Map */}
+        <div className="center-panel">
+          {/* Top Toggles (Mocked for visual parity) */}
+          <div className="map-toggles">
+            <button className="map-toggle-btn active">Monsoon Onset</button>
+            <button className="map-toggle-btn">Dry Spell Risk</button>
+            <button className="map-toggle-btn">Rainfall</button>
+            <button className="map-toggle-btn" style={{ borderRight: 'none' }}>Temperature</button>
+          </div>
+          
           <MapExplorer
             geography={geography}
             cells={cells}
@@ -94,9 +91,26 @@ export default function Dashboard({
             onSelectVillage={onSelectVillage}
             onDateChange={onDateChange}
           />
+          
+          {/* Bottom Legend */}
+          <div className="map-legend-bottom">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#0f766e' }}></div> Onset
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#facc15' }}></div> Likely
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#fb923c' }}></div> Uncertain
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }}></div> Low
+            </div>
+          </div>
         </div>
 
-        <div className="workspace-intel">
+        {/* Right Column */}
+        <div className="right-panel">
           {detailStatus === "error" && (
             <ErrorPanel error={detailError} onRetry={loadDetail} />
           )}
@@ -104,45 +118,12 @@ export default function Dashboard({
           {detailStatus === "loading" && <Loading label="Requesting forecast…" />}
 
           {detailStatus === "ready" && (
-            <div className="intel-panels">
-              <div id="forecast-section">
-                <ScenarioSwitcher scenarios={scenarios} selCell={selCell} onPick={onScenarioPick} />
-              </div>
-              
-              <CropDock crop={crop} setCrop={setCrop} />
-              
-              <MonsoonStatus decision={decision} village={village} />
-
-              <ProbabilityCards forecast={forecast} advisory={advisory} />
-
-              <CurrentSignal advisory={advisory} />
-
-              <RiskCards forecast={forecast} advisory={advisory} decision={decision} />
-
-              <DecisionPanel decision={decision} village={village} />
-
-              <ForecastTimeline forecast={forecast} advisory={advisory} decision={decision} />
-
-              <Advisory
-                forecast={forecast}
-                explanation={explanation}
-                advisory={advisory}
-              />
-              
-              <WhySection explainData={explainData} />
-              
-              <VillageAdvisoryPanel
-                  cellId={selCell}
-                  date={date}
-                  decision={decision}
-                  village={village}
-                  issuedBy={ISSUED_BY}
-                  crop={crop}
-                />
-              
-              <Transparency modelInfo={modelInfo} forecast={forecast} />
-              <Calibration forecast={forecast} />
-            </div>
+            <>
+              <MonsoonStatusCard forecast={forecast} />
+              <RainfallTrendChart />
+              <RiskIndicators risk={forecast?.risk_summary} />
+              <RecommendedActionsList />
+            </>
           )}
         </div>
       </div>
