@@ -154,7 +154,8 @@ def _resolve_live_data(comps: ServingComponents, cell_id: str, date: str | None)
         
     ts = _parse_date(date, comps.store, cell_id)
     row = comps.store.row(cell_id, ts)
-    _check_data(comps, row, cell_id, ts)
+    if row is None:
+        raise _error(404, "no_data", f"No historical data for cell '{cell_id}' on {ts.date()}.")
     meta = {"mode": "historical", "source": {"status": "ok"}}
     return comps, ts, row, meta
 
