@@ -47,12 +47,11 @@ export default function CommandBar({ breadcrumb }) {
         <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
           <Logo />
           <span style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.5px' }}>
-            AgriMonsoon
+            {t('brand.title')}
           </span>
         </Link>
         <div style={{ height: '32px', width: '1px', backgroundColor: '#e2e8f0' }}></div>
-        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: '1.2' }}>
-          Hyperlocal Monsoon Intelligence for<br/>Climate-Resilient Agriculture
+        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: '1.2' }} dangerouslySetInnerHTML={{ __html: t('brand.tagline').replace('Monsoon Intelligence', 'Monsoon Intelligence<br/>') }}>
         </span>
       </div>
 

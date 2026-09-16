@@ -10,9 +10,9 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
   // Sync initial state if provided
   useEffect(() => {
     if (currentLoc && currentLoc.village_id) {
-      setSelState(currentLoc.state_id || currentLoc.state?.state_id || '');
-      setSelDist(currentLoc.district_id || currentLoc.district?.district_id || '');
-      setSelBlock(currentLoc.block_id || currentLoc.block?.block_id || '');
+      setSelState(currentLoc.state_id || currentLoc.state?.state_id || (typeof currentLoc.state === 'string' ? currentLoc.state : ''));
+      setSelDist(currentLoc.district_id || currentLoc.district?.district_id || (typeof currentLoc.district === 'string' ? currentLoc.district : ''));
+      setSelBlock(currentLoc.block_id || currentLoc.block?.block_id || (typeof currentLoc.block === 'string' ? currentLoc.block : ''));
       setSelVill(currentLoc.village_id || currentLoc.village?.village_id || '');
     }
   }, [currentLoc]);
@@ -43,21 +43,21 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
 
   const hierarchy = geography?.hierarchy || [];
   
-  const currentStateObj = hierarchy.find(s => (s.state_id || s.name) === selState) || hierarchy[0];
+  const currentStateObj = hierarchy.find(s => (s.state?.geography_id || s.state?.name) === selState) || hierarchy[0];
   const districts = currentStateObj?.districts || [];
   
-  const currentDistObj = districts.find(d => (d.district_id || d.name) === selDist) || districts[0];
+  const currentDistObj = districts.find(d => (d.district?.geography_id || d.district?.name) === selDist) || districts[0];
   const blocks = currentDistObj?.blocks || [];
   
-  const currentBlockObj = blocks.find(b => (b.block_id || b.name) === selBlock) || blocks[0];
+  const currentBlockObj = blocks.find(b => (b.block?.geography_id || b.block?.name) === selBlock) || blocks[0];
   const villages = currentBlockObj?.villages || [];
 
   const handleSelect = (st, d, b, v) => {
     if (!v) return;
     onSelectLocation({
-      state: st,
-      district: d,
-      block: b,
+      state: st.state,
+      district: d.district,
+      block: b.block,
       village: v,
       village_id: v.village_id,
       name: v.name || v.village_name,
@@ -66,9 +66,6 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
       lon: v.lon
     });
   };
-
-  const getName = (obj) => obj?.name || obj?.village_name || obj?.district_name || obj?.block_name || '';
-  const getId = (obj, type) => obj?.[`${type}_id`] || obj?.name;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -86,7 +83,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         }}
       >
         <option value="">Select State</option>
-        {hierarchy.map(s => <option key={getId(s, 'state')} value={getId(s, 'state')}>{getName(s)}</option>)}
+        {hierarchy.map(s => <option key={s.state?.geography_id || s.state?.name} value={s.state?.geography_id || s.state?.name}>{s.state?.name}</option>)}
       </select>
 
       <select 
@@ -99,7 +96,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         disabled={!districts.length}
       >
         <option value="">Select District</option>
-        {districts.map(d => <option key={getId(d, 'district')} value={getId(d, 'district')}>{getName(d)}</option>)}
+        {districts.map(d => <option key={d.district?.geography_id || d.district?.name} value={d.district?.geography_id || d.district?.name}>{d.district?.name}</option>)}
       </select>
 
       <select 
@@ -112,7 +109,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         disabled={!blocks.length}
       >
         <option value="">Select Block</option>
-        {blocks.map(b => <option key={getId(b, 'block')} value={getId(b, 'block')}>{getName(b)}</option>)}
+        {blocks.map(b => <option key={b.block?.geography_id || b.block?.name} value={b.block?.geography_id || b.block?.name}>{b.block?.name}</option>)}
       </select>
 
       <select 
@@ -127,7 +124,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         disabled={!villages.length}
       >
         <option value="">Select Village</option>
-        {villages.map(v => <option key={v.village_id} value={v.village_id}>{getName(v)}</option>)}
+        {villages.map(v => <option key={v.village_id} value={v.village_id}>{v.name || v.village_name}</option>)}
       </select>
     </div>
   );

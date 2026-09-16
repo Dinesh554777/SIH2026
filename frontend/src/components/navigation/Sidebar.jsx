@@ -8,11 +8,11 @@ export default function Sidebar() {
   const { t } = useLanguage();
 
   const navItems = [
-    { path: '/dashboard', icon: Home, label: 'Home' },
-    { path: '/map', icon: Map, label: 'Map' },
-    { path: '/advisory', icon: FileText, label: 'Advisories' },
-    { path: '/risk', icon: FileBarChart, label: 'Reports' },
-    { path: '/crops', icon: MessageSquare, label: 'Chatbot' },
+    { path: '/dashboard', icon: Home, label: t('nav.home') },
+    { path: '/map', icon: Map, label: t('nav.map') },
+    { path: '/advisory', icon: FileText, label: t('nav.advisory') },
+    { path: '/risk', icon: FileBarChart, label: t('nav.reports') },
+    { path: '/crops', icon: MessageSquare, label: t('nav.chatbot') },
     // Keeping the rest for navigation purposes but hiding them from main view or separating them
     { path: '/alerts', icon: Bell, label: t('nav.alerts') },
     { path: '/history', icon: History, label: t('nav.history') },
