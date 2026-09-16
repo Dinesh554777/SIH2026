@@ -195,7 +195,7 @@ export default function App() {
       <Route element={<AppLayout breadcrumb={breadcrumbStr} />}>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard {...pageProps} />} />
-        <Route path="/forecast" element={<ForecastPage {...pageProps} />} />
+        <Route path="/map" element={<ForecastPage {...pageProps} />} />
         <Route path="/risk" element={<RiskPage {...pageProps} />} />
         <Route path="/advisory" element={<AdvisoryPage {...pageProps} />} />
         <Route path="/crops" element={<CropAdvisoryPage {...pageProps} />} />

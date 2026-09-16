@@ -9,7 +9,7 @@ export default function Sidebar() {
 
   const navItems = [
     { path: '/dashboard', icon: Home, label: 'Home' },
-    { path: '/forecast', icon: Map, label: 'Map' },
+    { path: '/map', icon: Map, label: 'Map' },
     { path: '/advisory', icon: FileText, label: 'Advisories' },
     { path: '/risk', icon: FileBarChart, label: 'Reports' },
     { path: '/crops', icon: MessageSquare, label: 'Chatbot' },
