@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function LocationSelector({ geography, currentLoc, onSelectLocation }) {
   const [selState, setSelState] = useState('');
   const [selDist, setSelDist] = useState('');
   const [selBlock, setSelBlock] = useState('');
+  const [selBlock, setSelBlock] = useState('');
   const [selVill, setSelVill] = useState('');
+  const { t } = useLanguage();
 
   // Sync initial state if provided
   useEffect(() => {
@@ -71,7 +74,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0f766e', fontWeight: '600', marginBottom: '4px' }}>
         <MapPin size={18} />
-        <span>Select Location</span>
+        <span>{t('dashboardCards.selectLocation')}</span>
       </div>
       
       <select 
@@ -82,7 +85,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
           setSelDist(''); setSelBlock(''); setSelVill('');
         }}
       >
-        <option value="">Select State</option>
+        <option value="">{t('dashboardCards.selectState')}</option>
         {hierarchy.map(s => <option key={s.state?.geography_id || s.state?.name} value={s.state?.geography_id || s.state?.name}>{s.state?.name}</option>)}
       </select>
 
@@ -95,7 +98,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         }}
         disabled={!districts.length}
       >
-        <option value="">Select District</option>
+        <option value="">{t('dashboardCards.selectDistrict')}</option>
         {districts.map(d => <option key={d.district?.geography_id || d.district?.name} value={d.district?.geography_id || d.district?.name}>{d.district?.name}</option>)}
       </select>
 
@@ -108,7 +111,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         }}
         disabled={!blocks.length}
       >
-        <option value="">Select Block</option>
+        <option value="">{t('dashboardCards.selectBlock')}</option>
         {blocks.map(b => <option key={b.block?.geography_id || b.block?.name} value={b.block?.geography_id || b.block?.name}>{b.block?.name}</option>)}
       </select>
 
@@ -123,7 +126,7 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
         }}
         disabled={!villages.length}
       >
-        <option value="">Select Village</option>
+        <option value="">{t('dashboardCards.selectVillage')}</option>
         {villages.map(v => <option key={v.village_id} value={v.village_id}>{v.name || v.village_name}</option>)}
       </select>
     </div>
