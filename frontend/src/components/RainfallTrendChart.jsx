@@ -6,39 +6,38 @@ import { motion } from 'framer-motion';
 export default function RainfallTrendChart({ forecast, historical }) {
   const { t } = useLanguage();
   
-  // Construct chart data
-  // If actual historical array is passed, use it; otherwise create a plausible fallback based on recent_rainfall_mm
-  const recentRain = forecast?.recent_features?.recent_rainfall_mm || 0;
-  const forecastRain = forecast?.forecast_features?.expected_rainfall_mm || 0;
+  const recentRain = forecast?.recent_features?.recent_rainfall_mm ?? null;
+  const forecastRain = forecast?.forecast_features?.expected_rainfall_mm ?? null;
 
   // Ideally, `historical` would be an array of `{ date, actual, predicted }`
   let data = historical || [];
   
   if (data.length === 0) {
-    const today = new Date();
-    // Generate a quick fallback visualization just to prevent empty charts if backend lacks historical array
-    for (let i = 6; i >= 1; i--) {
-      const d = new Date(today);
-      d.setDate(d.getDate() - i);
-      data.push({
-        date: d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }),
-        actual: Math.max(0, recentRain / 6 + (Math.random() * 10 - 5)),
-        predicted: null
-      });
-    }
-    data.push({
-      date: 'Today',
-      actual: null,
-      predicted: forecastRain
-    });
-    for (let i = 1; i <= 3; i++) {
-      const d = new Date(today);
-      d.setDate(d.getDate() + i);
-      data.push({
-        date: d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }),
-        actual: null,
-        predicted: Math.max(0, forecastRain / 4 + (Math.random() * 10 - 5))
-      });
+    if (recentRain !== null || forecastRain !== null) {
+      // B. If real time-series data does not exist: display the available point values only.
+      if (recentRain !== null) {
+        data.push({ date: 'Recent', actual: recentRain, predicted: null });
+      }
+      if (forecastRain !== null) {
+        data.push({ date: 'Forecast', actual: null, predicted: forecastRain });
+      }
+    } else {
+      // C. If insufficient data exists: show unavailable.
+      return (
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-panel" 
+          style={{ padding: '20px', marginBottom: '16px', display: 'flex', flexDirection: 'column', minHeight: '280px' }}
+        >
+          <div style={{ fontSize: '13px', color: 'var(--muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '16px' }}>
+            Rainfall Analytics (mm)
+          </div>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', fontSize: '13px', textAlign: 'center' }}>
+            Historical rainfall time-series unavailable for this location.
+          </div>
+        </motion.div>
+      );
     }
   }
 
@@ -63,8 +62,8 @@ export default function RainfallTrendChart({ forecast, historical }) {
               contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: 'var(--shadow)', fontSize: '13px' }}
             />
             <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-            <Bar dataKey="actual" name="Observed" fill="var(--primary)" radius={[4, 4, 0, 0]} barSize={16} />
-            <Line type="monotone" dataKey="predicted" name="Forecast" stroke="var(--status-likely)" strokeWidth={3} dot={{ r: 4, fill: 'var(--status-likely)' }} />
+            <Bar dataKey="actual" name="Observed" fill="var(--primary)" radius={[4, 4, 0, 0]} barSize={32} />
+            <Bar dataKey="predicted" name="Forecast" fill="var(--status-likely)" radius={[4, 4, 0, 0]} barSize={32} />
           </ComposedChart>
         </ResponsiveContainer>
       </div>

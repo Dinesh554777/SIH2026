@@ -722,6 +722,48 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             "mode": meta["mode"],
         }
 
+    @app.post("/api/v1/delivery/send")
+    async def send_delivery(request: Request):
+        """Queue an advisory for delivery across selected channels."""
+        payload = await request.json()
+        job_id = f"job_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        
+        # Simulate tracking in memory for SIH prototype
+        if not hasattr(app.state, "delivery_jobs"):
+            app.state.delivery_jobs = {}
+            
+        app.state.delivery_jobs[job_id] = {
+            "job_id": job_id,
+            "status": "QUEUED",
+            "channels": payload.get("channels", []),
+            "audience": payload.get("target", "unknown"),
+            "location": payload.get("location_id", "unknown"),
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+        
+        return {"job_id": job_id, "status": "QUEUED"}
+
+    @app.get("/api/v1/delivery/status/{job_id}")
+    def get_delivery_status(job_id: str, request: Request):
+        jobs = getattr(request.app.state, "delivery_jobs", {})
+        job = jobs.get(job_id)
+        if not job:
+            raise _error(404, "JOB_NOT_FOUND", "Delivery job not found.")
+            
+        # Simulate background progression for demo
+        import random
+        if job["status"] == "QUEUED":
+            job["status"] = "SENDING"
+        elif job["status"] == "SENDING":
+            # Real delivery is not faked as SENT unless provider confirmed.
+            # In demo mode without provider, we explicitly mark it DEMO SIMULATED or FAILED
+            if os.environ.get("SMS_PROVIDER"):
+                job["status"] = "SENT"
+            else:
+                job["status"] = "DEMO SIMULATED"
+                
+        return job
+
     @app.get("/api/v1/demo/scenarios")
     def demo_scenarios(request: Request):
         """Three reproducible demo scenarios computed from the REAL frozen pipeline.

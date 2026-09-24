@@ -24,7 +24,7 @@ export default function CommandBar({ breadcrumb }) {
     const fetchStatus = () => {
       api.liveStatus()
         .then(res => active && setLiveStatus(res))
-        .catch(() => {}); // silent fallback
+        .catch(() => active && setLiveStatus({ status: 'OFFLINE' })); // Explicit fallback
     };
     fetchStatus();
     const interval = setInterval(fetchStatus, 30000); // Check every 30s
@@ -39,7 +39,23 @@ export default function CommandBar({ breadcrumb }) {
     // Actual implementation would set CSS class on body/html
   };
 
-  const isLive = liveStatus?.status === 'ACTIVE' || !liveStatus?.status; // Default to live for demo if no backend explicitly says stale
+  const isLive = liveStatus?.status === 'ACTIVE';
+  const isOffline = liveStatus?.status === 'OFFLINE' || liveStatus?.status === 'UNAVAILABLE';
+  const isDemo = liveStatus?.mode !== 'LIVE' && !isOffline;
+  
+  let statusText = 'LIVE';
+  let statusColor = 'var(--status-onset)';
+  let statusBg = 'rgba(16, 185, 129, 0.1)';
+  
+  if (isOffline) {
+    statusText = 'OFFLINE';
+    statusColor = 'var(--status-low)';
+    statusBg = 'rgba(239, 68, 68, 0.1)';
+  } else if (isDemo) {
+    statusText = 'DEMO MODE';
+    statusColor = 'var(--status-likely)';
+    statusBg = 'rgba(245, 158, 11, 0.1)';
+  }
 
   return (
     <header className="glass-panel" style={{ 
@@ -79,13 +95,13 @@ export default function CommandBar({ breadcrumb }) {
         {/* Data Timestamp */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--muted)', fontSize: '12px', fontWeight: '500' }}>
           <Clock size={14} />
-          <span>Updated: Just now</span>
+          <span>Updated: {liveStatus?.last_observation ? new Date(liveStatus.last_observation).toLocaleTimeString() : 'Just now'}</span>
         </div>
 
         {/* Live Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '12px', backgroundColor: isLive ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', border: `1px solid ${isLive ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`, fontSize: '12px', fontWeight: '700', color: isLive ? 'var(--status-onset)' : 'var(--status-low)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '12px', backgroundColor: statusBg, border: `1px solid ${statusColor}40`, fontSize: '12px', fontWeight: '700', color: statusColor }}>
           <span style={{ fontSize: '16px', lineHeight: '1' }}>●</span>
-          <span>{isLive ? 'LIVE' : 'OFFLINE'}</span>
+          <span>{statusText}</span>
         </div>
 
         {/* Language Toggle */}
