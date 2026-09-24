@@ -799,6 +799,86 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             
         return job
 
+    @app.post("/api/v1/advisor/chat")
+    async def advisor_chat(request: Request):
+        payload = await request.json()
+        cell_id = payload.get("location_id")
+        user_message = payload.get("message")
+        lang = payload.get("language", "en")
+
+        if not cell_id or not user_message:
+            raise _error(422, "missing_fields", "location_id and message are required")
+
+        comps = _components(request)
+        cell = _resolve_cell(comps.registry, cell_id)
+        comps, ts, row, meta = _resolve_live_data(comps, cell_id, None)
+        pred = comps.service.predict(cell_id, ts)
+        bundle = build_cards_with_bands(comps.service, cell_id, ts, pred)
+        
+        try:
+            dec = decision_from_serving(bundle, mode=meta["mode"])
+        except Exception as exc:
+            raise _error(422, "decision_input", str(exc))
+
+        # Groq
+        ex = _explainer(request)
+        if not ex.available or not ex._client:
+            return {
+                "answer": "DEMO AI MODE — RESPONSE GENERATED LOCALLY.\n\n"
+                          "Based on current data, the recommendation is to " + dec.decision + 
+                          ". Please wait for real-time updates.",
+                "language": lang,
+                "context": {
+                    "location": f"{cell.get('region')} ({cell_id})",
+                    "forecast_status": bundle["dominant"],
+                    "decision": dec.decision,
+                    "updated_at": str(ts)
+                },
+                "mode": "DEMO"
+            }
+
+        prompt = f"""
+You are an Agricultural AI Assistant answering a farmer's question. 
+You must ONLY use the provided context below. NEVER invent weather, dates, or data.
+If the context is insufficient, reply: "I don't have enough verified data for this location to answer that reliably."
+
+Context:
+Location: {cell.get('region')}
+Forecast Date: {str(ts.date())}
+Recent Rainfall: {bundle['current_signal']['rain_t_mm']} mm today, {bundle['current_signal']['sum7_mm']} mm in last 7 days.
+Decision Recommended: {dec.decision}
+Reasoning: {', '.join(dec.reasoning)}
+
+User Question: {user_message}
+
+Reply ONLY in {lang}. Be concise. Format as text (not JSON).
+"""
+        
+        try:
+            reply = ex._client.chat.completions.create(
+                model=ex.model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.0,
+                max_tokens=256
+            )
+            answer = reply.choices[0].message.content
+            mode = "LIVE"
+        except Exception as e:
+            answer = f"AI ADVISOR UNAVAILABLE ({e})"
+            mode = "OFFLINE"
+
+        return {
+            "answer": answer,
+            "language": lang,
+            "context": {
+                "location": f"{cell.get('region')} ({cell_id})",
+                "forecast_status": bundle["dominant"],
+                "decision": dec.decision,
+                "updated_at": str(ts)
+            },
+            "mode": mode
+        }
+
     @app.get("/api/v1/demo/scenarios")
     def demo_scenarios(request: Request):
         """Three reproducible demo scenarios computed from the REAL frozen pipeline.
