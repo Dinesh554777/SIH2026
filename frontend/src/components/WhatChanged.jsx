@@ -50,26 +50,36 @@ export default function WhatChanged({ previous, current }) {
             <td style={{ padding: '12px 0', fontWeight: '600', color: 'var(--ink)' }}>Status</td>
             <td style={{ padding: '12px 0', color: 'var(--muted)' }}>{prevStatus}</td>
             <td style={{ padding: '12px 0', fontWeight: '700', color: prevStatus !== currStatus ? 'var(--primary)' : 'var(--ink)' }}>{currStatus}</td>
-            <td style={{ padding: '12px 0' }}>{prevStatus !== currStatus ? '🔄' : '-'}</td>
+            <td style={{ padding: '12px 0', fontSize: '11px', color: 'var(--muted)' }}>{prevStatus !== currStatus ? 'Changed' : 'No change'}</td>
           </tr>
           <tr style={{ borderBottom: '1px solid var(--line)' }}>
             <td style={{ padding: '12px 0', fontWeight: '600', color: 'var(--ink)' }}>Probability</td>
             <td style={{ padding: '12px 0', color: 'var(--muted)' }}>{Math.round(prevOnset * 100)}%</td>
             <td style={{ padding: '12px 0', fontWeight: '700', color: 'var(--ink)' }}>{Math.round(currOnset * 100)}%</td>
-            <td style={{ padding: '12px 0' }}>{getChangeIcon(prevOnset, currOnset)}</td>
+            <td style={{ padding: '12px 0', fontSize: '11px', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {getChangeIcon(prevOnset, currOnset)} 
+              {Math.abs(Math.round((currOnset - prevOnset) * 100))} percentage points
+            </td>
           </tr>
           <tr style={{ borderBottom: '1px solid var(--line)' }}>
             <td style={{ padding: '12px 0', fontWeight: '600', color: 'var(--ink)' }}>Rainfall</td>
             <td style={{ padding: '12px 0', color: 'var(--muted)' }}>{Math.round(prevRain)} mm</td>
             <td style={{ padding: '12px 0', fontWeight: '700', color: 'var(--ink)' }}>{Math.round(currRain)} mm</td>
-            <td style={{ padding: '12px 0' }}>{getChangeIcon(prevRain, currRain)}</td>
+            <td style={{ padding: '12px 0', fontSize: '11px', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {getChangeIcon(prevRain, currRain)}
+              {Math.abs(Math.round(currRain - prevRain))} mm difference
+            </td>
           </tr>
           <tr>
             <td style={{ padding: '12px 0', fontWeight: '600', color: 'var(--ink)' }}>Dry-spell risk</td>
             <td style={{ padding: '12px 0', color: 'var(--muted)' }}>{Math.round(prevRisk * 100)}%</td>
             <td style={{ padding: '12px 0', fontWeight: '700', color: 'var(--ink)' }}>{Math.round(currRisk * 100)}%</td>
-            <td style={{ padding: '12px 0' }}>{getChangeIcon(prevRisk, currRisk, true)}</td>
+            <td style={{ padding: '12px 0', fontSize: '11px', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {getChangeIcon(prevRisk, currRisk, true)}
+              {Math.abs(Math.round((currRisk - prevRisk) * 100))} percentage points
+            </td>
           </tr>
+
         </tbody>
       </table>
     </motion.div>

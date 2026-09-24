@@ -47,8 +47,8 @@ export default function Dashboard({
   const previousForecast = forecast?.historical_snapshots ? forecast.historical_snapshots[0] : null;
 
   return (
-    <main style={{ backgroundColor: 'var(--bg)', minHeight: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column', padding: '20px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr 380px', gap: '20px', flex: 1, maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
+    <main style={{ backgroundColor: 'var(--bg)', minHeight: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
+      <div className="dashboard-grid" style={{ flex: 1, maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
         {/* Left Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <LocationSelector

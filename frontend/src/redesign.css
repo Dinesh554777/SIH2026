@@ -8,6 +8,13 @@
   background-color: #f8fafc;
 }
 
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+
 .left-panel {
   display: flex;
   flex-direction: column;
