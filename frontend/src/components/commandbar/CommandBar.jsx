@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, User, MapPin, ChevronDown } from 'lucide-react';
+import { Bell, User, MapPin, ChevronDown, Clock, Sun, Moon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import { api } from '../../api.js';
@@ -7,9 +7,9 @@ import { api } from '../../api.js';
 export function Logo({ size = 32 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true" style={{ marginRight: '8px' }}>
-      <path d="M24 44C13 34 8 26 8 18a16 16 0 0 1 32 0c0 8-5 16-16 26Z" fill="#16a34a" />
-      <path d="M24 20c-3.5-2.5-5-5-5-7a5 5 0 0 1 10 0c0 2-1.5 4.5-5 7Z" fill="#bbf7d0" />
-      <path d="M18 26h12M18 30h9" stroke="#14532d" strokeWidth="2" strokeLinecap="round" />
+      <path d="M24 44C13 34 8 26 8 18a16 16 0 0 1 32 0c0 8-5 16-16 26Z" fill="var(--primary)" />
+      <path d="M24 20c-3.5-2.5-5-5-5-7a5 5 0 0 1 10 0c0 2-1.5 4.5-5 7Z" fill="var(--primary-light)" />
+      <path d="M18 26h12M18 30h9" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -17,6 +17,7 @@ export function Logo({ size = 32 }) {
 export default function CommandBar({ breadcrumb }) {
   const { lang, setLang, t } = useLanguage();
   const [liveStatus, setLiveStatus] = useState(null);
+  const [theme, setTheme] = useState('light'); // Mock theme state
 
   useEffect(() => {
     let active = true;
@@ -33,51 +34,85 @@ export default function CommandBar({ breadcrumb }) {
     };
   }, []);
 
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    // Actual implementation would set CSS class on body/html
+  };
+
+  const isLive = liveStatus?.status === 'ACTIVE' || !liveStatus?.status; // Default to live for demo if no backend explicitly says stale
+
   return (
-    <header style={{ 
+    <header className="glass-panel" style={{ 
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'space-between', 
       padding: '12px 24px', 
-      backgroundColor: 'white', 
-      borderBottom: '1px solid #e2e8f0',
-      height: '64px'
+      borderBottom: '1px solid var(--line)',
+      height: '64px',
+      borderRadius: '0',
+      borderTop: 'none',
+      borderLeft: 'none',
+      borderRight: 'none',
+      zIndex: 50,
+      position: 'sticky',
+      top: 0
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
           <Logo />
-          <span style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a', letterSpacing: '-0.5px' }}>
+          <span style={{ fontSize: '18px', fontWeight: '800', color: 'var(--ink)', letterSpacing: '-0.5px' }}>
             {t('brand.title')}
           </span>
         </Link>
-        <div style={{ height: '32px', width: '1px', backgroundColor: '#e2e8f0' }}></div>
-        <span style={{ fontSize: '13px', color: '#64748b', fontWeight: '500', lineHeight: '1.2' }} dangerouslySetInnerHTML={{ __html: t('brand.tagline').replace('Monsoon Intelligence', 'Monsoon Intelligence<br/>') }}>
-        </span>
+        <div style={{ height: '32px', width: '1px', backgroundColor: 'var(--line)' }}></div>
+        
+        {/* Selected Location / Breadcrumb */}
+        {breadcrumb && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--primary)' }}>
+            <MapPin size={18} />
+            <span style={{ fontSize: '14px', fontWeight: '600' }}>{breadcrumb}</span>
+          </div>
+        )}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 12px', borderRadius: '20px', backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
-          <MapPin size={16} color="#64748b" />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        {/* Data Timestamp */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--muted)', fontSize: '12px', fontWeight: '500' }}>
+          <Clock size={14} />
+          <span>Updated: Just now</span>
+        </div>
+
+        {/* Live Status */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '12px', backgroundColor: isLive ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', border: `1px solid ${isLive ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)'}`, fontSize: '12px', fontWeight: '700', color: isLive ? 'var(--status-onset)' : 'var(--status-low)' }}>
+          <span style={{ fontSize: '16px', lineHeight: '1' }}>●</span>
+          <span>{isLive ? 'LIVE' : 'OFFLINE'}</span>
+        </div>
+
+        {/* Language Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
           <select 
             value={lang} 
             onChange={e => setLang(e.target.value)}
-            style={{ border: 'none', background: 'transparent', fontSize: '13px', fontWeight: '600', color: '#334155', cursor: 'pointer', outline: 'none', WebkitAppearance: 'none' }}
+            style={{ border: 'none', background: 'transparent', fontSize: '14px', fontWeight: '600', color: 'var(--ink)', cursor: 'pointer', outline: 'none' }}
           >
-            <option value="en">Tamil Nadu (EN)</option>
-            <option value="ta">Tamil Nadu (TA)</option>
+            <option value="en">EN</option>
+            <option value="ta">TA</option>
+            <option value="hi">HI</option>
           </select>
-          <ChevronDown size={14} color="#64748b" />
-        </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '20px', backgroundColor: liveStatus?.status === 'ACTIVE' ? '#dcfce7' : liveStatus?.status === 'STALE' ? '#fef08a' : '#fee2e2', border: `1px solid ${liveStatus?.status === 'ACTIVE' ? '#bbf7d0' : liveStatus?.status === 'STALE' ? '#fde047' : '#fecaca'}`, fontSize: '12px', fontWeight: '700', color: liveStatus?.status === 'ACTIVE' ? '#166534' : liveStatus?.status === 'STALE' ? '#854d0e' : '#991b1b' }}>
-          <span style={{ fontSize: '16px', lineHeight: '1' }}>●</span>
-          <span>{liveStatus?.status === 'ACTIVE' ? 'LIVE FORECAST' : liveStatus?.status === 'STALE' ? 'FORECAST STALE' : 'FORECAST UNAVAILABLE'}</span>
         </div>
 
-        <button style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#64748b' }}>
+        {/* Theme Toggle */}
+        <button onClick={toggleTheme} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--muted)', display: 'flex', alignItems: 'center' }}>
+          {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+        </button>
+
+        {/* Notification Icon */}
+        <button style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--muted)', display: 'flex', alignItems: 'center' }}>
           <Bell size={20} />
         </button>
-        <button style={{ background: '#f1f5f9', border: 'none', cursor: 'pointer', color: '#334155', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        
+        {/* User Profile */}
+        <button style={{ background: 'var(--accent-soft)', border: 'none', cursor: 'pointer', color: 'var(--accent)', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <User size={18} />
         </button>
       </div>

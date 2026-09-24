@@ -1,15 +1,37 @@
 :root {
-  --bg: #f4f6f8;
+  /* Premium Dark/Nature Theme Basics */
+  --bg: #f8fafc;
   --surface: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.7);
   --ink: #0f172a;
   --muted: #64748b;
   --line: #e2e8f0;
-  --accent: #0f766e;
-  --accent-soft: #ccfbf1;
-  --amber: #b45309;
-  --red: #b91c1c;
-  --radius: 12px;
-  --shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  
+  /* Deep Green / Indigo / Slate */
+  --primary: #064e3b; /* Deep Green */
+  --primary-light: #10b981;
+  --accent: #4f46e5; /* Indigo */
+  --accent-soft: #e0e7ff;
+  
+  /* Status Colors */
+  --status-onset: #10b981; /* Green */
+  --status-likely: #f59e0b; /* Yellow/Amber */
+  --status-uncertain: #f97316; /* Orange */
+  --status-low: #ef4444; /* Red */
+  
+  --radius: 16px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  --glass-blur: blur(12px);
+}
+
+.glass-panel {
+  background: var(--surface-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
 }
 
 * {

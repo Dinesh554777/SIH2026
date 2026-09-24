@@ -6,7 +6,6 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
   const [selState, setSelState] = useState('');
   const [selDist, setSelDist] = useState('');
   const [selBlock, setSelBlock] = useState('');
-  const [selBlock, setSelBlock] = useState('');
   const [selVill, setSelVill] = useState('');
   const { t } = useLanguage();
 

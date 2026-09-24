@@ -2,6 +2,7 @@ import React from 'react';
 import { Home, Map, FileText, FileBarChart, MessageSquare, CloudRain, AlertTriangle, Sprout, History, Bell, Send, Gauge } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext.jsx';
+import { motion } from 'framer-motion';
 
 export default function Sidebar() {
   const location = useLocation();
@@ -9,10 +10,10 @@ export default function Sidebar() {
 
   const navItems = [
     { path: '/dashboard', icon: Home, label: t('nav.home') },
-    { path: '/map', icon: Map, label: t('nav.map') },
+    { path: '/forecast', icon: Map, label: t('nav.forecast') },
     { path: '/advisory', icon: FileText, label: t('nav.advisory') },
     { path: '/risk', icon: FileBarChart, label: t('nav.reports') },
-    { path: '/crops', icon: MessageSquare, label: t('nav.chatbot') },
+    { path: '/crops', icon: MessageSquare, label: t('nav.crops') },
     // Keeping the rest for navigation purposes but hiding them from main view or separating them
     { path: '/alerts', icon: Bell, label: t('nav.alerts') },
     { path: '/history', icon: History, label: t('nav.history') },
@@ -21,41 +22,45 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav style={{
+    <nav className="glass-panel" style={{
       width: '240px',
-      backgroundColor: 'white',
-      borderRight: '1px solid #e2e8f0',
+      borderRight: '1px solid var(--line)',
       display: 'flex',
       flexDirection: 'column',
       height: 'calc(100vh - 64px)',
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      borderRadius: '0',
+      borderTop: 'none',
+      borderBottom: 'none',
+      borderLeft: 'none',
     }}>
       <div style={{ padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: '8px', zIndex: 10 }}>
         {navItems.map((item, idx) => {
           const isActive = location.pathname === item.path || (location.pathname === '/' && item.path === '/dashboard');
           return (
-            <Link 
-              key={item.path} 
-              to={item.path}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                color: isActive ? 'white' : '#475569',
-                backgroundColor: isActive ? '#0f3a68' : 'transparent',
-                fontWeight: isActive ? '600' : '500',
-                fontSize: '14px',
-                transition: 'all 0.2s',
-                marginTop: idx === 5 ? '32px' : '0' // visual separator for extra pages
-              }}
-            >
-              <item.icon size={20} color={isActive ? 'white' : '#475569'} />
-              <span>{item.label}</span>
-            </Link>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} key={item.path}>
+              <Link 
+                to={item.path}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  textDecoration: 'none',
+                  color: isActive ? 'white' : 'var(--muted)',
+                  backgroundColor: isActive ? 'var(--primary)' : 'transparent',
+                  fontWeight: isActive ? '600' : '500',
+                  fontSize: '14px',
+                  transition: 'background-color 0.2s',
+                  marginTop: idx === 5 ? '32px' : '0' // visual separator for extra pages
+                }}
+              >
+                <item.icon size={20} color={isActive ? 'white' : 'var(--muted)'} />
+                <span>{item.label}</span>
+              </Link>
+            </motion.div>
           );
         })}
       </div>
