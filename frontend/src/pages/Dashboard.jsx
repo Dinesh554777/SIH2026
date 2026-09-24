@@ -12,6 +12,7 @@ import MonsoonStatusCard from "../components/MonsoonStatusCard.jsx";
 import RainfallTrendChart from "../components/RainfallTrendChart.jsx";
 import RiskIndicators from "../components/RiskIndicators.jsx";
 import RecommendedActionsList from "../components/RecommendedActionsList.jsx";
+import WhatChanged from "../components/WhatChanged.jsx";
 
 export default function Dashboard({
   cells,
@@ -41,88 +42,105 @@ export default function Dashboard({
     );
   }
 
+  // To demonstrate the What Changed engine, if backend provides history, use it.
+  // Otherwise we pass null and it handles gracefully.
+  const previousForecast = forecast?.historical_snapshots ? forecast.historical_snapshots[0] : null;
+
   return (
-    <main style={{ backgroundColor: '#f8fafc', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
-      <div className="dashboard-grid">
+    <main style={{ backgroundColor: 'var(--bg)', minHeight: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column', padding: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr 380px', gap: '20px', flex: 1, maxWidth: '1600px', margin: '0 auto', width: '100%' }}>
         {/* Left Column */}
-        <div className="left-panel">
-          <div className="re-card" style={{ padding: '12px' }}>
-            <LocationSelector
-              geography={geography}
-              currentLoc={village}
-              onSelectLocation={onSelectLocation}
-            />
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <LocationSelector
+            geography={geography}
+            currentLoc={village}
+            onSelectLocation={onSelectLocation}
+          />
           
           {detailStatus === "ready" && (
             <>
               <CurrentAdvisoryCard decision={decision} />
-              <QuickInfoCard />
+              {/* <QuickInfoCard /> */}
             </>
           )}
         </div>
 
         {/* Center Column - Map */}
-        <div className="center-panel">
-          {/* Top Toggles (Mocked for visual parity) */}
-          <div className="map-toggles">
-            <button className="map-toggle-btn active">{t('dashboardCards.monsoonOnset')}</button>
-            <button className="map-toggle-btn">{t('dashboardCards.drySpellRisk')}</button>
-            <button className="map-toggle-btn">{t('dashboardCards.rainfall')}</button>
-            <button className="map-toggle-btn" style={{ borderRight: 'none' }}>{t('dashboardCards.temperature')}</button>
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           
-          <MapExplorer
-            geography={geography}
-            cells={cells}
-            selCell={selCell}
-            cellInfo={cellInfo}
-            date={date}
-            village={village}
-            riskIndex={riskIndex}
-            onSelectCell={onSelectCell}
-            onSelectVillage={onSelectVillage}
-            onDateChange={onDateChange}
-          />
-          
-          {/* Bottom Legend */}
-          <div className="map-legend-bottom">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#0f766e' }}></div> {t('dashboardCards.onset')}
+          <div className="glass-panel" style={{ flex: 1, position: 'relative', overflow: 'hidden', minHeight: '500px' }}>
+            {/* Top Toggles */}
+            <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 10, display: 'flex', background: 'var(--surface)', borderRadius: '8px', padding: '4px', boxShadow: 'var(--shadow)' }}>
+              <button style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', background: 'var(--primary)', color: 'white', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Monsoon Status</button>
+              <button style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', background: 'transparent', color: 'var(--muted)', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Rainfall</button>
+              <button style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', background: 'transparent', color: 'var(--muted)', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Dry-Spell</button>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#facc15' }}></div> {t('dashboardCards.likely')}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#fb923c' }}></div> {t('dashboardCards.uncertain')}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }}></div> {t('dashboardCards.low')}
+            
+            <MapExplorer
+              geography={geography}
+              cells={cells}
+              selCell={selCell}
+              cellInfo={cellInfo}
+              date={date}
+              village={village}
+              riskIndex={riskIndex}
+              forecast={forecast}
+              decision={decision}
+              onSelectCell={onSelectCell}
+              onSelectVillage={onSelectVillage}
+              onDateChange={onDateChange}
+            />
+            
+            {/* Bottom Legend */}
+            <div style={{ position: 'absolute', bottom: '20px', right: '20px', zIndex: 10, background: 'var(--surface)', borderRadius: '8px', padding: '12px', boxShadow: 'var(--shadow)', fontSize: '13px', fontWeight: '600', color: 'var(--ink)' }}>
+              <div style={{ marginBottom: '8px', color: 'var(--muted)', fontSize: '11px', textTransform: 'uppercase' }}>Monsoon Status</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--status-onset)' }}></div> Onset
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--status-likely)' }}></div> Likely
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--status-uncertain)' }}></div> Uncertain
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--status-low)' }}></div> Low
+              </div>
             </div>
           </div>
         </div>
 
         {/* Right Column */}
-        <div className="right-panel">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {detailStatus === "error" && (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#64748b' }}>
+            <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 20px', color: 'var(--muted)' }}>
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>⛅</div>
-              <h3 style={{ margin: '0 0 8px 0', color: '#334155' }}>{t('dashboardCards.forecastUnavailable')}</h3>
+              <h3 style={{ margin: '0 0 8px 0', color: 'var(--ink)' }}>{t('dashboardCards.forecastUnavailable')}</h3>
               <p style={{ margin: '0 0 16px 0', textAlign: 'center', fontSize: '14px' }}>
                 {t('dashboardCards.noValidData')}
               </p>
-              <button className="btn-primary" onClick={loadDetail}>{t('common.retry')}</button>
+              <button style={{ padding: '8px 16px', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }} onClick={loadDetail}>{t('common.retry')}</button>
             </div>
           )}
 
-          {detailStatus === "loading" && <Loading label={t('dashboardCards.requestingForecast')} />}
+          {detailStatus === "loading" && (
+             <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px' }}>
+               <Loading label="Loading forecast..." />
+             </div>
+          )}
 
           {detailStatus === "ready" && (
             <>
               <MonsoonStatusCard forecast={forecast} />
-              <RainfallTrendChart />
+              {previousForecast ? (
+                <WhatChanged previous={previousForecast} current={forecast} />
+              ) : (
+                <div className="glass-panel" style={{ padding: '16px', fontSize: '13px', color: 'var(--muted)', textAlign: 'center', marginBottom: '16px' }}>
+                  No historical prediction data available for "What Changed" comparison.
+                </div>
+              )}
+              <RainfallTrendChart forecast={forecast} />
               <RiskIndicators risk={forecast?.risk_summary} />
-              <RecommendedActionsList />
             </>
           )}
         </div>
