@@ -722,17 +722,61 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             "mode": meta["mode"],
         }
 
+    from fastapi import BackgroundTasks
+    import logging
+
+    def process_delivery_job(job_id: str, payload: dict, app_state):
+        job = app_state.delivery_jobs[job_id]
+        job["status"] = "SENDING"
+        
+        try:
+            sms_provider = os.environ.get("SMS_PROVIDER")
+            
+            # If no provider is configured, mock the behavior safely for the demo
+            if not sms_provider or sms_provider.lower() != "twilio":
+                job["status"] = "DEMO SIMULATED"
+                return
+
+            account_sid = os.environ.get("SMS_API_KEY")
+            auth_token = os.environ.get("SMS_API_SECRET")
+            sender_id = os.environ.get("SMS_SENDER_ID")
+            
+            # Use a test number if provided by frontend, otherwise fallback
+            to_number = payload.get("phone") or os.environ.get("TEST_RECIPIENT_PHONE")
+            
+            if not all([account_sid, auth_token, sender_id, to_number]):
+                job["status"] = "FAILED"
+                job["error"] = "Missing Twilio configuration or recipient phone number."
+                return
+
+            from twilio.rest import Client
+            client = Client(account_sid, auth_token)
+            
+            message = client.messages.create(
+                body=payload.get("message", "Test Agricultural Advisory"),
+                from_=sender_id,
+                to=to_number
+            )
+            
+            job["status"] = "SENT"
+            job["provider_id"] = message.sid
+            
+        except Exception as e:
+            logging.error(f"Delivery failed: {str(e)}")
+            job["status"] = "FAILED"
+            job["error"] = str(e)
+
+
     @app.post("/api/v1/delivery/send")
-    async def send_delivery(request: Request):
+    async def send_delivery(request: Request, background_tasks: BackgroundTasks):
         """Queue an advisory for delivery across selected channels."""
         payload = await request.json()
         job_id = f"job_{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
-        # Simulate tracking in memory for SIH prototype
-        if not hasattr(app.state, "delivery_jobs"):
-            app.state.delivery_jobs = {}
+        if not hasattr(request.app.state, "delivery_jobs"):
+            request.app.state.delivery_jobs = {}
             
-        app.state.delivery_jobs[job_id] = {
+        request.app.state.delivery_jobs[job_id] = {
             "job_id": job_id,
             "status": "QUEUED",
             "channels": payload.get("channels", []),
@@ -740,6 +784,9 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
             "location": payload.get("location_id", "unknown"),
             "timestamp": datetime.now(timezone.utc).isoformat()
         }
+        
+        # Fire and forget the background task to send SMS
+        background_tasks.add_task(process_delivery_job, job_id, payload, request.app.state)
         
         return {"job_id": job_id, "status": "QUEUED"}
 
@@ -750,18 +797,6 @@ def create_app(store=None, registry=None, service=None, groq=None) -> FastAPI:
         if not job:
             raise _error(404, "JOB_NOT_FOUND", "Delivery job not found.")
             
-        # Simulate background progression for demo
-        import random
-        if job["status"] == "QUEUED":
-            job["status"] = "SENDING"
-        elif job["status"] == "SENDING":
-            # Real delivery is not faked as SENT unless provider confirmed.
-            # In demo mode without provider, we explicitly mark it DEMO SIMULATED or FAILED
-            if os.environ.get("SMS_PROVIDER"):
-                job["status"] = "SENT"
-            else:
-                job["status"] = "DEMO SIMULATED"
-                
         return job
 
     @app.get("/api/v1/demo/scenarios")

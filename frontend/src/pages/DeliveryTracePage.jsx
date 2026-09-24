@@ -45,16 +45,17 @@ function AdvisoryComposer({ forecast, decision, village, onSend }) {
   const [selectedChannels, setSelectedChannels] = useState({ sms: true, whatsapp: true, print: false });
   const [language, setLanguage] = useState('ta');
   const [target, setTarget] = useState('farmers');
+  const [phone, setPhone] = useState('');
   const [showPreview, setShowPreview] = useState(false);
   const [sending, setSending] = useState(false);
 
   const handleSend = () => {
     setSending(true);
-    setTimeout(() => {
-      onSend({ channels: selectedChannels, language, target, message: generateAdvisory() });
-      setSending(false);
-      setShowPreview(false);
-    }, 1500);
+    onSend({ channels: selectedChannels, language, target, phone, message: generateAdvisory() })
+      .finally(() => {
+        setSending(false);
+        setShowPreview(false);
+      });
   };
 
   const generateAdvisory = () => {
@@ -69,7 +70,7 @@ function AdvisoryComposer({ forecast, decision, village, onSend }) {
     <div className="glass-panel" style={{ padding: '24px', gridColumn: 'span 2' }}>
       <h2 style={{ fontSize: '18px', marginBottom: '20px', color: 'var(--ink)' }}>Advisory Composer</h2>
       
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', marginBottom: '24px' }}>
         <div>
           <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: 'var(--muted)', marginBottom: '8px' }}>Target Audience</label>
           <select value={target} onChange={e => setTarget(e.target.value)} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--line)' }}>
@@ -86,6 +87,11 @@ function AdvisoryComposer({ forecast, decision, village, onSend }) {
             <option value="en">English</option>
             <option value="hi">Hindi (हिंदी)</option>
           </select>
+        </div>
+
+        <div>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: 'var(--muted)', marginBottom: '8px' }}>Test Phone Number</label>
+          <input type="text" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+919876543210" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--line)' }} />
         </div>
       </div>
 
@@ -118,7 +124,7 @@ function AdvisoryComposer({ forecast, decision, village, onSend }) {
             </button>
           </div>
           <div style={{ fontSize: '11px', color: 'var(--status-likely)', textAlign: 'right', marginTop: '8px' }}>
-            DEMO MODE — NO REAL MESSAGE SENT
+            {phone ? 'LIVE DELIVERY INITIATED' : 'DEMO MODE — NO REAL MESSAGE SENT'}
           </div>
         </motion.div>
       )}
@@ -130,14 +136,40 @@ export default function DeliveryTracePage({ cells, selCell, village, forecast, d
   const { t } = useLanguage();
   const [history, setHistory] = useState([]);
 
-  const handleSend = (payload) => {
-    setHistory(prev => [{
-      id: Date.now(),
-      date: new Date().toLocaleString(),
-      channels: Object.keys(payload.channels).filter(k => payload.channels[k]).join(', '),
-      audience: payload.target,
-      status: 'DEMO SIMULATED'
-    }, ...prev]);
+  const handleSend = async (payload) => {
+    try {
+      const res = await api.post("/api/v1/delivery/send", payload);
+      const data = res.data;
+      
+      const newJob = {
+        id: data.job_id,
+        date: new Date().toLocaleString(),
+        channels: Object.keys(payload.channels).filter(k => payload.channels[k]).join(', '),
+        audience: payload.target,
+        status: data.status
+      };
+      
+      setHistory(prev => [newJob, ...prev]);
+
+      // Poll for status
+      const interval = setInterval(async () => {
+        try {
+          const statusRes = await api.get(`/api/v1/delivery/status/${data.job_id}`);
+          setHistory(prev => prev.map(job => 
+            job.id === data.job_id ? { ...job, status: statusRes.data.status } : job
+          ));
+          if (statusRes.data.status === 'SENT' || statusRes.data.status === 'DEMO SIMULATED' || statusRes.data.status === 'FAILED') {
+            clearInterval(interval);
+          }
+        } catch (e) {
+          clearInterval(interval);
+        }
+      }, 2000);
+      
+    } catch (err) {
+      console.error(err);
+      alert("Failed to queue delivery.");
+    }
   };
 
   return (
