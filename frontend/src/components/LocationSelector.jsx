@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin } from 'lucide-react';
+import { MapPin, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { motion } from 'framer-motion';
 
 export default function LocationSelector({ geography, currentLoc, onSelectLocation }) {
   const [selState, setSelState] = useState('');
@@ -69,65 +70,117 @@ export default function LocationSelector({ geography, currentLoc, onSelectLocati
     });
   };
 
+  const selectStyle = {
+    width: '100%',
+    padding: '10px 14px',
+    borderRadius: '8px',
+    border: '1px solid var(--line)',
+    backgroundColor: 'var(--surface)',
+    fontSize: '14px',
+    color: 'var(--ink)',
+    outline: 'none',
+    cursor: 'pointer',
+    appearance: 'none'
+  };
+
+  const selectWrapperStyle = {
+    position: 'relative',
+    marginBottom: '12px'
+  };
+
+  const selectIconStyle = {
+    position: 'absolute',
+    right: '12px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    pointerEvents: 'none',
+    color: 'var(--muted)'
+  };
+
+  if (!geography) {
+    return (
+      <div className="glass-panel" style={{ padding: '20px', color: 'var(--muted)', fontSize: '14px', textAlign: 'center' }}>
+        Loading location data...
+      </div>
+    );
+  }
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0f766e', fontWeight: '600', marginBottom: '4px' }}>
-        <MapPin size={18} />
-        <span>{t('dashboardCards.selectLocation')}</span>
+    <motion.div 
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="glass-panel" 
+      style={{ padding: '20px', marginBottom: '16px' }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)', fontWeight: '700', marginBottom: '16px', fontSize: '15px' }}>
+        <MapPin size={20} />
+        <span>Location Selection</span>
       </div>
       
-      <select 
-        className="filter-input"
-        value={selState} 
-        onChange={e => {
-          setSelState(e.target.value);
-          setSelDist(''); setSelBlock(''); setSelVill('');
-        }}
-      >
-        <option value="">{t('dashboardCards.selectState')}</option>
-        {hierarchy.map(s => <option key={s.state?.geography_id || s.state?.name} value={s.state?.geography_id || s.state?.name}>{s.state?.name}</option>)}
-      </select>
+      <div style={selectWrapperStyle}>
+        <select 
+          style={selectStyle}
+          value={selState} 
+          onChange={e => {
+            setSelState(e.target.value);
+            setSelDist(''); setSelBlock(''); setSelVill('');
+          }}
+        >
+          <option value="" disabled>Select State</option>
+          {hierarchy.map(s => <option key={s.state?.geography_id || s.state?.name} value={s.state?.geography_id || s.state?.name}>{s.state?.name}</option>)}
+        </select>
+        <ChevronDown size={16} style={selectIconStyle} />
+      </div>
 
-      <select 
-        className="filter-input"
-        value={selDist} 
-        onChange={e => {
-          setSelDist(e.target.value);
-          setSelBlock(''); setSelVill('');
-        }}
-        disabled={!districts.length}
-      >
-        <option value="">{t('dashboardCards.selectDistrict')}</option>
-        {districts.map(d => <option key={d.district?.geography_id || d.district?.name} value={d.district?.geography_id || d.district?.name}>{d.district?.name}</option>)}
-      </select>
+      <div style={selectWrapperStyle}>
+        <select 
+          style={{...selectStyle, opacity: !districts.length ? 0.5 : 1}}
+          value={selDist} 
+          onChange={e => {
+            setSelDist(e.target.value);
+            setSelBlock(''); setSelVill('');
+          }}
+          disabled={!districts.length}
+        >
+          <option value="" disabled>{!districts.length ? 'No districts available' : 'Select District'}</option>
+          {districts.map(d => <option key={d.district?.geography_id || d.district?.name} value={d.district?.geography_id || d.district?.name}>{d.district?.name}</option>)}
+        </select>
+        <ChevronDown size={16} style={selectIconStyle} />
+      </div>
 
-      <select 
-        className="filter-input"
-        value={selBlock} 
-        onChange={e => {
-          setSelBlock(e.target.value);
-          setSelVill('');
-        }}
-        disabled={!blocks.length}
-      >
-        <option value="">{t('dashboardCards.selectBlock')}</option>
-        {blocks.map(b => <option key={b.block?.geography_id || b.block?.name} value={b.block?.geography_id || b.block?.name}>{b.block?.name}</option>)}
-      </select>
+      <div style={selectWrapperStyle}>
+        <select 
+          style={{...selectStyle, opacity: !blocks.length ? 0.5 : 1}}
+          value={selBlock} 
+          onChange={e => {
+            setSelBlock(e.target.value);
+            setSelVill('');
+          }}
+          disabled={!blocks.length}
+        >
+          <option value="" disabled>{!blocks.length ? 'No blocks available' : 'Select Block'}</option>
+          {blocks.map(b => <option key={b.block?.geography_id || b.block?.name} value={b.block?.geography_id || b.block?.name}>{b.block?.name}</option>)}
+        </select>
+        <ChevronDown size={16} style={selectIconStyle} />
+      </div>
 
-      <select 
-        className="filter-input"
-        value={selVill} 
-        onChange={e => {
-          const vId = e.target.value;
-          setSelVill(vId);
-          const v = villages.find(x => x.village_id === vId);
-          if (v) handleSelect(currentStateObj, currentDistObj, currentBlockObj, v);
-        }}
-        disabled={!villages.length}
-      >
-        <option value="">{t('dashboardCards.selectVillage')}</option>
-        {villages.map(v => <option key={v.village_id} value={v.village_id}>{v.name || v.village_name}</option>)}
-      </select>
-    </div>
+      <div style={selectWrapperStyle}>
+        <select 
+          style={{...selectStyle, opacity: !villages.length ? 0.5 : 1, marginBottom: 0}}
+          value={selVill} 
+          onChange={e => {
+            const vId = e.target.value;
+            setSelVill(vId);
+            const v = villages.find(x => x.village_id === vId);
+            if (v) handleSelect(currentStateObj, currentDistObj, currentBlockObj, v);
+          }}
+          disabled={!villages.length}
+        >
+          <option value="" disabled>{!villages.length ? 'No villages available' : 'Select Village/Cell'}</option>
+          {villages.map(v => <option key={v.village_id} value={v.village_id}>{v.name || v.village_name}</option>)}
+        </select>
+        <ChevronDown size={16} style={selectIconStyle} />
+      </div>
+    </motion.div>
   );
 }
